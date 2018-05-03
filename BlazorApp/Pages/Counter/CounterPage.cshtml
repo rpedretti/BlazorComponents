@@ -1,0 +1,8 @@
+﻿@page "/counter"
+@inherits CounterPageBase
+
+<Counter
+    Title="@ViewModel.Model.CounterTitle"
+    ButtonText="@ViewModel.Model.CounterIncrementDescription"
+    IncrementAmount="@ViewModel.IncrementAmount"
+    bind-CurrentCount="@ViewModel.Model.CurrentCount"/>

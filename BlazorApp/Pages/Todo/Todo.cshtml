@@ -1,0 +1,7 @@
+﻿@page "/todo"
+@inherits TodoBase
+<h1 tabindex="0" aria-live="polite" aria-label=@ViewModel.Model.HeaderA11l>Todo (@ViewModel.Model.DoneItemsCount)</h1>
+
+<TodoList id="firstList"
+          Items="ViewModel.Model.Items"
+          OnItemsChanged=@StateHasChanged />

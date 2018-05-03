@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RunCommand>dotnet</RunCommand>
+    <RunArguments>blazor serve</RunArguments>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildWebCompiler" Version="1.11.375" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.0-preview2-final" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.2.1" />
+    <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Todo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\TodoList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Todo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Todo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\BackgroundContent\BackgroundContent.cshtml" />
+    <None Include="Pages\Todo\Todo.cshtml" />
+    <None Include="wwwroot\css\site.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\SurveyPrompt.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\Counter.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\CounterPage.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Shared\bootstrap\" />
+    <Folder Include="wwwroot\js\bootstrap\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\BackgroundContent\BackgroundContent.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\BackgroundContent\BackgroundContent.cshtml" />
+  </ItemGroup>
+
+</Project>
