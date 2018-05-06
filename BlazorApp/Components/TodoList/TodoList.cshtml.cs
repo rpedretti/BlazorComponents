@@ -1,4 +1,5 @@
-﻿using BlazorApp.Models;
+﻿using BlazorApp.Domain;
+using BlazorApp.Models;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;

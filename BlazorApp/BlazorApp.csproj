@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="BuildWebCompiler" Version="1.11.375" />
+    <PackageReference Include="FluentMigrator" Version="2.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.0-preview2-final" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.2.1" />
@@ -49,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Domain\" />
     <Folder Include="Shared\bootstrap\" />
     <Folder Include="wwwroot\js\bootstrap\" />
   </ItemGroup>
@@ -59,6 +61,13 @@
 
   <ItemGroup>
     <Content Remove="Components\BackgroundContent\BackgroundContent.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorApp.Domain\BlazorApp.Domain.csproj" />
+    <ProjectReference Include="..\BlazorApp.NHContext\BlazorApp.NHContext.csproj" />
+    <ProjectReference Include="..\BlazorApp.Repository\BlazorApp.Repository.csproj" />
+    <ProjectReference Include="..\BlazorApp.Services\BlazorApp.Services.csproj" />
   </ItemGroup>
 
 </Project>

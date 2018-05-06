@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27625.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{8DD529CF-4731-4526-9DBC-4EAD1AF0AF26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{8DD529CF-4731-4526-9DBC-4EAD1AF0AF26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp.Domain", "BlazorApp.Domain\BlazorApp.Domain.csproj", "{44470C6C-5D48-41A6-9C60-F0ABDD8D7F73}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp.Services", "BlazorApp.Services\BlazorApp.Services.csproj", "{547695AB-6456-4EA6-B24D-A9D1C502F44F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp.Repository", "BlazorApp.Repository\BlazorApp.Repository.csproj", "{2F83F92A-94EC-45FE-ACCE-66498E673880}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp.NHContext", "BlazorApp.NHContext\BlazorApp.NHContext.csproj", "{B0D2A5AC-7491-4A98-9177-2A4C0AC8C9F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{8DD529CF-4731-4526-9DBC-4EAD1AF0AF26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD529CF-4731-4526-9DBC-4EAD1AF0AF26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DD529CF-4731-4526-9DBC-4EAD1AF0AF26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44470C6C-5D48-41A6-9C60-F0ABDD8D7F73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44470C6C-5D48-41A6-9C60-F0ABDD8D7F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44470C6C-5D48-41A6-9C60-F0ABDD8D7F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44470C6C-5D48-41A6-9C60-F0ABDD8D7F73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{547695AB-6456-4EA6-B24D-A9D1C502F44F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547695AB-6456-4EA6-B24D-A9D1C502F44F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547695AB-6456-4EA6-B24D-A9D1C502F44F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{547695AB-6456-4EA6-B24D-A9D1C502F44F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F83F92A-94EC-45FE-ACCE-66498E673880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F83F92A-94EC-45FE-ACCE-66498E673880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F83F92A-94EC-45FE-ACCE-66498E673880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F83F92A-94EC-45FE-ACCE-66498E673880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0D2A5AC-7491-4A98-9177-2A4C0AC8C9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0D2A5AC-7491-4A98-9177-2A4C0AC8C9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0D2A5AC-7491-4A98-9177-2A4C0AC8C9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0D2A5AC-7491-4A98-9177-2A4C0AC8C9F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
