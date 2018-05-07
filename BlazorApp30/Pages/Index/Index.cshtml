@@ -1,10 +1,13 @@
 ﻿@page "/"
-@using System.Drawing
+@inherits IndexBase
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
-<BackgroundContent BgColor="@(Color.FromArgb(220, 111, 111, 111))">
+<BackgroundContent ParentBgColor="@ViewModel.ParentBgColor"
+                   ChildBgColor="@ViewModel.ChildBgColor">
     <SurveyPrompt Title="How is Blazor working for you?" />
+
+    <p onmouseover="@ViewModel.OnComponentHover" />
 </BackgroundContent>

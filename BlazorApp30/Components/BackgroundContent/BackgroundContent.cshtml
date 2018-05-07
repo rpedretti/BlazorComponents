@@ -1,12 +1,12 @@
 ﻿@using BlazorApp30.Extensions
 @inherits BackgroundContentBase
 
-<div class="background-content">
+<div class="background-content"
+     style="background-color: @(ParentBgColor.ToRgbaString());">
     <p>Below this is your content with backgoud color</p>
 
-    <div 
-        class="child--content"
-        style="background-color: @BgColor.ToRgbaString()">
+    <div class="child--content"
+         style="background-color: @ChildBgColor.ToRgbaString();">
         @ChildContent
     </div>
 

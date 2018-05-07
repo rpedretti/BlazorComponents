@@ -15,6 +15,7 @@ namespace BlazorApp30
                 services.AddTransient<TodoPageViewModel>();
                 services.AddTransient<CounterPageViewModel>();
                 services.AddTransient<FetchDataPageViewModel>();
+                services.AddTransient<IndexPageViewModel>();
             });
 
             new BrowserRenderer(serviceProvider).AddComponent<App>("app");
