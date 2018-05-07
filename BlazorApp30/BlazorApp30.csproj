@@ -1,0 +1,96 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RunCommand>dotnet</RunCommand>
+    <RunArguments>blazor serve</RunArguments>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.3.0" />
+    <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\BackgroundContent\BackgroundContent.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\Counter\Counter.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\SurveyPrompt\SurveyPrompt.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\TodoList\TodoList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Components\BackgroundContent\BackgroundContent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Components\Counter\Counter.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Components\SurveyPrompt\SurveyPrompt.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Components\TodoList\TodoList.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Counter\CounterPage.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Counter\CounterPage.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\FetchData\FetchData.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Todo\Todo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Index\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\FetchData\FetchData.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Todo\Todo.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Index\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+</Project>

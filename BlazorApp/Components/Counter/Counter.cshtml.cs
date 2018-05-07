@@ -1,15 +1,22 @@
-﻿using Microsoft.AspNetCore.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor;
+using Microsoft.AspNetCore.Blazor.Components;
 using System;
+using System.Threading.Tasks;
 
 namespace BlazorApp.Components
 {
     public class CounterBase : BlazorComponent
     {
-        public Action<int> CurrentCountChanged { get; set; }
-        public string Title { get; set; }
-        public string ButtonText { get; set; }
-        public int CurrentCount { get; set; } = 0;
-        public int IncrementAmount { get; set; } = 1;
+        [Parameter]
+        protected Action<int> CurrentCountChanged { get; set; }
+        [Parameter]
+        protected string Title { get; set; }
+        [Parameter]
+        protected string ButtonText { get; set; }
+        [Parameter]
+        protected int CurrentCount { get; set; } = 0;
+        [Parameter]
+        protected int IncrementAmount { get; set; } = 1;
 
         public void IncrementCount()
         {

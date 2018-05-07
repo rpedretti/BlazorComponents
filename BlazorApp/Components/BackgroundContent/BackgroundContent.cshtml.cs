@@ -12,6 +12,8 @@ namespace BlazorApp.Components.BackgroundContent
     public class BackgroundContentBase : BlazorComponent
     {
         public RenderFragment ChildContent { get; set; }
-        public Color BgColor { get; set; } = Color.Transparent;
+
+        [Parameter]
+        protected Color BgColor { get; set; } = Color.Transparent;
     }
 }

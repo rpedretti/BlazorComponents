@@ -8,6 +8,7 @@ namespace BlazorApp.Components.SurveyPrompt
 {
     public class SurveyPromptBase : BlazorComponent
     {
-        public string Title { get; set; }
+        [Parameter]
+        protected string Title { get; set; }
     }
 }

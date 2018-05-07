@@ -4,5 +4,5 @@
     <h1 tabindex="0" role="none">@Title</h1>
     <h2 tabindex="0" role="alert">Current count: @CurrentCount</h2>
 
-    <button class="btn" onclick="@IncrementCount">@ButtonText</button>
+    <button class="btn" onclick="@(() => IncrementCount())">@ButtonText</button>
 </div>

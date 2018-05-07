@@ -1,17 +1,20 @@
-﻿using BlazorApp.Domain;
-using BlazorApp.Models;
+﻿using BlazorApp.Models;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BlazorApp.Components
 {
     public class TodoListBase : BlazorComponent
     {
-        public Action OnItemsChanged { get; set; }
-        public IList<TodoItem> Items { get; set; }
-        public string Id { get; set; }
+        [Parameter]
+        protected Action OnItemsChanged { get; set; }
+        [Parameter]
+        protected IList<TodoItem> Items { get; set; }
+        [Parameter]
+        protected string Id { get; set; }
 
         protected string NewTodoTitle { get; set; }
 
@@ -32,6 +35,11 @@ namespace BlazorApp.Components
         {
             item.Title = a.Value as string;
             OnItemsChanged?.Invoke();
+        }
+
+        protected void OnInputChanged(UIChangeEventArgs a)
+        {
+            NewTodoTitle = a.Value as string;
         }
     }
 }

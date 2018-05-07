@@ -6,11 +6,12 @@
                class="form-text-input todo-title-input"
                aria-label="título"
                placeholder="Algo a fazer..."
-               bind="@NewTodoTitle"
+               onchange="@(a => OnInputChanged(a))"
+               value="@NewTodoTitle"
                id="@($"{Id}-todo-title")" />
         <button tabindex="0"
                 class="btn todo-add-button"
-                onclick="@AddTodo"
+                onclick="@(() => AddTodo())"
                 id="@($"{Id}-todo-add-button")"
                 disabled="@string.IsNullOrWhiteSpace(NewTodoTitle)">
             Adicionar item
