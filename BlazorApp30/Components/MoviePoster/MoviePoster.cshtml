@@ -1,0 +1,27 @@
+﻿@inherits MoviePosterBase
+
+<div id="@Movie.imdbID" class="movie-poster"
+     tabindex="@(CanFlip ? "0" : null)"
+     onclick="@HandleClick"
+     onkeypress="@HandleKeyPress">
+    <div class="@($"movie-poster_card {(CanFlip && Flipped ? "-flipped" : null)}")">
+        <div class="movie-poster_face -back">
+            <p>@Movie.Plot</p>
+        </div>
+        <div class="movie-poster_face -front">
+            @if (Movie.Poster == "N/A")
+            {
+                <img class="poster-image -loaded -no-poster" src="/assets/poster-placeholder.png" />
+                <p class="title--overlay" style="align-content: center">@Movie.Title</p>
+            }
+            else
+            {
+                <Spinner Active="@(!ImageLoaded)" Centered="true"></Spinner>
+                <img class="@($"poster-image {(ImageLoaded ? "-loaded" : null)}")"
+                     src="@(ImageError ? "/assets/poster-placeholder.png" : Movie.Poster)" 
+                     onerror="@UpdateError"
+                     onload="@UpdateLoader" />
+            }
+        </div>
+    </div>
+</div>

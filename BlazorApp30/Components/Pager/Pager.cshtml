@@ -1,0 +1,39 @@
+﻿@inherits PagerBase
+
+<nav aria-label="Page navigation example" class="pager">
+    <ul class="@($"pagination {(Small ? "pagination-sm" : null)} justify-content-center")">
+        @if (ShowFirst)
+        {
+            <li class="page-item">
+                <a class="page-link" onclick="@FirstPage">&lt;&lt;</a>
+            </li>
+            <li class="page-item">
+                <i class="page-link fa fa-ellipsis-h" onclick="@PreviousPagination"></i>
+            </li>
+        }
+        <li class="@($"page-item {(CurrentPage == 1 ? "disabled" : null)}")">
+            <a class="page-link" onclick="@PreviousPage">&lt;</a>
+        </li>
+
+        @for (int i = 0; i < Indicators.Length; i++)
+        {
+            var indicator = Indicators[i];
+            <li class="@($"page-item {(indicator.Active ? "active" : null)} {(!indicator.Visible ? "-hidden" : null)}")">
+                <a class="page-link" onclick="@(() => OnRequestPage?.Invoke(indicator.Page))">@indicator.Content</a>
+            </li>
+        }
+
+        <li class="@($"page-item {(CurrentPage == PageCount ? "disabled" : null)}")">
+            <a class="page-link" onclick="@NextPage">&gt;</a>
+        </li>
+        @if (ShowLast)
+        {
+            <li class="page-item">
+                <i class="page-link fa fa-ellipsis-h" onclick="@NextPagination"></i>
+            </li>
+            <li class="page-item">
+                <a class="page-link" onclick="@LastPage">&gt;&gt;</a>
+            </li>
+        }
+    </ul>
+</nav>

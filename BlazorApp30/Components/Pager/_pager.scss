@@ -1,0 +1,10 @@
+﻿.pager {
+    user-select: none;
+    > .pagination {
+        > .page-item {
+            &.-hidden {
+                display: none;
+            }
+        }
+    }
+}

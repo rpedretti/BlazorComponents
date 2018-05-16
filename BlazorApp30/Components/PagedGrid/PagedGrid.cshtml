@@ -1,0 +1,24 @@
+﻿@inherits PagedGridBase
+
+@if (HasContent)
+{
+    <Pager MaxIndicators="@MaxIndicators"
+           OnRequestPage="@OnRequestPage"
+           CurrentPage="@CurrentPage"
+           PageCount="@PageCount"
+           Small="@SmallPager"></Pager>
+}
+@if (HasContent && !Loading)
+{
+    <div class="child-content">
+        @ChildContent
+    </div>
+}
+else if (Loading)
+{
+    <p>@LoadingMessage</p>
+}
+else if (!HasContent)
+{
+    <p>@NoContentMessage</p>
+}

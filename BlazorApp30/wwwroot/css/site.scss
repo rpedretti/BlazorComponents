@@ -1,4 +1,8 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+﻿@import "../../Shared/Styles/font-awesome/_font-awesome.scss";
+@import "../../Shared/Styles/_animations.scss";
+@import "../../Components/styles/_all.scss";
+@import "../../Pages/styles/_all.scss";
+
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -121,6 +125,3 @@ app {
         display: block;
     }
 }
-
-@import "../../Components/styles/_all.scss";
-@import "../../Pages/styles/_all.scss";

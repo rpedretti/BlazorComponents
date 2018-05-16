@@ -1,0 +1,33 @@
+﻿@page "/movies"
+@inherits MoviesBase
+
+<h1>Movies - total (@ViewModel.Model.MoviesCount)</h1>
+
+<PagedGrid ref="PagedGrid"
+           MaxIndicators="2"
+           SmallPager="true"
+           Loading="@ViewModel.Loading"
+           HasContent="@ViewModel.HasContent"
+           CurrentPage="@ViewModel.Model.CurrentPage"
+           PageCount="@ViewModel.Model.PageCount"
+           OnRequestPage="@RequestPage">
+    <div tabindex="0" aria-label="filmes" role="list" aria-required="false" class="movies">
+        @for (int i = 0; i < ViewModel.Model.Movies.Count; i++)
+        {
+            var index = i;
+            var movie = ViewModel.Model.Movies[index];
+            <div class="poster"
+                 tabindex="0"
+                 role="listitem"
+                 aria-setsize="@(ViewModel.Model.MoviesCount)"
+                 aria-posinset="@((ViewModel.Model.CurrentPage - 1) * 10 + index + 1)"
+                 aria-label="@(movie.Title + ", " + movie.Plot)"
+                 onclick="@(() => Flip(index))"
+                 onkeypress="@(key => HandleKeyPress(key, index))">
+                <MoviePoster Movie="@movie"
+                             OnClick="@(() => ViewModel.GoToMovie(movie.imdbID))"
+                             CanFlip="false"/>
+            </div>
+        }
+    </div>
+</PagedGrid>

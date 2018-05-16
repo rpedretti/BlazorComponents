@@ -1,16 +1,10 @@
 ﻿@page "/"
-@using BlazorApp30.Extensions
+@using System.Drawing
+@using BlazorApp30.Components.BackgroundContent
 @inherits IndexBase
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+<p>Welcome to your new app.</p>
 
-<BackgroundContent ParentBgColor="@ViewModel.ParentBgColor"
-                   ChildBgColor="@ViewModel.ChildBgColor">
-    <SurveyPrompt Title="How is Blazor working for you?" />
-
-    <p onmouseover="@ViewModel.OnComponentHover"
-       class="@(ViewModel != null ? "some-class" : null)" 
-       style="background-color: @ViewModel.ParentBgColor.ToRgbaString()"/>
-</BackgroundContent>
+<SurveyPrompt Title="Is Blazor ok?" />

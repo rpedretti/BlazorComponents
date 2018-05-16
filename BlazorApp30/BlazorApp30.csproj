@@ -95,6 +95,55 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\MoviePoster\MoviePoster.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\MoviePoster\MoviePoster.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\MoviePoster\MoviePoster.cshtml" />
+    <None Include="Components\PagedGrid\PagedGrid.cshtml" />
+    <None Include="Components\Pager\Pager.cshtml" />
+    <None Include="Components\Spinner\Spinner.cshtml" />
+    <None Include="Pages\Movies\Movies.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Movies\Movies.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Movies\Movies.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\PagedGrid\PagedGrid.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\PagedGrid\PagedGrid.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\Spinner\Spinner.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\Spinner\Spinner.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\Pager\Pager.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\Pager\Pager.cshtml" />
   </ItemGroup>
 
 </Project>

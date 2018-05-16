@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor.Components;
 using System;
-using System.Threading.Tasks;
 
 namespace BlazorApp30.Components
 {

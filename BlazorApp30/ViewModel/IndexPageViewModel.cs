@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Blazor;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlazorApp30.ViewModel
 {
@@ -11,6 +7,7 @@ namespace BlazorApp30.ViewModel
     {
         public Color ParentBgColor { get; set; }
         public Color ChildBgColor { get; set; }
+        public string ParagraphStyle { get; set; }
 
         public void OnComponentHover()
         {
