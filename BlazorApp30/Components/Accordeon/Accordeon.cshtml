@@ -1,8 +1,8 @@
 ﻿@inherits AccordeonBase
 
 <div class="@($"accordeon")">
-    <div class="accordeon-title" onclick="@(() => Expanded = !Expanded)">
-        <span>@Title</span>
+    <div class="@($"accordeon-title{(CenterTitle ? " -center" : null)}")" onclick="@(() => Expanded = !Expanded)">
+        <span class="title">@Title</span>
     </div>
     <div class="@($"accordeon-content{(Expanded ? " -expand" : " -collapse")}")">
         <div class="content-wrapper">

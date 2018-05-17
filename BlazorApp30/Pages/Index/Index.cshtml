@@ -8,16 +8,26 @@
 
 <p>Welcome to your new app.</p>
 
-<Accordeon Title="Loaders">
+<div class="accordeon-container">
+    <Accordeon Title="Loaders" CenterTitle="true" bind-Expanded="@ViewModel.ExpandLoaderAccordeon">
 
-    <div style="width: 200px; margin: 0 auto;">
-        <ProgressBar></ProgressBar>
-    </div>
-    <Spinner Active="true"></Spinner>
-    <Spinner Active="true" Centered="true"></Spinner>
-    <Spinner Active="true" Size="@SpinnerSize.MEDIUM"></Spinner>
-    <Spinner Active="true" Size="@SpinnerSize.MEDIUM" Centered="true"></Spinner>
-    <Spinner Active="true" Size="@SpinnerSize.LARGE"></Spinner>
-    <Spinner Active="true" Size="@SpinnerSize.LARGE" Centered="true"></Spinner>
-</Accordeon>
+        <h4>Indeterminate progress bar</h4>
+        <div style="width: 200px; margin: 0 auto 42px auto;">
+            <ProgressBar></ProgressBar>
+        </div>
+        <h4>Spinner - small</h4>
+        <Spinner Active="@ViewModel.ExpandLoaderAccordeon"></Spinner>
+        <h4>Spinner - small centered</h4>
+        <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Centered="true"></Spinner>
+        <h4>Spinner - medium</h4>
+        <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM"></Spinner>
+        <h4>Spinner - medium centered</h4>
+        <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" Centered="true"></Spinner>
+        <h4>Spinner - large</h4>
+        <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE"></Spinner>
+        <h4>Spinner - large centered</h4>
+        <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" Centered="true"></Spinner>
+    </Accordeon>
+</div>
+
 <SurveyPrompt Title="Is Blazor ok?" />

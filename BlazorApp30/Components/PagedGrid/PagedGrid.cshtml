@@ -1,4 +1,5 @@
 ﻿@inherits PagedGridBase
+@using BlazorApp30.Components.Spinner
 
 @if (HasContent)
 {
@@ -16,7 +17,7 @@
 }
 else if (Loading)
 {
-    <Spinner Active="true" Centered="true"></Spinner>
+    <Spinner Active="true" Centered="true" Size="SpinnerSize.LARGE"></Spinner>
 }
 else if (!HasContent)
 {
