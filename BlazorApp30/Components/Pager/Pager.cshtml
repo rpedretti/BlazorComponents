@@ -1,17 +1,29 @@
 ﻿@inherits PagerBase
 
-<nav aria-label="Page navigation example" class="pager">
+<nav aria-label="Movies navigation" class="pager">
     <ul class="@($"pagination {(Small ? "pagination-sm" : null)} justify-content-center")">
         @if (ShowFirst)
         {
             <li class="page-item">
-                <a class="page-link" onclick="@FirstPage">&lt;&lt;</a>
+                <a class="page-link"
+                   tabindex="0"
+                   role="button"
+                   aria-label="first page"
+                   onclick="@FirstPage">&lt;&lt;</a>
             </li>
             <li class="page-item">
-                <i class="page-link fa fa-ellipsis-h" onclick="@PreviousPagination"></i>
+                <i class="page-link fa fa-ellipsis-h"
+                   tabindex="0"
+                   role="button"
+                   aria-label="previous page group"
+                   onclick="@PreviousPagination"></i>
             </li>
         }
-        <li class="@($"page-item {(CurrentPage == 1 ? "disabled" : null)}")">
+        <li class="@($"page-item {(CurrentPage == 1 ? "disabled" : null)}")"
+            tabindex="0"
+            role="button"
+            aria-disabled="@(CurrentPage == 1)"
+            aria-label="previous page">
             <a class="page-link" onclick="@PreviousPage">&lt;</a>
         </li>
 
@@ -19,20 +31,38 @@
         {
             var indicator = Indicators[i];
             <li class="@($"page-item {(indicator.Active ? "active" : null)} {(!indicator.Visible ? "-hidden" : null)}")">
-                <a class="page-link" onclick="@(() => OnRequestPage?.Invoke(indicator.Page))">@indicator.Content</a>
+                <a class="page-link" 
+                   tabindex="0"
+                   role="button"
+                   aria-hidden="@(!indicator.Visible ? "true" : null)"
+                   aria-label="@($"page {indicator.Content}{(indicator.Active ? ", atual" : null)}")"
+                   onclick="@(() => OnRequestPage?.Invoke(indicator.Page))">@indicator.Content</a>
             </li>
         }
 
         <li class="@($"page-item {(CurrentPage == PageCount ? "disabled" : null)}")">
-            <a class="page-link" onclick="@NextPage">&gt;</a>
+            <a class="page-link"
+               tabindex="0"
+               role="button"
+               aria-disabled="@(CurrentPage == PageCount)"
+               aria-label="next page"
+               onclick="@NextPage">&gt;</a>
         </li>
         @if (ShowLast)
         {
             <li class="page-item">
-                <i class="page-link fa fa-ellipsis-h" onclick="@NextPagination"></i>
+                <i class="page-link fa fa-ellipsis-h"
+                   tabindex="0"
+                   role="button"
+                   aria-label="next page group"
+                   onclick="@NextPagination"></i>
             </li>
             <li class="page-item">
-                <a class="page-link" onclick="@LastPage">&gt;&gt;</a>
+                <a class="page-link"
+                   tabindex="0"
+                   role="button"
+                   aria-label="last page"
+                   onclick="@LastPage">&gt;&gt;</a>
             </li>
         }
     </ul>

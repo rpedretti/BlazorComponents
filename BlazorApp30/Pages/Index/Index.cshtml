@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using System.Drawing
+@using BlazorApp30.Components.Spinner
 @using BlazorApp30.Components.BackgroundContent
 @inherits IndexBase
 
@@ -7,4 +8,16 @@
 
 <p>Welcome to your new app.</p>
 
+<Accordeon Title="Loaders">
+
+    <div style="width: 200px; margin: 0 auto;">
+        <ProgressBar></ProgressBar>
+    </div>
+    <Spinner Active="true"></Spinner>
+    <Spinner Active="true" Centered="true"></Spinner>
+    <Spinner Active="true" Size="@SpinnerSize.MEDIUM"></Spinner>
+    <Spinner Active="true" Size="@SpinnerSize.MEDIUM" Centered="true"></Spinner>
+    <Spinner Active="true" Size="@SpinnerSize.LARGE"></Spinner>
+    <Spinner Active="true" Size="@SpinnerSize.LARGE" Centered="true"></Spinner>
+</Accordeon>
 <SurveyPrompt Title="Is Blazor ok?" />

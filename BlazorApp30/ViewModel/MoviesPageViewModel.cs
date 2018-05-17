@@ -1,8 +1,8 @@
-﻿using BlazorApp30.Domain;
-using BlazorApp30.Models;
+﻿using BlazorApp30.Models;
 using BlazorApp30.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlazorApp30.ViewModel
@@ -10,7 +10,7 @@ namespace BlazorApp30.ViewModel
     public sealed class MoviesPageViewModel : BaseViewModel
     {
         private readonly IMovieService _movieService;
-        private Dictionary<int, IEnumerable<Movie>> CachedMovies = new Dictionary<int, IEnumerable<Movie>>();
+        private Dictionary<int, IEnumerable<MoviePosterModel>> CachedMovies = new Dictionary<int, IEnumerable<MoviePosterModel>>();
 
         public MoviesPageModel Model { get; private set; } = new MoviesPageModel();
         public bool Loading { get; set; }
@@ -33,7 +33,7 @@ namespace BlazorApp30.ViewModel
 
         public async Task GetMoviesAsync(int page = 1)
         {
-            IEnumerable<Movie> movies;
+            IEnumerable<MoviePosterModel> movies;
 
             Loading = true;
 
@@ -45,7 +45,13 @@ namespace BlazorApp30.ViewModel
             if (!CachedMovies.ContainsKey(page))
             {
                 var moviesResult = await _movieService.FindMoviesByPattern("avengers", page);
-                movies = moviesResult.Search;
+                movies = moviesResult.Search.Select(m => new MoviePosterModel
+                {
+                    Id = m.imdbID,
+                    Plot = m.Plot,
+                    Poster = m.Poster,
+                    Title = m.Title
+                });
 
                 CachedMovies[page] = movies;
                 if (Model.MoviesCount == 0)
@@ -64,22 +70,6 @@ namespace BlazorApp30.ViewModel
             Loading = false;
 
             OnStateHasChanged();
-
-        }
-
-        public async Task GetMovieAsync()
-        {
-            var movie = await _movieService.GetMovieByTitle("avengers");
-
-            if (Model.MoviesCount == 0)
-            {
-                Model.MoviesCount = 1;
-                Model.PageCount = 1;
-            }
-
-            Model.Movies.Clear();
-            Model.Movies.Add(movie);
-            Model.CurrentPage = 1;
         }
     }
 }

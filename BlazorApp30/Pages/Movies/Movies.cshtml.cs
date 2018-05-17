@@ -21,30 +21,18 @@ namespace BlazorApp30.Pages.Movies
             ViewModel.StateHasChanged += NotifyChanged;
         }
 
-        protected Dictionary<int, bool> _flipped = new Dictionary<int, bool>();
-
         protected override async Task OnInitAsync()
         {
             await ViewModel.GetMoviesAsync();
-            for (int i = 0; i < ViewModel.Model.Movies.Count; i++)
-            {
-                _flipped[i] = false;
-            }
-
         }
 
-        protected void HandleKeyPress(UIKeyboardEventArgs args, int index)
+        protected void HandleKeyPress(UIKeyboardEventArgs args, string id)
         {
             Console.WriteLine(args.Key);
             if (args.Key == " " || args.Key == "Enter")
             {
-                Flip(index);
+                ViewModel.GoToMovie(id);
             }
-        }
-
-        protected void Flip(int index)
-        {
-            _flipped[index] = !_flipped[index];
         }
 
         protected async void RequestPage(int page)

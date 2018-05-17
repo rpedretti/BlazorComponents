@@ -1,0 +1,32 @@
+﻿.accordeon {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: #A1A1A1 0px 2px 10px;
+
+    & > &-title {
+        display: block;
+        min-height: 48px;
+
+        &.-center {
+            text-align: center;
+        }
+    }
+
+    & > &-content {
+        transition: max-height 0.5s ease-in-out;
+        overflow: hidden;
+        border-top: 1px solid #A1A1A1;
+
+        > .content-wrapper {
+            padding: 12px 16px;
+        }
+
+        &.-collapse {
+            max-height: 0;
+        }
+
+        &.-expand {
+            max-height: 3000px;
+        }
+    }
+}

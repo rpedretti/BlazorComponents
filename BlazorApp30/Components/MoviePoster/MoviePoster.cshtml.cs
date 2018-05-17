@@ -1,53 +1,31 @@
-﻿using BlazorApp30.Domain;
+﻿using BlazorApp30.Models;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;
 
 namespace BlazorApp30.Components.MoviePoster
 {
-    public class MoviePosterBase : BlazorComponent
+    public class MoviePosterBase : BaseAccessibleComponent
     {
         [Parameter]
         protected Action OnClick { get; set; }
 
         [Parameter]
-        protected Movie Movie { get; set; }
-
-        [Parameter]
-        protected bool Flipped { get; set; }
-
-        [Parameter]
-        protected bool CanFlip { get; set; }
+        protected MoviePosterModel Movie { get; set; }
 
         protected bool ImageLoaded = false;
         protected bool ImageError;
 
         protected void HandleClick()
         {
-            if (OnClick != null)
-            {
-                OnClick();
-            }
-            else if (CanFlip)
-            {
-                Flip();
-            }
-        }
-
-        protected void Flip()
-        {
-            Flipped = !Flipped;
+            OnClick?.Invoke();
         }
 
         protected void HandleKeyPress(UIKeyboardEventArgs args)
         {
-            if (CanFlip)
+            if (args.Key == " " || args.Key == "Enter")
             {
-                Console.WriteLine(args.Key);
-                if (args.Key == " " || args.Key == "Enter")
-                {
-                    Flip();
-                }
+                OnClick?.Invoke();
             }
         }
 

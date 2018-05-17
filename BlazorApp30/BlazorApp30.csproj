@@ -107,9 +107,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Components\Accordeon\Accordeon.cshtml" />
     <None Include="Components\MoviePoster\MoviePoster.cshtml" />
     <None Include="Components\PagedGrid\PagedGrid.cshtml" />
     <None Include="Components\Pager\Pager.cshtml" />
+    <None Include="Components\ProgressBar\ProgressBar.cshtml" />
     <None Include="Components\Spinner\Spinner.cshtml" />
     <None Include="Pages\Movies\Movies.cshtml" />
   </ItemGroup>
@@ -144,6 +146,22 @@
 
   <ItemGroup>
     <Content Remove="Components\Pager\Pager.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\ProgressBar\ProgressBar.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\ProgressBar\ProgressBar.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\Accordeon\Accordeon.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\Accordeon\Accordeon.cshtml" />
   </ItemGroup>
 
 </Project>

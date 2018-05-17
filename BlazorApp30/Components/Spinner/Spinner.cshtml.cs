@@ -8,6 +8,16 @@ namespace BlazorApp30.Components.Spinner
         protected bool Active { get; set; }
 
         [Parameter]
+        protected SpinnerSize Size { get; set; } = SpinnerSize.SMALL;
+
+        [Parameter]
         protected bool Centered { get; set; }
+    }
+
+    public enum SpinnerSize
+    {
+        SMALL,
+        MEDIUM,
+        LARGE
     }
 }
