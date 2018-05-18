@@ -1,6 +1,6 @@
 ﻿@inherits AccordeonBase
 
-<div class="@($"accordeon")">
+<div class="accordeon card">
     <div class="@($"accordeon-title{(CenterTitle ? " -center" : null)}")" onclick="@(() => Expanded = !Expanded)">
         <span class="title">@Title</span>
     </div>
