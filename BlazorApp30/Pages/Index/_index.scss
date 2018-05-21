@@ -1,8 +1,12 @@
-﻿.spinner-wrapper {
-    margin-bottom: 42px;
+﻿.spinner-row {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #a6a6a6;
+    margin-bottom: 12px;
+    &:last-of-type {
+        border-bottom: none;
+    }
 }
 
 .accordeon-container {
     max-width: 350px;
-    margin: 0 auto;
 }

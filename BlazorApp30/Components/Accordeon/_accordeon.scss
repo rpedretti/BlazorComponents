@@ -17,7 +17,11 @@
     & > &-content {
         transition: max-height 0.5s ease-in-out;
         overflow: hidden;
-        border-top: 1px solid #A1A1A1;
+
+        .content-wrapper {
+            padding: 8px 20px;
+            border-top: 1px solid #A1A1A1;
+        }
 
         &.-collapse {
             max-height: 0;
