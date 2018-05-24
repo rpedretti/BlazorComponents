@@ -3,7 +3,7 @@ using System;
 
 namespace BlazorApp30.Components.Pager
 {
-    public class PagerBase : BlazorComponent
+    public class PagerBase : BaseAccessibleComponent
     {
         [Parameter]
         protected Action<int> OnRequestPage { get; set; }

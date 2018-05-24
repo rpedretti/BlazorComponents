@@ -5,12 +5,12 @@
 
 <PagedGrid MaxIndicators="3"
            SmallPager="true"
+           A11yLabel="Movies"
            Loading="@ViewModel.Loading"
            HasContent="@ViewModel.HasContent"
            CurrentPage="@ViewModel.Model.CurrentPage"
            PageCount="@ViewModel.Model.PageCount"
            OnRequestPage="@RequestPage">
-    <ol tabindex="0" aria-label="filmes" aria-required="false" class="movies">
         @for (int i = 0; i < ViewModel.Model.Movies.Count; i++)
         {
             var index = i;
@@ -20,7 +20,6 @@
                          A11ySetSize="@(ViewModel.Model.MoviesCount)"
                          A11yPosInSet="@((ViewModel.Model.CurrentPage - 1) * 10 + index + 1)"
                          A11yLabel="@($"{movie.Title}{(movie.Plot != null ? ", " + movie.Plot : null)}")"
-                         Onclick="@(() => ViewModel.GoToMovie(movie.Id))" />
+                         OnClick="@(() => ViewModel.GoToMovie(movie.Id))" />
         }
-    </ol>
 </PagedGrid>

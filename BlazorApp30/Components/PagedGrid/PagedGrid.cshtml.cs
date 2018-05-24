@@ -4,7 +4,7 @@ using System;
 
 namespace BlazorApp30.Components.PagedGrid
 {
-    public class PagedGridBase : BlazorComponent
+    public class PagedGridBase : BaseAccessibleComponent
     {
         [Parameter]
         protected Action<int> OnRequestPage { get; set; }

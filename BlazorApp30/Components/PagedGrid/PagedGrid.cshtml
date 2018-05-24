@@ -1,25 +1,27 @@
 ﻿@inherits PagedGridBase
 @using BlazorApp30.Components.Spinner
 
-@if (HasContent)
-{
-    <Pager MaxIndicators="@MaxIndicators"
-           OnRequestPage="@OnRequestPage"
-           CurrentPage="@CurrentPage"
-           PageCount="@PageCount"
-           Small="@SmallPager"></Pager>
-}
-@if (HasContent && !Loading)
-{
-    <div class="child-content">
-        @ChildContent
-    </div>
-}
-else if (Loading)
-{
-    <Spinner Active="true" Centered="true" Size="SpinnerSize.LARGE"></Spinner>
-}
-else if (!HasContent)
-{
-    <p>@NoContentMessage</p>
-}
+<div class="paged-grid">
+    @if (HasContent)
+    {
+        <Pager MaxIndicators="@MaxIndicators"
+               OnRequestPage="@OnRequestPage"
+               CurrentPage="@CurrentPage"
+               PageCount="@PageCount"
+               Small="@SmallPager"></Pager>
+    }
+    @if (HasContent && !Loading)
+    {
+        <ol tabindex="0" aria-label="@A11yLabel" aria-required="false" class="movies">
+            @ChildContent
+        </ol>
+    }
+    else if (Loading)
+    {
+        <Spinner Active="true" Centered="true" Size="SpinnerSize.LARGE"></Spinner>
+    }
+    else if (!HasContent)
+    {
+        <p>@NoContentMessage</p>
+    }
+</div>
