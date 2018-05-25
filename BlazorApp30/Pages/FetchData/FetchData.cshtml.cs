@@ -12,6 +12,7 @@ namespace BlazorApp30.Pages
         protected override async Task OnInitAsync()
         {
             await ViewModel.FetchDataAsync();
+            StateHasChanged();
         }
     }
 }

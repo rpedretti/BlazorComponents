@@ -8,12 +8,11 @@ namespace BlazorApp30.Components
 {
     public class TodoListBase : BlazorComponent
     {
-        [Parameter]
-        protected Action OnItemsChanged { get; set; }
-        [Parameter]
-        protected IList<TodoItem> Items { get; set; }
-        [Parameter]
-        protected string Id { get; set; }
+        [Parameter] protected Action OnItemsChanged { get; set; }
+
+        [Parameter] protected IList<TodoItem> Items { get; set; }
+
+        [Parameter] protected string Id { get; set; }
 
         protected string NewTodoTitle { get; set; }
 

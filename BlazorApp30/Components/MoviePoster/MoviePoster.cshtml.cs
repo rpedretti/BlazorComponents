@@ -7,11 +7,9 @@ namespace BlazorApp30.Components.MoviePoster
 {
     public class MoviePosterBase : BaseAccessibleComponent
     {
-        [Parameter]
-        protected Action OnClick { get; set; }
+        [Parameter] protected Action OnClick { get; set; }
 
-        [Parameter]
-        protected MoviePosterModel Movie { get; set; }
+        [Parameter] protected MoviePosterModel Movie { get; set; }
 
         protected bool ImageLoaded = false;
         protected bool ImageError;

@@ -5,31 +5,12 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (ViewModel.Model.Forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in ViewModel.Model.Forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(0))">@(!ViewModel.Model.Headers.ElementAt(0).Hidden ? "Hide" : "Show") Date </button>
+<button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(1))">@(!ViewModel.Model.Headers.ElementAt(1).Hidden ? "Hide" : "Show") Temp. (C)</button>
+<button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(2))">@(!ViewModel.Model.Headers.ElementAt(2).Hidden ? "Hide" : "Show") Temp. (F)</button>
+<button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(3))">@(!ViewModel.Model.Headers.ElementAt(3).Hidden ? "Hide" : "Show") Summary</button>
+
+<DynamicTable Classes="table-bordered"
+              Headers="@ViewModel.Model.Headers"
+              Rows="@ViewModel.Model.Forecasts"
+              Loading="@ViewModel.Loading"></DynamicTable>

@@ -5,20 +5,15 @@ namespace BlazorApp30.Components.Pager
 {
     public class PagerBase : BaseAccessibleComponent
     {
-        [Parameter]
-        protected Action<int> OnRequestPage { get; set; }
+        [Parameter] protected Action<int> OnRequestPage { get; set; }
 
-        [Parameter]
-        protected int MaxIndicators { get; set; } = 5;
+        [Parameter] protected int MaxIndicators { get; set; } = 5;
 
-        [Parameter]
-        protected int PageCount { get; set; }
+        [Parameter] protected int PageCount { get; set; }
 
-        [Parameter]
-        protected int CurrentPage { get; set; }
+        [Parameter] protected int CurrentPage { get; set; }
 
-        [Parameter]
-        protected bool Small { get; set; }
+        [Parameter] protected bool Small { get; set; }
 
         protected Indicator[] Indicators { get; set; }
         protected int IndicatorCount { get; set; }

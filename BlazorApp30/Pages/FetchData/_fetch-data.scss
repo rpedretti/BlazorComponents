@@ -1,1 +1,35 @@
-﻿
+﻿.dynamic-table {
+    margin: 32px auto auto auto;
+    width: fit-content;
+
+    .table {
+        width: fit-content;
+
+        .table-header {
+            background-color: lightgray;
+
+            &.forecast-date {
+                font-weight: bold;
+            }
+        }
+
+        .table-row {
+        }
+
+        .table-cell {
+            min-width: 180px;
+        }
+
+        .-l {
+            text-align: left;
+        }
+
+        .-r {
+            text-align: right
+        }
+
+        .-hidden {
+            max-width: 0px;
+        }
+    }
+}

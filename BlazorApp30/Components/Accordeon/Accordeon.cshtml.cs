@@ -10,19 +10,15 @@ namespace BlazorApp30.Components.Accordeon
 {
     public class AccordeonBase : BlazorComponent
     {
-        [Parameter]
-        protected string Title { get; set; }
+        [Parameter] protected string Title { get; set; }
 
-        [Parameter]
-        protected bool CenterTitle { get; set; }
+        [Parameter] protected bool CenterTitle { get; set; }
 
-        [Parameter]
-        protected RenderFragment ChildContent { get; set; }
+        [Parameter] protected RenderFragment ChildContent { get; set; }
 
         private bool _expanded;
 
-        [Parameter]
-        protected bool Expanded
+        [Parameter] protected bool Expanded
         {
             get { return _expanded; }
             set
@@ -37,7 +33,6 @@ namespace BlazorApp30.Components.Accordeon
             }
         }
 
-        [Parameter]
-        protected Action<bool> ExpandedChanged { get; set; }
+        [Parameter] protected Action<bool> ExpandedChanged { get; set; }
     }
 }

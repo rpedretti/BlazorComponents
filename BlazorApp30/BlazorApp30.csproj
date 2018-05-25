@@ -108,6 +108,7 @@
 
   <ItemGroup>
     <None Include="Components\Accordeon\Accordeon.cshtml" />
+    <None Include="Components\DynamicTable\DynamicTable.cshtml" />
     <None Include="Components\MoviePoster\MoviePoster.cshtml" />
     <None Include="Components\PagedGrid\PagedGrid.cshtml" />
     <None Include="Components\Pager\Pager.cshtml" />
@@ -162,6 +163,14 @@
 
   <ItemGroup>
     <Content Remove="Components\Accordeon\Accordeon.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\DynamicTable\DynamicTable.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\DynamicTable\DynamicTable.cshtml" />
   </ItemGroup>
 
 </Project>

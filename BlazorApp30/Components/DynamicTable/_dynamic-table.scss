@@ -1,0 +1,12 @@
+﻿.dynamic-table {
+    >.table {
+        .-hidden {
+            display: none;
+        }
+        .table-header {
+            .fa {
+                text-align: right;
+            }
+        }
+    }
+}

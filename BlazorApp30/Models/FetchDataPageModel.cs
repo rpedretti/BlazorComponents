@@ -1,9 +1,12 @@
-﻿using BlazorApp30.Domain;
+﻿using BlazorApp30.Components.DynamicTable;
+using BlazorApp30.Domain;
+using System.Collections.Generic;
 
 namespace BlazorApp30.Models
 {
     public class FetchDataPageModel
     {
-        public WeatherForecast[] Forecasts { get; set; }
+        public DynamicTableHeader[] Headers { get; set; }
+        public IEnumerable<DynamicTableRow> Forecasts { get; set; }
     }
 }
