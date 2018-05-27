@@ -1,6 +1,22 @@
 ﻿@page "/movies"
 @inherits MoviesBase
 
+<div class="input-group mb-3">
+    <input type="text"
+           class="form-control"
+           aria-label="title"
+           placeholder="Movie title..."
+           bind="@ViewModel.Model.SearchMovieTitle" />
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary"
+                type="button"
+                onclick="@(() => ViewModel.SearchAsync())"
+                disabled="@string.IsNullOrWhiteSpace(ViewModel.Model.SearchMovieTitle)">
+            Adicionar item
+        </button>
+    </div>
+</div>
+
 <h1>Movies - total (@ViewModel.Model.MoviesCount)</h1>
 
 <PagedGrid MaxIndicators="3"
@@ -11,15 +27,15 @@
            CurrentPage="@ViewModel.Model.CurrentPage"
            PageCount="@ViewModel.Model.PageCount"
            OnRequestPage="@RequestPage">
-        @for (int i = 0; i < ViewModel.Model.Movies.Count; i++)
-        {
-            var index = i;
-            var movie = ViewModel.Model.Movies[index];
-            <MoviePoster Movie="@movie"
-                         A11yRole="listitem"
-                         A11ySetSize="@(ViewModel.Model.MoviesCount)"
-                         A11yPosInSet="@((ViewModel.Model.CurrentPage - 1) * 10 + index + 1)"
-                         A11yLabel="@($"{movie.Title}{(movie.Plot != null ? ", " + movie.Plot : null)}")"
-                         OnClick="@(() => ViewModel.GoToMovie(movie.Id))" />
-        }
+    @for (int i = 0; i < ViewModel.Model.Movies.Count; i++)
+    {
+        var index = i;
+        var movie = ViewModel.Model.Movies[index];
+        <MoviePoster Movie="@movie"
+                     A11yRole="listitem"
+                     A11ySetSize="@(ViewModel.Model.MoviesCount)"
+                     A11yPosInSet="@((ViewModel.Model.CurrentPage - 1) * 10 + index + 1)"
+                     A11yLabel="@($"{movie.Title}{(movie.Plot != null ? ", " + movie.Plot : null)}")"
+                     OnClick="@(() => ViewModel.GoToMovie(movie.Id))" />
+    }
 </PagedGrid>

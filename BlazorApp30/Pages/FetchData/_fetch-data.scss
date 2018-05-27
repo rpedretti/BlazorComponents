@@ -1,9 +1,9 @@
-﻿.dynamic-table {
-    margin: 32px auto auto auto;
-    width: fit-content;
+﻿.dynamic-grouped-table {
+    margin-top: 12px;
+    width: 60vw;
 
     .table {
-        width: fit-content;
+        margin-bottom: 0;
 
         .table-header {
             background-color: lightgray;
@@ -13,23 +13,12 @@
             }
         }
 
-        .table-row {
-        }
-
-        .table-cell {
-            min-width: 180px;
-        }
-
         .-l {
             text-align: left;
         }
 
         .-r {
             text-align: right
-        }
-
-        .-hidden {
-            max-width: 0px;
         }
     }
 }

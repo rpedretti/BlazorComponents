@@ -18,7 +18,6 @@ namespace BlazorApp30.Services
 
         public async Task<SearchResult> FindMoviesByPattern(string pattern, int page)
         {
-            await Task.Delay(1500);
             var movies = await httpClient.GetJsonAsync<SearchResult>($"{_baseUrl}&s={pattern}&page={page}");
             return movies;
         }

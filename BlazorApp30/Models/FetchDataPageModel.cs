@@ -6,7 +6,8 @@ namespace BlazorApp30.Models
 {
     public class FetchDataPageModel
     {
-        public DynamicTableHeader[] Headers { get; set; }
-        public IEnumerable<DynamicTableRow> Forecasts { get; set; }
+        public List<DynamicTableHeader> Headers { get; set; }
+        public List<DynamicTableRow> Forecasts { get; set; }
+        public List<DynamicTableGroup> GroupedForecast { get; set; }
     }
 }

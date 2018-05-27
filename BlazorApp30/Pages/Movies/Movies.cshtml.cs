@@ -21,11 +21,6 @@ namespace BlazorApp30.Pages.Movies
             ViewModel.StateHasChanged += NotifyChanged;
         }
 
-        protected override async Task OnInitAsync()
-        {
-            await ViewModel.GetMoviesAsync();
-        }
-
         protected void HandleKeyPress(UIKeyboardEventArgs args, string id)
         {
             Console.WriteLine(args.Key);

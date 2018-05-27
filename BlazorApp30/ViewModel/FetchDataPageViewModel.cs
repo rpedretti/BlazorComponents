@@ -3,6 +3,7 @@ using BlazorApp30.Domain;
 using BlazorApp30.Models;
 using Microsoft.AspNetCore.Blazor;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace BlazorApp30.ViewModel
         public async Task FetchDataAsync()
         {
             Loading = true;
-            Model.Headers = new DynamicTableHeader[]
+            Model.Headers = new List<DynamicTableHeader>()
             {
                 new DynamicTableHeader{ Title =  "Date", Classes = "forecast-date -l"},
                 new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l" },
@@ -36,7 +37,7 @@ namespace BlazorApp30.ViewModel
             var forecasts = await _httpClient.GetJsonAsync<WeatherForecast[]>("/sample-data/weather.json");
             Model.Forecasts = forecasts.Select(f =>
             {
-                var props = new DynamicTableCell[]
+                var props = new List<DynamicTableCell>
                 {
                     new DynamicTableCell { Content = f.Date, Classes = "forecast-date -l", Formatter = f.Date.ToShortDateString },
                     new DynamicTableCell { Content = f.TemperatureC, Classes = "-l"  },
@@ -45,7 +46,30 @@ namespace BlazorApp30.ViewModel
                 };
 
                 return new DynamicTableRow { Cells = props, Classes = "alternate" };
-            });
+            }).ToList();
+
+            Model.GroupedForecast = forecasts.GroupBy(f => f.Date).Select(g =>
+            {
+                var group = new DynamicTableGroup
+                {
+                    Title = g.Average(f => f.TemperatureC).ToString(),
+                    Rows = g.Select(f =>
+                    {
+                        var props = new List<DynamicTableCell>
+                        {
+                            new DynamicTableCell { Content = f.Date, Classes = "forecast-date -l", Formatter = f.Date.ToShortDateString },
+                            new DynamicTableCell { Content = f.TemperatureC, Classes = "-l"  },
+                            new DynamicTableCell { Content = f.TemperatureF, Classes = "-r"  },
+                            new DynamicTableCell { Content = f.Summary, Classes = "-r"  }
+                        };
+
+                        return new DynamicTableRow { Cells = props, Classes = "alternate" };
+                    }).ToList()
+                };
+
+                return group;
+            }).ToList();
+
 
             Loading = false;
         }

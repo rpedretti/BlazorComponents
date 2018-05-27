@@ -14,7 +14,7 @@
                     @foreach (var header in Headers)
                     {
                         var h = header;
-                        <td tabindex="@(h.CanSort ? "0" : null)"
+                        <th tabindex="@(h.CanSort ? "0" : null)"
                             class="@($"table-header {h.Classes}{(h.Hidden ? " -hidden" : null)}")"
                             onkeypress="@(k => HandleKeyPress(k, () => { if (h.CanSort) Sort(h); }))"
                             onclick="@(() => { if (h.CanSort) Sort(h); })">
@@ -23,7 +23,7 @@
                             {
                                 <i class="fa fa-sort@(SortedTable.ContainsKey(h) ? SortedTable[h] ? "-down" : "-up" : null)"></i>
                             }
-                        </td>
+                        </th>
                     }
                 </tr>
             </thead>

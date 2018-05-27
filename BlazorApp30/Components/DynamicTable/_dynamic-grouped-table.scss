@@ -1,0 +1,31 @@
+﻿.dynamic-grouped-table {
+    .-hidden {
+        display: none;
+    }
+    .table {
+        table-layout: fixed;
+        width: 100%;
+        &-header {
+            margin-bottom: -2px;
+        }
+    }
+    .group {
+        &-header {
+            display: block;
+            text-align: center;
+            background-color: lightgray;
+        }
+
+        &-content {
+            transition: max-height 0.5s ease-in-out;
+            overflow: hidden;
+            max-height: 500px;
+        }
+
+        &.-collapse {
+            .group-content {
+                max-height: 0;
+            }
+        }
+    }
+}

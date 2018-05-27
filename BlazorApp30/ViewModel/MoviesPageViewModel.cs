@@ -24,6 +24,13 @@ namespace BlazorApp30.ViewModel
         public void ClearMovies()
         {
             Model.Movies.Clear();
+            CachedMovies.Clear();
+        }
+
+        public async Task SearchAsync()
+        {
+            ClearMovies();
+            await GetMoviesAsync();
         }
 
         public void GoToMovie(string id)
@@ -44,31 +51,44 @@ namespace BlazorApp30.ViewModel
 
             if (!CachedMovies.ContainsKey(page))
             {
-                var moviesResult = await _movieService.FindMoviesByPattern("avengers", page);
-                movies = moviesResult.Search.Select(m => new MoviePosterModel
+                try
                 {
-                    Id = m.imdbID,
-                    Plot = m.Plot,
-                    Poster = m.Poster,
-                    Title = m.Title
-                });
+                    var moviesResult = await _movieService.FindMoviesByPattern(Model.SearchMovieTitle, page);
 
-                CachedMovies[page] = movies;
-                if (Model.MoviesCount == 0)
+                    if (moviesResult.Response)
+                    {
+                        movies = moviesResult.Search.Select(m => new MoviePosterModel
+                        {
+                            Id = m.imdbID,
+                            Plot = m.Plot,
+                            Poster = m.Poster,
+                            Title = m.Title
+                        });
+
+                        CachedMovies[page] = movies;
+                        if (Model.MoviesCount == 0)
+                        {
+                            Model.MoviesCount = moviesResult.totalResults;
+                            HasContent = Model.MoviesCount > 0;
+                            Model.PageCount = (int)Math.Ceiling(Model.MoviesCount / 10d);
+                        }
+
+                        movies = CachedMovies[page];
+
+                        Model.Movies.AddRange(movies);
+                    }
+                    else
+                    {
+                        HasContent = false;
+                    }
+                }
+                catch
                 {
-                    Model.MoviesCount = moviesResult.totalResults;
-                    HasContent = Model.MoviesCount > 0;
-                    Model.PageCount = (int)Math.Ceiling(Model.MoviesCount / 10d);
+                    HasContent = false;
                 }
             }
 
-            movies = CachedMovies[page];
-
-            Model.Movies.AddRange(movies);
-
-
             Loading = false;
-
             OnStateHasChanged();
         }
     }
