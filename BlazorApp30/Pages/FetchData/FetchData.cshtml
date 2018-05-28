@@ -3,18 +3,28 @@
 
 <h1>Weather forecast</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
-    <button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(0))">@(!ViewModel.Model.Headers.ElementAt(0).Hidden ? "Hide" : "Show") Date </button>
-    <button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(1))">@(!ViewModel.Model.Headers.ElementAt(1).Hidden ? "Hide" : "Show") Temp. (C)</button>
-    <button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(2))">@(!ViewModel.Model.Headers.ElementAt(2).Hidden ? "Hide" : "Show") Temp. (F)</button>
-    <button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(3))">@(!ViewModel.Model.Headers.ElementAt(3).Hidden ? "Hide" : "Show") Summary</button>
+<ToggleSwitch
+    Round
+    Label="Grouped"
+    Checked="@ViewModel.Model.Grouped"
+    CheckedChanged="ViewModel.GroupedChanged"></ToggleSwitch>
 
-@*
+<button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(0))">@(!ViewModel.Model.Headers.ElementAt(0).Hidden ? "Hide" : "Show") Date </button>
+<button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(1))">@(!ViewModel.Model.Headers.ElementAt(1).Hidden ? "Hide" : "Show") Temp. (C)</button>
+<button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(2))">@(!ViewModel.Model.Headers.ElementAt(2).Hidden ? "Hide" : "Show") Temp. (F)</button>
+<button type="button" class="btn" onclick="@(() => ViewModel.ToggleColumn(3))">@(!ViewModel.Model.Headers.ElementAt(3).Hidden ? "Hide" : "Show") Summary</button>
+
+
+@if (ViewModel.Model.Grouped)
+{
+    <DynamicGroupedTable Headers="@ViewModel.Model.Headers"
+                         Groups="@ViewModel.Model.GroupedForecast"
+                         Loading="@ViewModel.Loading"></DynamicGroupedTable>
+}
+else
+{
     <DynamicTable Classes="table-bordered"
                   Headers="@ViewModel.Model.Headers"
                   Rows="@ViewModel.Model.Forecasts"
-                  Loading="@ViewModel.Loading"></DynamicTable>*@
-
-<DynamicGroupedTable Headers="@ViewModel.Model.Headers"
-                     Groups="@ViewModel.Model.GroupedForecast"
-                     Loading="@ViewModel.Loading"></DynamicGroupedTable>
+                  Loading="@ViewModel.Loading"></DynamicTable>
+}

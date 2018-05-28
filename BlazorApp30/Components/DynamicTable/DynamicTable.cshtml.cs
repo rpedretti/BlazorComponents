@@ -36,7 +36,6 @@ namespace BlazorApp30.Components.DynamicTable
 
             CurrentOrdered = header;
 
-            Console.WriteLine($"sort {CurrentOrdered.Title}");
             var index = Headers.ToList().IndexOf(CurrentOrdered);
 
             if (!SortedTable.ContainsKey(CurrentOrdered))

@@ -1,0 +1,9 @@
+﻿@inherits ToggleSwitchBase
+
+<div class="@($"toggle-switch{(Inline ? " -inline" : null)}")">
+    <label class="label">Grouped</label>
+    <label class="switch">
+        <input type="checkbox" onchange="@HandleChanged" />
+        <span class="@($"slider{(Round ? " -round" : null)}")"></span>
+    </label>
+</div>

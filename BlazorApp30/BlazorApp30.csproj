@@ -115,6 +115,7 @@
     <None Include="Components\Pager\Pager.cshtml" />
     <None Include="Components\ProgressBar\ProgressBar.cshtml" />
     <None Include="Components\Spinner\Spinner.cshtml" />
+    <None Include="Components\ToggleSwitch\ToggleSwitch.cshtml" />
     <None Include="Pages\Movies\Movies.cshtml" />
   </ItemGroup>
 
@@ -176,6 +177,14 @@
 
   <ItemGroup>
     <BlazorGenerate Remove="Components\DynamicTable\DynamicGroupedTable.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\ToggleSwitch\ToggleSwitch.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\ToggleSwitch\ToggleSwitch.cshtml" />
   </ItemGroup>
 
 </Project>

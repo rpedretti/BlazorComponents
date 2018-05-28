@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BlazorApp30.Pages.Movies
 {
-    public class MoviesBase : BlazorComponent
+    public class MoviesBase : BlazorComponent, IDisposable
     {
         protected PagedGrid PagedGrid { get; set; }
 
@@ -21,9 +21,13 @@ namespace BlazorApp30.Pages.Movies
             ViewModel.StateHasChanged += NotifyChanged;
         }
 
+        public void Dispose()
+        {
+            ViewModel.StateHasChanged -= NotifyChanged;
+        }
+
         protected void HandleKeyPress(UIKeyboardEventArgs args, string id)
         {
-            Console.WriteLine(args.Key);
             if (args.Key == " " || args.Key == "Enter")
             {
                 ViewModel.GoToMovie(id);

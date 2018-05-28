@@ -21,7 +21,7 @@
             {
                 if (!ImageLoaded)
                 {
-                <Spinner Active="@(!ImageLoaded)" Centered="true"></Spinner>
+                <Spinner Active="@(!ImageLoaded)" Centered></Spinner>
                 }
                 <img class="@($"poster-image {(ImageLoaded ? "-loaded" : null)}")"
                      alt="@Movie.Title"

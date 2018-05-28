@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BlazorApp30.ViewModel
 {
-    public class FetchDataPageViewModel
+    public class FetchDataPageViewModel : BaseViewModel
     {
         private readonly HttpClient _httpClient;
         public FetchDataPageModel Model { get; set; } = new FetchDataPageModel();
@@ -72,6 +72,12 @@ namespace BlazorApp30.ViewModel
 
 
             Loading = false;
+        }
+
+        public void GroupedChanged(bool grouped)
+        {
+            Model.Grouped = grouped;
+            OnStateHasChanged();
         }
 
         public void ToggleColumn(int index)

@@ -9,5 +9,6 @@ namespace BlazorApp30.Models
         public List<DynamicTableHeader> Headers { get; set; }
         public List<DynamicTableRow> Forecasts { get; set; }
         public List<DynamicTableGroup> GroupedForecast { get; set; }
+        public bool Grouped { get; set; }
     }
 }
