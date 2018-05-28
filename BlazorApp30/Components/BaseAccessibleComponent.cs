@@ -2,7 +2,7 @@
 
 namespace BlazorApp30.Components
 {
-    public class BaseAccessibleComponent : BlazorComponent
+    public abstract class BaseAccessibleComponent : BaseComponent
     {
         [Parameter] protected string A11yLabel { get; set; }
 

@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace BlazorApp30.Components.Accordeon
 {
-    public class AccordeonBase : BlazorComponent
+    public class AccordeonBase : BaseComponent
     {
         [Parameter] protected string Title { get; set; }
 
@@ -20,13 +20,15 @@ namespace BlazorApp30.Components.Accordeon
             get { return _expanded; }
             set
             {
-                _expanded = value;
-                var delay = !value ? 600 : 0;
-                new Timer(_ =>
+                SetParameter(ref _expanded, value, () =>
                 {
-                    ExpandedChanged?.Invoke(_expanded);
-                    StateHasChanged();
-                }, null, delay, Timeout.Infinite);
+                    var delay = !value ? 600 : 0;
+                    new Timer(_ =>
+                    {
+                        ExpandedChanged?.Invoke(_expanded);
+                        StateHasChanged();
+                    }, null, delay, Timeout.Infinite);
+                });
             }
         }
 

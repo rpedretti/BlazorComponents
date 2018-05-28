@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <BlazorGenerate Remove="Components\BackgroundContent\BackgroundContent.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <BlazorGenerate Remove="Components\Counter\Counter.cshtml" />
   </ItemGroup>
 
@@ -27,12 +23,6 @@
 
   <ItemGroup>
     <BlazorGenerate Remove="Components\TodoList\TodoList.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Components\BackgroundContent\BackgroundContent.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>

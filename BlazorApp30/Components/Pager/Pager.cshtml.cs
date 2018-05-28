@@ -7,11 +7,26 @@ namespace BlazorApp30.Components.Pager
     {
         [Parameter] protected Action<int> OnRequestPage { get; set; }
 
-        [Parameter] protected int MaxIndicators { get; set; } = 5;
+        private int _maxIndicators = 5;
+        [Parameter] protected int MaxIndicators
+        {
+            get { return _maxIndicators; }
+            set { SetParameter(ref _maxIndicators, value, UpdatePagerCount); }
+        }
 
-        [Parameter] protected int PageCount { get; set; }
+        private int _pageCount;
+        [Parameter] protected int PageCount
+        {
+            get { return _pageCount; }
+            set { SetParameter(ref _pageCount, value, UpdatePagerCount); }
+        }
 
-        [Parameter] protected int CurrentPage { get; set; }
+        private int _currentPage;
+        [Parameter] protected int CurrentPage
+        {
+            get { return _currentPage; }
+            set { SetParameter(ref _currentPage, value, UpdatePagerCount); }
+        }
 
         [Parameter] protected bool Small { get; set; }
 
@@ -19,9 +34,9 @@ namespace BlazorApp30.Components.Pager
         protected int IndicatorCount { get; set; }
         protected bool ShowFirst { get; set; } = false;
         protected bool ShowLast { get; set; } = false;
-        private double TotalPages { get; set; }
+        private int TotalPaginationPages { get; set; }
 
-        private bool initialized = false;
+        private bool _initialized;
 
         protected override void OnInit()
         {
@@ -37,17 +52,10 @@ namespace BlazorApp30.Components.Pager
                     Page = page
                 };
             }
-            TotalPages = Math.Ceiling(PageCount / (double)MaxIndicators);
-            UpdatePagerCount();
-            initialized = true;
-        }
 
-        protected override void OnParametersSet()
-        {
-            if (initialized)
-            {
-                UpdatePagerCount();
-            }
+            TotalPaginationPages = (int)Math.Ceiling(PageCount / (double)MaxIndicators);
+            _initialized = true;
+            UpdatePagerCount();
         }
 
         protected void PreviousPagination()
@@ -84,36 +92,39 @@ namespace BlazorApp30.Components.Pager
 
         private void UpdatePagerCount()
         {
-            if (PageCount > MaxIndicators)
+            if (_initialized)
             {
-                var start = MaxIndicators * ((CurrentPage - 1)/ MaxIndicators) + 1;
-                var limit = Math.Min(PageCount - start + 1, MaxIndicators);
-
-                ShowFirst = CurrentPage > MaxIndicators;
-                ShowLast = Math.Ceiling(CurrentPage / (double)MaxIndicators) < TotalPages;
-
-                for (int i = 0; i < limit; i++)
+                if (PageCount > MaxIndicators)
                 {
-                    var page = i + start;
-                    Indicators[i].Visible = true;
-                    Indicators[i].Active = CurrentPage == page;
-                    Indicators[i].Content = page.ToString();
-                    Indicators[i].Page = page;
-                }
+                    var start = MaxIndicators * ((CurrentPage - 1) / MaxIndicators) + 1;
+                    var limit = Math.Min(PageCount - start + 1, MaxIndicators);
 
-                if (limit < MaxIndicators)
-                {
-                    for (int i = limit; i < MaxIndicators; i++)
+                    ShowFirst = CurrentPage > MaxIndicators;
+                    ShowLast = Math.Ceiling(CurrentPage / (double)MaxIndicators) < TotalPaginationPages;
+
+                    for (int i = 0; i < limit; i++)
                     {
-                        Indicators[i].Visible = false;
+                        var page = i + start;
+                        Indicators[i].Visible = true;
+                        Indicators[i].Active = CurrentPage == page;
+                        Indicators[i].Content = page.ToString();
+                        Indicators[i].Page = page;
+                    }
+
+                    if (limit < MaxIndicators)
+                    {
+                        for (int i = limit; i < MaxIndicators; i++)
+                        {
+                            Indicators[i].Visible = false;
+                        }
                     }
                 }
-            }
-            else
-            {
-                for (int i = 0; i < IndicatorCount; i++)
+                else
                 {
-                    Indicators[i].Active = CurrentPage == i + 1;
+                    for (int i = 0; i < IndicatorCount; i++)
+                    {
+                        Indicators[i].Active = CurrentPage == i + 1;
+                    }
                 }
             }
         }

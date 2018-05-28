@@ -43,6 +43,8 @@ namespace BlazorApp30.Pages.Movies
         public void ClearMovies()
         {
             Movies.Clear();
+            MoviesCount = 0;
+            HasContent = false;
             CachedMovies.Clear();
         }
 
