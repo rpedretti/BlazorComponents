@@ -64,21 +64,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <BlazorGenerate Remove="Pages\FetchData\FetchData.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <BlazorGenerate Remove="Pages\Todo\Todo.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <BlazorGenerate Remove="Pages\Index\Index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Pages\FetchData\FetchData.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -185,6 +175,10 @@
 
   <ItemGroup>
     <Content Remove="Components\ToggleSwitch\ToggleSwitch.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Pages\Forecast\Forecast.cshtml" />
   </ItemGroup>
 
 </Project>

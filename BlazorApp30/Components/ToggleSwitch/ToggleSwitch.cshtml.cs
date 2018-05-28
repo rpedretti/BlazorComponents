@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.AspNetCore.Blazor;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlazorApp30.Components.ToggleSwitch
 {
@@ -17,7 +14,17 @@ namespace BlazorApp30.Components.ToggleSwitch
 
         protected void HandleChanged(UIChangeEventArgs a)
         {
-            CheckedChanged?.Invoke((bool)a.Value);
+            Checked = (bool)a.Value;
+            CheckedChanged?.Invoke(Checked);
+        }
+
+        protected void HandleKeyPress(UIKeyboardEventArgs args)
+        {
+            if (args.Key == " " || args.Key == "Enter")
+            {
+                Checked = !Checked;
+                CheckedChanged?.Invoke(Checked);
+            }
         }
     }
 }

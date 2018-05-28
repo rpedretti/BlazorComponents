@@ -30,7 +30,7 @@
             <tbody>
                 @foreach (var row in Rows)
                 {
-                    <tr class="table-row @row.Classes">
+                    <tr tabindex="0" class="table-row @row.Classes">
                         @for (int i = 0; i < row.Cells.Count(); i++)
                         {
                             var header = Headers.ElementAt(i);

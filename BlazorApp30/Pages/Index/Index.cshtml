@@ -1,7 +1,5 @@
 ﻿@page "/"
-@using System.Drawing
 @using BlazorApp30.Components.Spinner
-@using BlazorApp30.Components.BackgroundContent
 @inherits IndexBase
 
 <h1>Hello, world!</h1>
@@ -9,37 +7,37 @@
 <p>Welcome to your new app.</p>
 
 <div class="accordeon-container">
-    <Accordeon Title="Loaders" CenterTitle bind-Expanded="@ViewModel.ExpandLoaderAccordeon">
+    <Accordeon Title="Loaders" CenterTitle bind-Expanded="@ExpandLoaderAccordeon">
 
         <div class="spinner-row">
             <h4>Indeterminate progress bar</h4>
             <div class="spinner-row" style="width: 90%; margin:0 auto;">
-                <ProgressBar></ProgressBar>
+                <ProgressBar/>
             </div>
         </div>
         <div class="spinner-row">
             <h4>Spinner - small</h4>
-            <Spinner Active="@ViewModel.ExpandLoaderAccordeon"></Spinner>
+            <Spinner Active="@ExpandLoaderAccordeon"/>
         </div>
         <div class="spinner-row">
             <h4>Spinner - small centered</h4>
-            <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Centered></Spinner>
+            <Spinner Active="@ExpandLoaderAccordeon" Centered/>
         </div>
         <div class="spinner-row">
             <h4>Spinner - medium</h4>
-            <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM"></Spinner>
+            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM"/>
         </div>
         <div class="spinner-row">
             <h4>Spinner - medium centered</h4>
-            <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" Centered></Spinner>
+            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" Centered/>
         </div>
         <div class="spinner-row">
             <h4>Spinner - large</h4>
-            <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE"></Spinner>
+            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE"/>
         </div>
         <div class="spinner-row">
             <h4>Spinner - large centered</h4>
-            <Spinner Active="@ViewModel.ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" Centered></Spinner>
+            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" Centered/>
         </div>
     </Accordeon>
 </div>

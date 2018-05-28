@@ -1,62 +1,62 @@
 ﻿[
   {
-    "Date": "2018-05-06",
-    "TemperatureC": 1,
-    "Summary": "Freezing",
-    "TemperatureF": 33
+    "Date": "2018-05-06 10:00:00",
+    "Temperature": 16,
+    "RainChangePercent": "10",
+    "RainAmmount": 33
   },
   {
-    "Date": "2018-05-07",
-    "TemperatureC": 14,
-    "Summary": "Bracing",
-    "TemperatureF": 57
+    "Date": "2018-05-07 10:00:00",
+    "Temperature": 14,
+    "RainChangePercent": "20",
+    "RainAmmount": 57
   },
   {
-    "Date": "2018-05-07",
-    "TemperatureC": 14,
-    "Summary": "Bracing",
-    "TemperatureF": 57
+    "Date": "2018-05-07 12:00:00",
+    "Temperature": 12,
+    "RainChangePercent": "40",
+    "RainAmmount": 57
   },
   {
-    "Date": "2018-05-07",
-    "TemperatureC": 14,
-    "Summary": "Bracing",
-    "TemperatureF": 57
+    "Date": "2018-05-07 14:00:00",
+    "Temperature": 10,
+    "RainChangePercent": "100",
+    "RainAmmount": 57
   },
   {
-    "Date": "2018-05-08",
-    "TemperatureC": -13,
-    "Summary": "Freezing",
-    "TemperatureF": 9
+    "Date": "2018-05-08 10:00:00",
+    "Temperature": 22,
+    "RainChangePercent": "34",
+    "RainAmmount": 9
   },
   {
-    "Date": "2018-05-08",
-    "TemperatureC": -13,
-    "Summary": "Freezing",
-    "TemperatureF": 9
+    "Date": "2018-05-08 12:00:00",
+    "Temperature": 25,
+    "RainChangePercent": "12",
+    "RainAmmount": 9
   },
   {
-    "Date": "2018-05-08",
-    "TemperatureC": -13,
-    "Summary": "Freezing",
-    "TemperatureF": 9
+    "Date": "2018-05-08 14:00:00",
+    "Temperature": 20,
+    "RainChangePercent": "73",
+    "RainAmmount": 9
   },
   {
-    "Date": "2018-05-09",
-    "TemperatureC": -16,
-    "Summary": "Balmy",
-    "TemperatureF": 4
+    "Date": "2018-05-09 10:00:00",
+    "Temperature": 25,
+    "RainChangePercent": "12",
+    "RainAmmount": 4
   },
   {
-    "Date": "2018-05-09",
-    "TemperatureC": -16,
-    "Summary": "Balmy",
-    "TemperatureF": 4
+    "Date": "2018-05-09 12:00:00",
+    "Temperature": 20,
+    "RainChangePercent": "85",
+    "RainAmmount": 4
   },
   {
-    "Date": "2018-05-10",
-    "TemperatureC": -2,
-    "Summary": "Chilly",
-    "TemperatureF": 29
+    "Date": "2018-05-10 10:00:00",
+    "Temperature": 22,
+    "RainChangePercent": "55",
+    "RainAmmount": 29
   }
 ]

@@ -22,13 +22,17 @@
         {
             var g = group;
             <div class="@($"group{(g.Collapsed ? " -collapse" : null)}")">
-                <span class="group-header" onclick="@(() => ToggleGroupCollapsed(g))">@g.Title</span>
+                <span class="group-header" 
+                      role="heading"
+                      tabindex="0"
+                      onkeypress="@(k => HandleKeyPress(k, () => ToggleGroupCollapsed(g)))"
+                      onclick="@(() => ToggleGroupCollapsed(g))">@g.Title</span>
                 <div class="group-content">
                     <table class="table">
                         <tbody>
                             @foreach (var row in group.Rows)
                             {
-                                <tr class="table-row @row.Classes">
+                                <tr tabindex="@(g.Collapsed ? null : "0")" class="table-row @row.Classes">
                                     @for (int i = 0; i < row.Cells.Count(); i++)
                                     {
                                         var header = Headers.ElementAt(i);

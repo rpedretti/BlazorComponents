@@ -1,46 +1,128 @@
-﻿using BlazorApp30.Components.PagedGrid;
-using BlazorApp30.ViewModel;
+﻿using BlazorApp30.Models;
+using BlazorApp30.Services;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlazorApp30.Pages.Movies
 {
-    public class MoviesBase : BlazorComponent, IDisposable
+    public class MoviesBase : BlazorComponent
     {
-        protected PagedGrid PagedGrid { get; set; }
-
         [Inject]
-        protected MoviesPageViewModel ViewModel { get; set; }
+        private IMovieService _movieService { get; set; }
+        private Dictionary<int, IEnumerable<MoviePosterModel>> CachedMovies = new Dictionary<int, IEnumerable<MoviePosterModel>>();
+        private CancellationTokenSource requestToken;
 
-        protected override void OnInit()
-        {
-            base.OnInit();
-            ViewModel.StateHasChanged += NotifyChanged;
-        }
+        protected List<MoviePosterModel> Movies { get; set; } = new List<MoviePosterModel>();
+        protected string SearchMovieTitle { get; set; }
+        protected int MoviesCount { get; set; }
+        protected int CurrentPage { get; set; }
+        protected int PageCount { get; set; }
+        protected bool Loading { get; set; }
+        protected bool HasContent { get; set; }
 
-        public void Dispose()
-        {
-            ViewModel.StateHasChanged -= NotifyChanged;
-        }
 
         protected void HandleKeyPress(UIKeyboardEventArgs args, string id)
         {
             if (args.Key == " " || args.Key == "Enter")
             {
-                ViewModel.GoToMovie(id);
+                GoToMovie(id);
             }
         }
 
         protected async void RequestPage(int page)
         {
-            await ViewModel.GetMoviesAsync(page);
+            await GetMoviesAsync(page);
+            StateHasChanged();
         }
 
-        private void NotifyChanged(object sender, EventArgs e)
+        public void ClearMovies()
         {
+            Movies.Clear();
+            CachedMovies.Clear();
+        }
+
+        public async Task SearchAsync()
+        {
+            ClearMovies();
+            await GetMoviesAsync();
+        }
+
+        public void GoToMovie(string id)
+        {
+            Console.WriteLine($"Olar filme {id}");
+        }
+
+        public async Task GetMoviesAsync(int page = 1)
+        {
+            IEnumerable<MoviePosterModel> movies;
+
+            Loading = true;
+
+            Movies.Clear();
+            CurrentPage = page;
+
+            StateHasChanged();
+
+            if (!CachedMovies.ContainsKey(page))
+            {
+                try
+                {
+                    if (requestToken != null)
+                    {
+                        requestToken.Cancel();
+                    }
+
+                    requestToken = new CancellationTokenSource();
+
+                    var moviesResult = await _movieService.FindMoviesByPattern(SearchMovieTitle, page, requestToken.Token);
+
+                    if (moviesResult.Response)
+                    {
+                        movies = moviesResult.Search.Select(m => new MoviePosterModel
+                        {
+                            Id = m.imdbID,
+                            Plot = m.Plot,
+                            Poster = m.Poster,
+                            Title = m.Title
+                        });
+
+                        CachedMovies[page] = movies;
+                        if (MoviesCount == 0)
+                        {
+                            MoviesCount = moviesResult.totalResults;
+                            HasContent = MoviesCount > 0;
+                            PageCount = (int)Math.Ceiling(MoviesCount / 10d);
+                        }
+
+                        movies = CachedMovies[page];
+                        Movies.AddRange(movies);
+                    }
+                    else
+                    {
+                        HasContent = false;
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    Console.WriteLine("Task cancelled");
+                }
+                catch
+                {
+                    HasContent = false;
+                }
+            }
+            else
+            {
+                movies = CachedMovies[page];
+                Movies.AddRange(movies);
+            }
+
+            Loading = false;
             StateHasChanged();
         }
     }

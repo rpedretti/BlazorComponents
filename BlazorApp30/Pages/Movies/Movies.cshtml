@@ -6,36 +6,36 @@
            class="form-control"
            aria-label="title"
            placeholder="Movie title..."
-           bind="@ViewModel.Model.SearchMovieTitle" />
+           bind="@SearchMovieTitle" />
     <div class="input-group-append">
         <button class="btn btn-outline-secondary"
                 type="button"
-                onclick="@(() => ViewModel.SearchAsync())"
-                disabled="@string.IsNullOrWhiteSpace(ViewModel.Model.SearchMovieTitle)">
+                onclick="@(() => SearchAsync())"
+                disabled="@string.IsNullOrWhiteSpace(SearchMovieTitle)">
             Adicionar item
         </button>
     </div>
 </div>
 
-<h1>Movies - total (@ViewModel.Model.MoviesCount)</h1>
+<h1>Movies - total (@MoviesCount)</h1>
 
 <PagedGrid MaxIndicators="3"
            SmallPager
            A11yLabel="Movies"
-           Loading="@ViewModel.Loading"
-           HasContent="@ViewModel.HasContent"
-           CurrentPage="@ViewModel.Model.CurrentPage"
-           PageCount="@ViewModel.Model.PageCount"
+           Loading="@Loading"
+           HasContent="@HasContent"
+           CurrentPage="@CurrentPage"
+           PageCount="@PageCount"
            OnRequestPage="@RequestPage">
-    @for (int i = 0; i < ViewModel.Model.Movies.Count; i++)
+    @for (int i = 0; i < Movies.Count; i++)
     {
         var index = i;
-        var movie = ViewModel.Model.Movies[index];
+        var movie = Movies[index];
         <MoviePoster Movie="@movie"
                      A11yRole="listitem"
-                     A11ySetSize="@(ViewModel.Model.MoviesCount)"
-                     A11yPosInSet="@((ViewModel.Model.CurrentPage - 1) * 10 + index + 1)"
+                     A11ySetSize="@(MoviesCount)"
+                     A11yPosInSet="@((CurrentPage - 1) * 10 + index + 1)"
                      A11yLabel="@($"{movie.Title}{(movie.Plot != null ? ", " + movie.Plot : null)}")"
-                     OnClick="@(() => ViewModel.GoToMovie(movie.Id))" />
+                     OnClick="@(() => GoToMovie(movie.Id))" />
     }
 </PagedGrid>

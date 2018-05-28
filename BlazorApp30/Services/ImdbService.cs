@@ -1,6 +1,8 @@
 ﻿using BlazorApp30.Domain;
 using Microsoft.AspNetCore.Blazor;
+using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BlazorApp30.Services
@@ -16,23 +18,45 @@ namespace BlazorApp30.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<SearchResult> FindMoviesByPattern(string pattern, int page)
+        public async Task<MovieSearchResult> FindMoviesByPattern(string pattern, int page)
         {
-            var movies = await httpClient.GetJsonAsync<SearchResult>($"{_baseUrl}&s={pattern}&page={page}");
+            return await FindMoviesByPattern(pattern, page, CancellationToken.None);
+        }
+
+        public async Task<MovieSearchResult> FindMoviesByPattern(string pattern, int page, CancellationToken cancelationToken)
+        {
+            var responseJson = await httpClient.GetAsync($"{_baseUrl}&s={pattern}&page={page}", cancelationToken);
+            var content = await responseJson.Content.ReadAsStringAsync();
+            var movies = JsonUtil.Deserialize<MovieSearchResult>(content);
+
             return movies;
         }
 
         public async Task<Movie> GetMovieById(string id)
         {
-            await Task.Delay(1500);
-            var movie = await httpClient.GetJsonAsync<Movie>($"{_baseUrl}&i={id}");
+            return await GetMovieById(id, CancellationToken.None);
+        }
+
+        public async Task<Movie> GetMovieById(string id, CancellationToken cancelationToken)
+        {
+            var responseJson = await httpClient.GetAsync($"{_baseUrl}&i={id}");
+            var content = await responseJson.Content.ReadAsStringAsync();
+
+            var movie = JsonUtil.Deserialize<Movie>(content);
             return movie;
         }
 
         public async Task<Movie> GetMovieByTitle(string title)
         {
-            await Task.Delay(1500);
-            var movie = await httpClient.GetJsonAsync<Movie>($"{_baseUrl}&t={title}");
+            return await GetMovieByTitle(title, CancellationToken.None);
+        }
+
+        public async Task<Movie> GetMovieByTitle(string title, CancellationToken cancelationToken)
+        {
+            var responseJson = await httpClient.GetAsync($"{_baseUrl}&t={title}");
+            var content = await responseJson.Content.ReadAsStringAsync();
+
+            var movie = JsonUtil.Deserialize<Movie>(content);
             return movie;
         }
     }
