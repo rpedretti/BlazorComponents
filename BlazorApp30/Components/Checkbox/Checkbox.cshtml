@@ -1,0 +1,15 @@
+﻿@inherits CheckboxBase
+
+<div class="@($"checkbox size-{(int)Size}{(Inline ? " -inline" : null)}")">
+    <input 
+        type="checkbox"
+        class="checkbox-input"
+        id="@($"checkbox-{CheckboxId}")"
+        checked="@Checked"
+        onchange="@HandleChanged"/>
+
+    <label class="checkbox-label" for="@($"checkbox-{CheckboxId}")">
+        <i class="@($"checkbox-label far fa-{(Checked ? "check-": null)}square")"></i>
+        @Label
+    </label>
+</div>

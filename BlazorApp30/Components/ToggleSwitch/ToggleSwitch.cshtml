@@ -3,7 +3,16 @@
 <div class="@($"toggle-switch{(Inline ? " -inline" : null)}")">
     <label class="label">@Label</label>
     <label class="switch">
-        <input type="checkbox" checked="@Checked" onchange="@HandleChanged" />
-        <span tabindex="0" aria-label="@Label" onkeypress="@HandleKeyPress" role="checkbox" aria-checked="@Checked.ToString()" class="@($"slider{(Round ? " -round" : null)}")"></span>
+        <input
+            type="checkbox"
+            checked="@Checked"
+            onchange="@HandleChanged" />
+        <span
+            tabindex="0"
+            role="checkbox"
+            aria-label="@Label"
+            aria-checked="@Checked.ToString()"
+            class="@($"slider{(Round ? " -round" : null)}")"
+            onkeypress="@HandleKeyPress"></span>
     </label>
 </div>

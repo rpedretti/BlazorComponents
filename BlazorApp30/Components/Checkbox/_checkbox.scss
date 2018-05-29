@@ -1,0 +1,30 @@
+﻿.checkbox {
+    &.-inline {
+        display: inline-block;
+    }
+
+    &.size-1 {
+        font-size: 14px;
+    }
+
+    &.size-2 {
+        font-size: 18px;
+    }
+
+    &.size-3 {
+        font-size: 24px;
+    }
+
+    &.size-4 {
+        font-size: 32px;
+    }
+
+    > .checkbox-input {
+        display: none
+    }
+
+    > .checbox-label {
+        margin: 0;
+        padding: 0;
+    }
+}

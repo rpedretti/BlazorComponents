@@ -75,7 +75,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
-    <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -88,6 +87,7 @@
 
   <ItemGroup>
     <None Include="Components\Accordeon\Accordeon.cshtml" />
+    <None Include="Components\Checkbox\Checkbox.cshtml" />
     <None Include="Components\DynamicTable\DynamicGroupedTable.cshtml" />
     <None Include="Components\DynamicTable\DynamicTable.cshtml" />
     <None Include="Components\MoviePoster\MoviePoster.cshtml" />
@@ -169,6 +169,14 @@
 
   <ItemGroup>
     <BlazorGenerate Remove="Pages\Forecast\Forecast.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\Checkbox\Checkbox.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\Checkbox\Checkbox.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using BlazorApp30.Components.Spinner
+@using BlazorApp30.Components.Checkbox
 @inherits IndexBase
 
 <h1>Hello, world!</h1>
@@ -12,34 +13,46 @@
         <div class="spinner-row">
             <h4>Indeterminate progress bar</h4>
             <div class="spinner-row" style="width: 90%; margin:0 auto;">
-                <ProgressBar/>
+                <ProgressBar Active="@ExpandLoaderAccordeon" />
             </div>
         </div>
         <div class="spinner-row">
             <h4>Spinner - small</h4>
-            <Spinner Active="@ExpandLoaderAccordeon"/>
+            <Spinner Active="@ExpandLoaderAccordeon" />
         </div>
         <div class="spinner-row">
             <h4>Spinner - small centered</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Centered/>
+            <Spinner Active="@ExpandLoaderAccordeon" Centered />
         </div>
         <div class="spinner-row">
             <h4>Spinner - medium</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM"/>
+            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" />
         </div>
         <div class="spinner-row">
             <h4>Spinner - medium centered</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" Centered/>
+            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" Centered />
         </div>
         <div class="spinner-row">
             <h4>Spinner - large</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE"/>
+            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" />
         </div>
         <div class="spinner-row">
             <h4>Spinner - large centered</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" Centered/>
+            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" Centered />
         </div>
     </Accordeon>
 </div>
 
-<SurveyPrompt Title="Is Blazor ok?" />
+<div class="accordeon-container">
+    <Accordeon Title="Checkbox" CenterTitle>
+        <Checkbox Label="Olar 1" />
+        <Checkbox Label="Olar 2" Size="CheckboxSize.MEDIUM" />
+        <Checkbox Label="Olar 3" Size="CheckboxSize.LARGE" />
+        <Checkbox Label="Olar 4" Size="CheckboxSize.EXTRA_LARGE" />
+
+
+        <Checkbox Label="Olar inline 1" Inline />
+        <Checkbox Label="Olar inline 2" Inline Size="CheckboxSize.MEDIUM" />
+    </Accordeon>
+</div>
+        <SurveyPrompt Title="Is Blazor ok?" />
