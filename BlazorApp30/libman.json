@@ -16,11 +16,6 @@
       "library": "popper.js@1.12.9",
       "files": [ "popper.min.js", "popper.min.js.map" ],
       "destination": "wwwroot/js"
-    },
-    {
-      "library": "font-awesome@4.7.0",
-      "files": [ "css/font-awesome.min.css", "css/font-awesome.css.map" ],
-      "destination": "wwwroot/"
     }
   ]
 }

@@ -5,11 +5,16 @@
 
     &.-inline {
         display: inline-flex;
+        margin-right: 8px;
     }
 
     .label {
         margin: 0;
         margin-right: 8px;
+
+        &.-fill {
+            margin: 0 auto 0 0;
+        }
     }
 
     .switch {

@@ -12,12 +12,12 @@
                 type="button"
                 onclick="@(() => SearchAsync())"
                 disabled="@string.IsNullOrWhiteSpace(SearchMovieTitle)">
-            Adicionar item
+            Search
         </button>
     </div>
 </div>
 
-<h1>Movies - total (@MoviesCount)</h1>
+<h1>Movies (@MoviesCount)</h1>
 
 <PagedGrid MaxIndicators="3"
            SmallPager

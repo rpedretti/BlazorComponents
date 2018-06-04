@@ -9,50 +9,72 @@
 
 <div class="accordeon-container">
     <Accordeon Title="Loaders" CenterTitle bind-Expanded="@ExpandLoaderAccordeon">
-
-        <div class="spinner-row">
-            <h4>Indeterminate progress bar</h4>
+        <fieldset>
+            <legend>Progress</legend>
             <div class="spinner-row" style="width: 90%; margin:0 auto;">
                 <ProgressBar Active="@ExpandLoaderAccordeon" />
             </div>
-        </div>
-        <div class="spinner-row">
-            <h4>Spinner - small</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" />
-        </div>
-        <div class="spinner-row">
-            <h4>Spinner - small centered</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Centered />
-        </div>
-        <div class="spinner-row">
-            <h4>Spinner - medium</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" />
-        </div>
-        <div class="spinner-row">
-            <h4>Spinner - medium centered</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" Centered />
-        </div>
-        <div class="spinner-row">
-            <h4>Spinner - large</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" />
-        </div>
-        <div class="spinner-row">
-            <h4>Spinner - large centered</h4>
-            <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" Centered />
-        </div>
+        </fieldset>
+        <fieldset>
+            <legend>Not centered</legend>
+            <div class="spinner-row">
+                <Spinner Active="@ExpandLoaderAccordeon" />
+                <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" />
+                <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" />
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Centered</legend>
+
+            <div class="spinner-row">
+                <Spinner Active="@ExpandLoaderAccordeon" Centered />
+                <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" Centered />
+                <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" Centered />
+            </div>
+
+        </fieldset>
+
+
     </Accordeon>
 </div>
 
 <div class="accordeon-container">
     <Accordeon Title="Checkbox" CenterTitle>
-        <Checkbox Label="Olar 1" />
-        <Checkbox Label="Olar 2" Size="CheckboxSize.MEDIUM" />
-        <Checkbox Label="Olar 3" Size="CheckboxSize.LARGE" />
-        <Checkbox Label="Olar 4" Size="CheckboxSize.EXTRA_LARGE" />
 
-
-        <Checkbox Label="Olar inline 1" Inline />
-        <Checkbox Label="Olar inline 2" Inline Size="CheckboxSize.MEDIUM" />
+        <fieldset>
+            <legend>Dependent Inverse</legend>
+            <Checkbox Label="Olar 1" bind-Checked="@SomeChecked"/>
+            <Checkbox Label="Olar 2" Checked="@(!SomeChecked)" CheckedChanged="@(v => SomeChecked = !v)" Size="CheckboxSize.MEDIUM" />
+        </fieldset>
+        <fieldset>
+            <legend>Dependent</legend>
+            <Checkbox Label="Olar 3" bind-Checked="@SomeChecked2" Size="CheckboxSize.LARGE" />
+            <Checkbox Label="Olar 4" bind-Checked="@SomeChecked2" Size="CheckboxSize.EXTRA_LARGE" />
+        </fieldset>
+        <fieldset>
+            <legend>Inline</legend>
+            <Checkbox Label="Olar inline 1" Inline />
+            <Checkbox Label="Olar inline 2" Inline Size="CheckboxSize.MEDIUM" />
+        </fieldset>
     </Accordeon>
 </div>
-        <SurveyPrompt Title="Is Blazor ok?" />
+<div class="accordeon-container">
+    <Accordeon Title="Switches" CenterTitle>
+        <fieldset>
+            <legend>Dependent Inverse</legend>
+            <ToggleSwitch Label="Square" bind-Checked="@SomeToggled" />
+            <ToggleSwitch Label="Round" Round Checked="@(!SomeToggled)" CheckedChanged="@(v => SomeToggled = !v)" />
+        </fieldset>
+        <fieldset>
+            <legend>Dependent</legend>
+            <ToggleSwitch Label="Square Fill" Fill bind-Checked="@SomeToggled2" />
+            <ToggleSwitch Label="Round Fill" Round Fill bind-Checked="@SomeToggled2" />
+        </fieldset>
+        <fieldset>
+            <legend>Inline</legend>
+            <ToggleSwitch Label="Inline 1" Inline />
+            <ToggleSwitch Label="Inline 2" Inline Round />
+        </fieldset>
+    </Accordeon>
+</div>
+<SurveyPrompt Title="Is Blazor ok?" />

@@ -19,9 +19,9 @@
         }
 
         &-content {
-            transition: max-height 0.5s ease-in-out;
+            transition: max-height 0.25s ease-in-out;
             overflow: hidden;
-            max-height: 500px;
+            max-height: 200px;
         }
 
         &.-collapse {

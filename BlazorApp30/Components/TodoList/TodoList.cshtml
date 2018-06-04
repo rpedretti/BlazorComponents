@@ -6,7 +6,7 @@
             type="text"
             class="form-control"
             aria-label="título"
-            placeholder="Algo a fazer..."
+            placeholder="something to do"
             bind="@NewTodoTitle"
             id="@($"{Id}-todo-title")" 
             aria-describedby="basic-addon2"/>
@@ -16,7 +16,7 @@
                 type="button"
                 onclick="@AddTodo"
                 id="@($"{Id}-todo-add-button")"
-                disabled="@string.IsNullOrWhiteSpace(NewTodoTitle)">Adicionar item</button>
+                disabled="@string.IsNullOrWhiteSpace(NewTodoTitle)">add item</button>
         </div>
     </div>
     @if (Items.Count > 0)

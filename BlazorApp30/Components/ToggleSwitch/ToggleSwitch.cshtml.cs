@@ -11,6 +11,7 @@ namespace BlazorApp30.Components.ToggleSwitch
         [Parameter] protected bool Inline { get; set; }
         [Parameter] protected Action<bool> CheckedChanged { get; set; }
         [Parameter] protected bool Round { get; set; }
+        [Parameter] protected bool Fill { get; set; }
 
         protected void HandleChanged(UIChangeEventArgs a)
         {
