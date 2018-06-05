@@ -7,6 +7,7 @@
     <base href="/" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/fontawesome.css" integrity="sha384-GVa9GOgVQgOk+TNYXu7S/InPTfSDTtBalSgkgqQ7sCik56N9ztlkoTr2f/T44oKV" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/solid.css" integrity="sha384-Rw5qeepMFvJVEZdSo1nDQD5B6wX0m7c5Z/pLNvjkB14W6Yki1hKbSEQaX9ffUbWe" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/regular.css" integrity="sha384-EWu6DiBz01XlR6XGsVuabDMbDN6RT8cwNoY+3tIH+6pUCfaNldJYJQfQlbEIWLyA" crossorigin="anonymous">
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/site.min.css" rel="stylesheet" />
     <script src="js/jquery.min.js"></script>
@@ -14,7 +15,11 @@
     <script src="js/popper.min.js"></script>
 </head>
 <body>
-    <app>Loading...</app>
+    <app>
+        <div class="spinner-wrapper -centered -large">
+            <div class="spinner -active"></div>
+        </div>
+    </app>
 
     <script type="blazor-boot"></script>
 </body>

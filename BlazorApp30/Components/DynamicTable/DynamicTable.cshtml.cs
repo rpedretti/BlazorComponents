@@ -3,18 +3,17 @@ using Microsoft.AspNetCore.Blazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlazorApp30.Components.DynamicTable
 {
-    public class DynamicTableBase: BlazorComponent
+    public class DynamicTableBase : BlazorComponent
     {
         [Parameter] protected string Classes { get; set; }
-
         [Parameter] protected IEnumerable<DynamicTableHeader> Headers { get; set; }
-
         [Parameter] protected IEnumerable<DynamicTableRow> Rows { get; set; }
-
         [Parameter] protected bool Loading { get; set; }
+        [Parameter] protected Func<string, bool, Task> SortRequest { get; set; }
 
         protected readonly Dictionary<DynamicTableHeader, bool> SortedTable = new Dictionary<DynamicTableHeader, bool>();
         protected DynamicTableHeader CurrentOrdered { get; set; }
@@ -35,8 +34,6 @@ namespace BlazorApp30.Components.DynamicTable
 
             CurrentOrdered = header;
 
-            var index = Headers.ToList().IndexOf(CurrentOrdered);
-
             if (!SortedTable.ContainsKey(CurrentOrdered))
             {
                 SortedTable[CurrentOrdered] = true;
@@ -44,14 +41,7 @@ namespace BlazorApp30.Components.DynamicTable
 
             var isAsc = SortedTable[CurrentOrdered];
 
-            if (isAsc)
-            {
-                Rows = Rows.OrderBy(r => r.Cells.ElementAt(index).Content);
-            }
-            else
-            {
-                Rows = Rows.OrderByDescending(r => r.Cells.ElementAt(index).Content);
-            }
+            SortRequest?.Invoke(header.SortId, isAsc);
 
             SortedTable[CurrentOrdered] = !SortedTable[CurrentOrdered];
         }

@@ -2,31 +2,27 @@
 @using BlazorApp30.Components.Spinner
 
 <div class="dynamic-table">
-    @if (Loading)
-    {
-        <Spinner Centered Active="@Loading" Size="SpinnerSize.MEDIUM"></Spinner>
-    }
-    else
-    {
-        <table class="@($"table {@Classes}")">
-            <thead>
-                <tr>
-                    @foreach (var header in Headers)
-                    {
-                        var h = header;
-                        <th tabindex="@(h.CanSort ? "0" : null)"
-                            class="@($"table-header {h.Classes}{(h.Hidden ? " -hidden" : null)}")"
-                            onkeypress="@(k => HandleKeyPress(k, () => { if (h.CanSort) Sort(h); }))"
-                            onclick="@(() => { if (h.CanSort) Sort(h); })">
-                            @h.Title
-                            @if (h.CanSort)
-                            {
-                                <i class="fas fa-sort@(SortedTable.ContainsKey(h) ? SortedTable[h] ? "-down" : "-up" : null)"></i>
-                            }
-                        </th>
-                    }
-                </tr>
-            </thead>
+    <table class="@($"table {@Classes}")">
+        <thead>
+            <tr>
+                @foreach (var header in Headers)
+                {
+                    var h = header;
+                    <th tabindex="@(h.CanSort ? "0" : null)"
+                        class="@($"table-header {h.Classes}{(h.Hidden ? " -hidden" : null)}")"
+                        onkeypress="@(k => HandleKeyPress(k, () => { if (h.CanSort) Sort(h); }))"
+                        onclick="@(() => { if (h.CanSort) Sort(h); })">
+                        @h.Title
+                        @if (h.CanSort)
+                        {
+                            <i class="fas fa-sort@(SortedTable.ContainsKey(h) ? SortedTable[h] ? "-down" : "-up" : null)"></i>
+                        }
+                    </th>
+                }
+            </tr>
+        </thead>
+        @if (!Loading)
+        {
             <tbody>
                 @foreach (var row in Rows)
                 {
@@ -40,6 +36,10 @@
                     </tr>
                 }
             </tbody>
-        </table>
+        }
+    </table>
+    @if (Loading)
+    {
+        <Spinner Centered Active="@Loading" Size="SpinnerSize.MEDIUM"></Spinner>
     }
 </div>

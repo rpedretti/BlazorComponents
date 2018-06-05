@@ -1,4 +1,5 @@
-﻿using BlazorApp30.Components.DynamicTable;
+﻿using BlazorApp30.Components;
+using BlazorApp30.Components.DynamicTable;
 using BlazorApp30.Services;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;
@@ -8,21 +9,32 @@ using System.Threading.Tasks;
 
 namespace BlazorApp30.Pages
 {
-    public class ForecastBase : BaseBlazorPage
+    public class ForecastBase : BaseComponent
     {
         [Inject]
         private IForecastService ForecastService { get; set; }
 
-        protected bool Loading { get; set; }
+        private bool _loading;
+        protected bool Loading
+        {
+            get { return _loading; }
+            set { SetParameter(ref _loading, value, StateHasChanged); }
+        }
+
         protected List<DynamicTableHeader> Headers { get; set; }
         protected List<DynamicTableRow> Forecasts { get; set; }
         protected List<DynamicTableGroup> GroupedForecast { get; set; }
-        private bool _grouped;
 
+        private bool _grouped;
         public bool Grouped
         {
             get { return _grouped; }
-            set { SetParameter(ref _grouped, value); }
+            set { SetParameter(ref _grouped, value, StateHasChanged); }
+        }
+
+        public void ToggleColumn(int index)
+        {
+            Headers.ElementAt(index).Hidden = !Headers.ElementAt(index).Hidden;
         }
 
         protected override async Task OnInitAsync()
@@ -31,15 +43,33 @@ namespace BlazorApp30.Pages
             StateHasChanged();
         }
 
+        protected async Task Sort(string sortId, bool isAsc)
+        {
+            Loading = true;
+
+            await Task.Delay(1500);
+
+            if (isAsc)
+            {
+                Forecasts = Forecasts.OrderBy(r => r.Cells.ElementAt(int.Parse(sortId)).Content).ToList();
+            }
+            else
+            {
+                Forecasts = Forecasts.OrderByDescending(r => r.Cells.ElementAt(int.Parse(sortId)).Content).ToList();
+            }
+
+            Loading = false;
+        }
+
         private async Task GetForecastAsync()
         {
             Loading = true;
             Headers = new List<DynamicTableHeader>()
             {
                 new DynamicTableHeader{ Title =  "Date", Classes = "-l"},
-                new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l" },
-                new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r" },
-                new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r" }
+                new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l", SortId = "1" },
+                new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
+                new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
             };
 
             var forecasts = await ForecastService.GetForecastAsync();
@@ -81,11 +111,6 @@ namespace BlazorApp30.Pages
 
 
             Loading = false;
-        }
-
-        public void ToggleColumn(int index)
-        {
-            Headers.ElementAt(index).Hidden = !Headers.ElementAt(index).Hidden;
         }
     }
 }
