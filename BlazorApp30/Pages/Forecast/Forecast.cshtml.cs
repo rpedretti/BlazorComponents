@@ -17,19 +17,30 @@ namespace BlazorApp30.Pages
         private bool _loading;
         protected bool Loading
         {
-            get { return _loading; }
-            set { SetParameter(ref _loading, value, StateHasChanged); }
+            get => _loading;
+            set => SetParameter(ref _loading, value, StateHasChanged);
+        }
+
+        private bool _grouped;
+        public bool Grouped
+        {
+            get => _grouped;
+            set => SetParameter(ref _grouped, value, StateHasChanged);
         }
 
         protected List<DynamicTableHeader> Headers { get; set; }
         protected List<DynamicTableRow> Forecasts { get; set; }
         protected List<DynamicTableGroup> GroupedForecast { get; set; }
 
-        private bool _grouped;
-        public bool Grouped
+        public ForecastBase()
         {
-            get { return _grouped; }
-            set { SetParameter(ref _grouped, value, StateHasChanged); }
+            Headers = new List<DynamicTableHeader>()
+            {
+                new DynamicTableHeader{ Title =  "Date", Classes = "-l"},
+                new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l", SortId = "1" },
+                new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
+                new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
+            };
         }
 
         public void ToggleColumn(int index)
@@ -64,13 +75,6 @@ namespace BlazorApp30.Pages
         private async Task GetForecastAsync()
         {
             Loading = true;
-            Headers = new List<DynamicTableHeader>()
-            {
-                new DynamicTableHeader{ Title =  "Date", Classes = "-l"},
-                new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l", SortId = "1" },
-                new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
-                new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
-            };
 
             var forecasts = await ForecastService.GetForecastAsync();
 

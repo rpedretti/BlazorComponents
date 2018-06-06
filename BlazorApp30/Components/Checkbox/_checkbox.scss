@@ -4,23 +4,25 @@
     }
 
     &.size-1 {
-        font-size: 14px;
+        font-size: 0.75rem;
     }
 
     &.size-2 {
-        font-size: 18px;
+        font-size: 1rem;
     }
 
     &.size-3 {
-        font-size: 24px;
+        font-size: 1.25rem;
     }
 
     &.size-4 {
-        font-size: 32px;
+        font-size: 1.5rem;
     }
 
     > .checkbox-input {
-        display: none
+        input {
+            display: none
+        }
     }
 
     > .checkbox-label {

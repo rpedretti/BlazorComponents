@@ -4,11 +4,12 @@ using System;
 
 namespace BlazorApp30.Components.ToggleSwitch
 {
-    public class ToggleSwitchBase : BlazorComponent
+    public class ToggleSwitchBase : BaseComponent
     {
         [Parameter] protected string Label { get; set; }
         [Parameter] protected bool Checked { get; set; }
         [Parameter] protected bool Inline { get; set; }
+        [Parameter] protected SwitchSize Size { get; set; } = SwitchSize.MEDIUM;
         [Parameter] protected Action<bool> CheckedChanged { get; set; }
         [Parameter] protected bool Round { get; set; }
         [Parameter] protected bool Fill { get; set; }
@@ -27,5 +28,12 @@ namespace BlazorApp30.Components.ToggleSwitch
                 CheckedChanged?.Invoke(Checked);
             }
         }
+    }
+
+    public enum SwitchSize
+    {
+        SMALL,
+        MEDIUM,
+        LARGE
     }
 }

@@ -10,22 +10,22 @@ namespace BlazorApp30.Components.Pager
         private int _maxIndicators = 5;
         [Parameter] protected int MaxIndicators
         {
-            get { return _maxIndicators; }
-            set { SetParameter(ref _maxIndicators, value, UpdatePagerCount); }
+            get => _maxIndicators;
+            set => SetParameter(ref _maxIndicators, value, UpdatePagerCount);
         }
 
         private int _pageCount;
         [Parameter] protected int PageCount
         {
-            get { return _pageCount; }
-            set { SetParameter(ref _pageCount, value, UpdatePagerCount); }
+            get => _pageCount;
+            set => SetParameter(ref _pageCount, value, UpdatePagerCount);
         }
 
         private int _currentPage;
         [Parameter] protected int CurrentPage
         {
-            get { return _currentPage; }
-            set { SetParameter(ref _currentPage, value, UpdatePagerCount); }
+            get => _currentPage;
+            set => SetParameter(ref _currentPage, value, UpdatePagerCount);
         }
 
         [Parameter] protected bool Small { get; set; }

@@ -10,8 +10,8 @@ namespace BlazorApp30.Components.DynamicTable
         private Func<string> _formatter;
         public Func<string> Formatter
         {
-            get { return _formatter ?? DefaultFormatter; }
-            set { _formatter = value; }
+            get => _formatter ?? DefaultFormatter;
+            set => _formatter = value;
         }
 
         private string DefaultFormatter() => Content.ToString();

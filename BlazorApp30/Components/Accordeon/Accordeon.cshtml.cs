@@ -7,31 +7,36 @@ namespace BlazorApp30.Components.Accordeon
 {
     public class AccordeonBase : BaseComponent
     {
+        protected bool showChildren;
         [Parameter] protected string Title { get; set; }
-
         [Parameter] protected bool CenterTitle { get; set; }
-
         [Parameter] protected RenderFragment ChildContent { get; set; }
 
         private bool _expanded;
-
         [Parameter] protected bool Expanded
         {
-            get { return _expanded; }
-            set
-            {
-                SetParameter(ref _expanded, value, () =>
+            get => _expanded;
+            set => SetParameter(ref _expanded, value, () => {
+                var delay = !value ? 600 : 0;
+                new Timer(_ =>
                 {
-                    var delay = !value ? 600 : 0;
-                    new Timer(_ =>
-                    {
-                        ExpandedChanged?.Invoke(_expanded);
-                        StateHasChanged();
-                    }, null, delay, Timeout.Infinite);
-                });
-            }
+                    ExpandedChanged?.Invoke(_expanded);
+                    showChildren = value;
+                    StateHasChanged();
+                }, null, delay, Timeout.Infinite);
+            });
+            
         }
 
         [Parameter] protected Action<bool> ExpandedChanged { get; set; }
+
+        protected void HandleKeyPress(UIKeyboardEventArgs args)
+        {
+            Console.WriteLine("expand key");
+            if (args.Key == " " || args.Key == "Enter")
+            {
+                Expanded = !Expanded;
+            }
+        }
     }
 }

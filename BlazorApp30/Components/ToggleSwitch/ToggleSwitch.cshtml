@@ -1,6 +1,6 @@
 ﻿@inherits ToggleSwitchBase
 
-<div class="@($"toggle-switch{(Inline ? " -inline" : null)}")">
+<div class="@($"toggle-switch{(Inline ? " -inline" : null)} -{Size.ToString().ToLower()}")">
     <label class="@($"label{(Fill ? " -fill" : null)}")">@Label</label>
     <label class="switch">
         <input

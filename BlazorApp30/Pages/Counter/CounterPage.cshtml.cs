@@ -9,8 +9,8 @@
         private int _currentCount;
         public int CurrentCount
         {
-            get { return _currentCount; }
-            set { SetParameter(ref _currentCount, value); }
+            get => _currentCount;
+            set => SetParameter(ref _currentCount, value);
         }
 
         public CounterPageBase()
