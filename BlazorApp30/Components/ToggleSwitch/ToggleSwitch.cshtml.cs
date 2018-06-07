@@ -20,13 +20,10 @@ namespace BlazorApp30.Components.ToggleSwitch
             CheckedChanged?.Invoke(Checked);
         }
 
-        protected void HandleKeyPress(UIKeyboardEventArgs args)
+        protected void ToggleChecked()
         {
-            if (args.Key == " " || args.Key == "Enter")
-            {
-                Checked = !Checked;
-                CheckedChanged?.Invoke(Checked);
-            }
+            Checked = !Checked;
+            CheckedChanged?.Invoke(Checked);
         }
     }
 

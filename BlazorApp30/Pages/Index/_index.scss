@@ -28,4 +28,8 @@ fieldset {
     border-style: groove;
     border-color: threedface;
     border-image: initial;
+
+    .radio-group {
+        margin-bottom: 16px;
+    }
 }

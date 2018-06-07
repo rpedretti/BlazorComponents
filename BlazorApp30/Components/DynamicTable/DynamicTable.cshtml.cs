@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlazorApp30.Components.DynamicTable
 {
-    public class DynamicTableBase : BlazorComponent
+    public class DynamicTableBase : BaseComponent
     {
         [Parameter] protected string Classes { get; set; }
         [Parameter] protected IEnumerable<DynamicTableHeader> Headers { get; set; }
@@ -16,13 +16,6 @@ namespace BlazorApp30.Components.DynamicTable
 
         protected readonly Dictionary<DynamicTableHeader, bool> SortedTable = new Dictionary<DynamicTableHeader, bool>();
         protected DynamicTableHeader CurrentOrdered { get; set; }
-        protected void HandleKeyPress(UIKeyboardEventArgs args, Action action)
-        {
-            if (args.Key == " " || args.Key == "Enter")
-            {
-                action?.Invoke();
-            }
-        }
 
         protected void Sort(DynamicTableHeader header)
         {

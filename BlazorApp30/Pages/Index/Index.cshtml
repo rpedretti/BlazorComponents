@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using BlazorApp30.Components.Spinner
 @using BlazorApp30.Components.Checkbox
+@using BlazorApp30.Components.Radio
 @using BlazorApp30.Components.ToggleSwitch
 @inherits IndexBase
 
@@ -55,10 +56,11 @@
         <fieldset>
             <legend>Inline</legend>
             <Checkbox Label="Olar inline 1" Inline />
-            <Checkbox Label="Olar inline 2" Inline Size="CheckboxSize.MEDIUM" />
+            <Checkbox Label="Olar inline 2" Inline Size="CheckboxSize.EXTRA_LARGE" Disabled />
         </fieldset>
     </Accordeon>
 </div>
+
 <div class="accordeon-container">
     <Accordeon Title="Switches" CenterTitle>
         <fieldset>
@@ -84,6 +86,25 @@
             <legend>Inline</legend>
             <ToggleSwitch Label="Inline 1" Inline />
             <ToggleSwitch Label="Inline 2" Inline Round />
+        </fieldset>
+    </Accordeon>
+</div>
+
+<div class="accordeon-container">
+    <Accordeon Title="Radio Button" CenterTitle>
+        <button class="btn my-button" onclick="@ResetSelectedRadios" disabled="@(!HasSelection)">Reset All</button>
+
+        <fieldset>
+            <legend>Vertical</legend>
+            <RadioGroup Buttons="@RadioButtons" bind-Selected="@SelectedRadioButton1" />
+        </fieldset>
+        <fieldset>
+            <legend>Horizontal</legend>
+            <RadioGroup Buttons="@RadioButtons" Orientation="@RadioOrientation.HORIZONTAL" bind-Selected="@SelectedRadioButton2" />
+        </fieldset>
+        <fieldset>
+            <legend>Can deselect</legend>
+            <RadioGroup Buttons="@RadioButtons" CanDeselect bind-Selected="@SelectedRadioButton3" />
         </fieldset>
     </Accordeon>
 </div>

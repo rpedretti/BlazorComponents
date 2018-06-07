@@ -11,6 +11,7 @@ namespace BlazorApp30.Components.Checkbox
         [Parameter] protected bool Inline { get; set; }
         [Parameter] protected Action<bool> CheckedChanged { get; set; }
         [Parameter] protected CheckboxSize Size { get; set; } = CheckboxSize.REGULAR;
+        [Parameter] protected bool Disabled { get; set; }
 
         protected string CheckboxId = Guid.NewGuid().ToString().Replace("-", "");
 
@@ -21,13 +22,10 @@ namespace BlazorApp30.Components.Checkbox
             CheckedChanged?.Invoke(Checked);
         }
 
-        protected void HandleKeyPress(UIKeyboardEventArgs args)
+        protected void ToogleCheck()
         {
-            if (args.Key == " " || args.Key == "Enter")
-            {
-                Checked = !Checked;
-                CheckedChanged?.Invoke(Checked);
-            }
+            Checked = !Checked;
+            CheckedChanged?.Invoke(Checked);
         }
     }
 }

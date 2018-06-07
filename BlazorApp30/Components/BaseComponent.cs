@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor;
+using Microsoft.AspNetCore.Blazor.Components;
 using System;
 using System.Collections.Generic;
 
@@ -17,6 +18,14 @@ namespace BlazorApp30.Components
             onChange?.Invoke();
 
             return true;
+        }
+
+        protected void HandleKeyPress(UIKeyboardEventArgs args, Action action)
+        {
+            if (args.Key == " " || args.Key == "Enter")
+            {
+                action?.Invoke();
+            }
         }
     }
 }

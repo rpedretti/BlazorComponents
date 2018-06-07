@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using BlazorApp30.Components;
+using BlazorApp30.Components.Radio;
 
 namespace BlazorApp30.Pages.Index
 {
@@ -10,6 +11,34 @@ namespace BlazorApp30.Pages.Index
         public Color ChildBgColor { get; set; }
         public string ParagraphStyle { get; set; }
         public bool ExpandLoaderAccordeon { get; set; }
+        public RadioButton[] RadioButtons { get; set; } = new RadioButton[]
+        {
+            new RadioButton { Label = "Button 1", Value = 4 },
+            new RadioButton { Label = "Button 2", Value = "olar"},
+            new RadioButton { Label = "Button 3", Value = null, Disabled = true },
+            new RadioButton { Label = "Button 4", Value = false }
+        };
+
+        private RadioButton _selectedRadioButton1;
+        public RadioButton SelectedRadioButton1
+        {
+            get => _selectedRadioButton1;
+            set => SetParameter(ref _selectedRadioButton1, value, StateHasChanged);
+        }
+
+        private RadioButton _selectedRadioButton2;
+        public RadioButton SelectedRadioButton2
+        {
+            get => _selectedRadioButton2;
+            set => SetParameter(ref _selectedRadioButton2, value, StateHasChanged);
+        }
+
+        private RadioButton _selectedRadioButton3;
+        public RadioButton SelectedRadioButton3
+        {
+            get => _selectedRadioButton3;
+            set => SetParameter(ref _selectedRadioButton3, value, StateHasChanged);
+        }
 
         private bool _someChecked;
         protected bool SomeChecked
@@ -45,5 +74,17 @@ namespace BlazorApp30.Pages.Index
             ChildBgColor = Color.FromArgb(220, 111, 25, 111);
             ParagraphStyle = "background: ";
         }
+
+        protected void ResetSelectedRadios()
+        {
+            SelectedRadioButton1 = null;
+            SelectedRadioButton2 = null;
+            SelectedRadioButton3 = null;
+        }
+
+        protected bool HasSelection =>
+            SelectedRadioButton1 != null ||
+            SelectedRadioButton2 != null ||
+            SelectedRadioButton3 != null;
     }
 }

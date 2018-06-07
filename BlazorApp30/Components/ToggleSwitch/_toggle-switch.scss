@@ -1,4 +1,6 @@
-﻿$font-size: ( small: 0.75rem, medium: 1rem, large: 1.25rem );
+﻿@import "../../Shared/Styles/_mixins.scss";
+
+$font-size: ( small: 0.75rem, medium: 1rem, large: 1.25rem );
 $slider-height: ( small: 16px, medium: 22px, large: 26px );
 $slider-width: ( small: 16px, medium: 22px, large: 26px );
 $slider-left: ( small: 3px, medium: 3px, large: 4px );
@@ -28,9 +30,7 @@ $translate: ( small: 16px, medium: 22px, large: 26px );
 
         > input {
             &:checked + .slider:before {
-                -webkit-transform: translateX(map-get($translate, $size));
-                -ms-transform: translateX(map-get($translate, $size));
-                transform: translateX(map-get($translate, $size));
+                @include intrinsic(transform, translateX(map-get($translate, $size)));
             }
         }
 
@@ -93,14 +93,13 @@ $translate: ( small: 16px, medium: 22px, large: 26px );
             right: 0;
             bottom: 0;
             background-color: #ccc;
-            transition: .4s;
+            @include intrinsic(transition, .4s);
 
             &:before {
                 position: absolute;
                 content: "";
                 background-color: white;
-                -webkit-transition: .4s;
-                transition: .4s;
+                @include intrinsic(transition, .4s);
             }
         }
     }

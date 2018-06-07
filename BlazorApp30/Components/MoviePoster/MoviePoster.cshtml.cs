@@ -19,14 +19,6 @@ namespace BlazorApp30.Components.MoviePoster
             OnClick?.Invoke();
         }
 
-        protected void HandleKeyPress(UIKeyboardEventArgs args)
-        {
-            if (args.Key == " " || args.Key == "Enter")
-            {
-                OnClick?.Invoke();
-            }
-        }
-
         protected void UpdateLoader()
         {
             ImageLoaded = true;

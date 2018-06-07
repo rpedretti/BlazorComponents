@@ -94,6 +94,7 @@
     <None Include="Components\PagedGrid\PagedGrid.cshtml" />
     <None Include="Components\Pager\Pager.cshtml" />
     <None Include="Components\ProgressBar\ProgressBar.cshtml" />
+    <None Include="Components\Radio\RadioGroup.cshtml" />
     <None Include="Components\Spinner\Spinner.cshtml" />
     <None Include="Components\ToggleSwitch\ToggleSwitch.cshtml" />
     <None Include="Pages\Movies\Movies.cshtml" />
@@ -177,6 +178,14 @@
 
   <ItemGroup>
     <Content Remove="Components\Checkbox\Checkbox.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <BlazorGenerate Remove="Components\Radio\RadioGroup.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Components\Radio\RadioGroup.cshtml" />
   </ItemGroup>
 
 </Project>

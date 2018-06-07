@@ -25,14 +25,6 @@ namespace BlazorApp30.Pages.Movies
         protected bool Loading { get; set; }
         protected bool HasContent { get; set; }
 
-        protected void HandleKeyPress(UIKeyboardEventArgs args, string id)
-        {
-            if (args.Key == " " || args.Key == "Enter")
-            {
-                GoToMovie(id);
-            }
-        }
-
         protected async void RequestPage(int page)
         {
             await GetMoviesAsync(page);

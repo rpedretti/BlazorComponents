@@ -29,14 +29,5 @@ namespace BlazorApp30.Components.Accordeon
         }
 
         [Parameter] protected Action<bool> ExpandedChanged { get; set; }
-
-        protected void HandleKeyPress(UIKeyboardEventArgs args)
-        {
-            Console.WriteLine("expand key");
-            if (args.Key == " " || args.Key == "Enter")
-            {
-                Expanded = !Expanded;
-            }
-        }
     }
 }

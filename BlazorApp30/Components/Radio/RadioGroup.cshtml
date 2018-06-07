@@ -1,0 +1,17 @@
+﻿@inherits RadioGroupBase
+
+<div class="@($"radio-group -{Orientation.ToString().ToLower()}")" role="radiogroup">
+    @foreach (var button in Buttons)
+    {
+        var b = button;
+        <div class="@($"btn radio-button{(b == Selected ? " -checked" : null)}{(b.Disabled ? " -disabled" : null)}")"
+             role="radio"
+             aria-checked="@(b == Selected ? "true" : "false")"
+             aria-disabled="@(b.Disabled ? "true" : "false")"
+             tabindex="@(!b.Disabled ? "0" : null)"
+             onkeypress="@(k => HandleKeyPress(k, () => { if (!b.Disabled) SelectButton(b); }))"
+             onclick="@(() => { if (!b.Disabled) SelectButton(b); })">
+            @b.Label
+        </div>
+    }
+</div>

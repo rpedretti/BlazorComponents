@@ -13,6 +13,6 @@
             aria-label="@Label"
             aria-checked="@Checked.ToString()"
             class="@($"slider{(Round ? " -round" : null)}")"
-            onkeypress="@HandleKeyPress"></span>
+            onkeypress="@(k => HandleKeyPress(k, ToggleChecked))"></span>
     </label>
 </div>
