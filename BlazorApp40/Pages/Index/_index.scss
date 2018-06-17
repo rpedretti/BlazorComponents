@@ -1,0 +1,35 @@
+﻿.spinner-row {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #a6a6a6;
+    margin-bottom: 12px;
+    &:last-of-type {
+        border-bottom: none;
+    }
+}
+
+.accordeon-container {
+    width: 400px;
+    margin: 24px 0;
+}
+
+legend {
+    width: auto;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+fieldset {
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    min-width: min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+
+    .radio-group {
+        margin-bottom: 16px;
+    }
+}

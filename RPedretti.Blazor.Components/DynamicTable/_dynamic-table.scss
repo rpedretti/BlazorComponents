@@ -1,0 +1,15 @@
+﻿.dynamic-table {
+    >.table {
+        .-hidden {
+            display: none;
+        }
+        .table-header {
+            .fa {
+                text-align: right;
+            }
+        }
+    }
+    >.spinner-wrapper {
+        margin-top: 32px;
+    }
+}

@@ -1,0 +1,69 @@
+﻿$small: 40px;
+$border-small: 4px;
+$medium: 60px;
+$border-medium: 6px;
+$large: 80px;
+$border-large: 8px;
+
+@mixin spinner-size($size, $border-size) {
+    width: $size;
+    height: $size;
+    border: $border-size solid #f3f3f3; /* Light grey */
+    border-top: $border-size solid #3498db; /* Blue */
+}
+
+@mixin spinner-center($size) {
+    top: calc(50% - (#{$size} / 2));
+}
+
+.spinner-wrapper {
+    &.-small {
+        .spinner {
+            @include spinner-size($small, $border-small);
+        }
+
+        &.-centered {
+            @include spinner-center($small);
+        }
+    }
+
+    &.-medium {
+        .spinner {
+            @include spinner-size($medium, $border-medium);
+        }
+
+        &.-centered {
+            @include spinner-center($medium);
+        }
+    }
+
+    &.-large {
+        .spinner {
+            @include spinner-size($large, $border-large);
+        }
+
+        &.-centered {
+            @include spinner-center($large);
+        }
+    }
+
+    &.-centered {
+        position: relative;
+
+        > .spinner {
+            margin: auto;
+        }
+    }
+
+    .spinner {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        display: none;
+
+        &.-active {
+            animation: spin 1s linear infinite;
+            display: block;
+        }
+    }
+}

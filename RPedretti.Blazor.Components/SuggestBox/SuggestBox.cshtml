@@ -1,0 +1,42 @@
+﻿@inherits SuggestBoxBase
+@using RPedretti.Blazor.Components.Spinner
+
+<div class="@($"sugest-box{(OpenSuggestion ? " -open" : null)}")">
+    <div class="sb-input">
+        <input type="text"
+               class="form-control"
+               onfocusin="@(() => { HasFocus = true; Console.WriteLine("focus input"); })"
+               onfocusout="@(() => { HasFocus = internalSuggestions?.Count > 0; Console.WriteLine("lost focus input"); })"
+               bind="@Query" />
+    </div>
+    @if (OpenSuggestion)
+    {
+        <div class="sb-flyout">
+            @if (LoadingSuggestion)
+            {
+                <div class="sb-progress">
+                    <ProgressBar Active />
+                </div>
+            }
+            else if (!LoadingSuggestion && internalSuggestions?.Count > 0)
+            {
+                <ol>
+                    @for(var i = 0; i < internalSuggestions.Count; i++)
+                    {
+                        var s = internalSuggestions[i];
+                        var isLast = i == internalSuggestions.Count - 1;
+                        <li tabindex="0"
+                            onclick="@(() => InternalSuggestionSelected(s))"
+                            onfocusout="@(() => { HasFocus = !isLast; Console.WriteLine("lost focus input\tislast:" + isLast); })">
+                            <p class="sb-suggestion">@s</p>
+                        </li>
+                    }
+                </ol>
+            }
+            else
+            {
+                <p class="sb-noresult">No result</p>
+            }
+        </div>
+    }
+</div>

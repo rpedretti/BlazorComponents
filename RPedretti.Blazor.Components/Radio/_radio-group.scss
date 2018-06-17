@@ -1,0 +1,54 @@
+﻿.radio-group {
+
+    &.-vertical {
+        .radio-button {
+            display: table;
+
+            &:last-of-type {
+                margin-bottom: initial;
+            }
+        }
+    }
+
+    &.-horizontal {
+        .radio-button {
+            margin-right: 8px;
+            display: inline-table;
+
+            &:last-of-type {
+                margin-right: initial;
+            }
+        }
+    }
+
+    .radio-button {
+        @include intrinsic(width, fit-content);
+        min-height: 50px;
+        min-width: 100px;
+        margin-bottom: 8px;
+        padding: 12px 8px;
+        background-color: gainsboro;
+        box-shadow: #A1A1A1 0px 0px 4px;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out, font-size .15s ease-in-out;
+
+        &.-disabled {
+            opacity: .65;
+            cursor: default;
+        }
+
+        &.-checked {
+            font-size: .96rem;
+            background-color: #CFCFCF;
+            box-shadow: #A1A1A1 0px 0px 0px;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem #9A9A9A;
+
+            &.-checked {
+                box-shadow: #4C4C4C 0px 0px 0.2rem;
+            }
+        }
+    }
+}
