@@ -21,8 +21,8 @@ namespace BlazorApp40.Pages.Index
         private string _query;
         public string Query
         {
-            get { return _query; }
-            set { SetParameter(ref _query, value, StateHasChanged); }
+            get => _query;
+            set => SetParameter(ref _query, value, StateHasChanged);
         }
 
         public RadioButton[] RadioButtons { get; set; } = new RadioButton[]
@@ -147,6 +147,7 @@ namespace BlazorApp40.Pages.Index
 
         protected async Task FetchSuggestions(string query)
         {
+            Query = query;
             if (!string.IsNullOrWhiteSpace(query))
             {
                 LoadingSuggestions = true;

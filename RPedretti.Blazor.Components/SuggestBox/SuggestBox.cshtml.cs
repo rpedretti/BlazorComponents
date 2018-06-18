@@ -8,11 +8,13 @@ namespace RPedretti.Blazor.Components.SuggestBox
 {
     public class SuggestBoxBase : BaseComponent
     {
-        private string _query;
+        private bool _suggestionSelected;
+
+        protected string internalQuery;
         [Parameter] protected string Query
         {
-            get => _query;
-            set => SetParameter(ref _query, value, () => QueryChanged?.Invoke(value));
+            get => internalQuery;
+            set => SetParameter(ref internalQuery, value, () => { QueryChanged?.Invoke(value); _suggestionSelected = false; });
         }
         [Parameter] protected Func<string, Task> QueryChanged { get; set; }
         [Parameter] protected Action<string> SuggestionSelected { get; set; }
@@ -20,7 +22,8 @@ namespace RPedretti.Blazor.Components.SuggestBox
         [Parameter] protected int MaxSuggestions { get; set; }
 
         protected List<string> internalSuggestions;
-        [Parameter] protected List<string> Suggestions
+        [Parameter]
+        protected List<string> Suggestions
         {
             get
             {
@@ -42,11 +45,14 @@ namespace RPedretti.Blazor.Components.SuggestBox
 
         protected void InternalSuggestionSelected(string query)
         {
+            _suggestionSelected = true;
+            internalQuery = query;
             SuggestionSelected?.Invoke(query);
+            StateHasChanged();
         }
 
         protected bool HasFocus { get; set; }
 
-        protected bool OpenSuggestion => (internalSuggestions != null || LoadingSuggestion) && HasFocus;
+        protected bool OpenSuggestion => (internalSuggestions != null || LoadingSuggestion) && HasFocus && !_suggestionSelected;
     }
 }

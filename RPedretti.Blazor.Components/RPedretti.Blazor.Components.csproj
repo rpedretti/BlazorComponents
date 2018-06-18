@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="content\all.scss" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Accordeon\Accordeon.cshtml" />
     <None Include="Checkbox\Checkbox.cshtml" />
     <None Include="DynamicTable\DynamicGroupedTable.cshtml" />

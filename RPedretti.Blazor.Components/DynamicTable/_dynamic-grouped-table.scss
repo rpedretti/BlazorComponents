@@ -3,13 +3,16 @@
     .-hidden {
         display: none;
     }
+
     .table {
         table-layout: fixed;
         width: 100%;
+
         &-header {
             margin-bottom: -2px;
         }
     }
+
     .group {
         &-header {
             display: block;
@@ -22,6 +25,21 @@
             transition: max-height 0.25s ease-in-out;
             overflow: hidden;
             max-height: 200px;
+
+            .table-row {
+                transition: background-color .2s ease-in-out, font-weight .2s ease-in-out;
+
+                &:hover {
+                    background-color: #acacac;
+                    font-weight: 600;
+                }
+            }
+
+            .table-cell {
+                &:not(:last-of-type) {
+                    border-right: 1px solid #acacac;
+                }
+            }
         }
 
         &.-collapse {
