@@ -1,7 +1,7 @@
 ﻿@inherits PagerBase
 
 <nav aria-label="@A11yLabel" class="pager">
-    <ul class="@($"pagination {(Small ? "pagination-sm" : null)} justify-content-center")">
+    <ul class="@($"pagination {(Small ? "pagination-sm" : null)} justify-content-{Position.ToString().ToLower()}")">
         @if (ShowFirst)
         {
             <li class="page-item">

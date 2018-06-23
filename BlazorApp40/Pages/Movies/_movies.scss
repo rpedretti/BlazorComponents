@@ -1,6 +1,6 @@
 ﻿.paged-grid {
     height: calc(100vh - 140px);
-
+    min-width: 360px;
     .movies {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));

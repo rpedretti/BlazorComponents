@@ -2,6 +2,7 @@
 
 <div class="accordeon card">
     <div tabindex="0"
+         role="button"
          aria-expanded="@Expanded.ToString().ToLower()"
          aria-label="@Title"
          class="@($"accordeon-title{(CenterTitle ? " -center" : null)}")"

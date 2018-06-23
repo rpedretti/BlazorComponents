@@ -51,8 +51,8 @@
 
         <fieldset>
             <legend>Dependent Inverse</legend>
-            <Checkbox Label="Olar 1" bind-Checked="@SomeChecked" />
-            <Checkbox Label="Olar 2" Checked="@(!SomeChecked)" CheckedChanged="@(v => SomeChecked = !v)" Size="CheckboxSize.MEDIUM" />
+            <Checkbox A11yLabel="Olar First" Label="Olar 1" bind-Checked="@SomeChecked" />
+            <Checkbox A11yLabel="Olar Second" Label="Olar 2" Checked="@(!SomeChecked)" CheckedChanged="@(v => SomeChecked = !v)" Size="CheckboxSize.MEDIUM" />
         </fieldset>
         <fieldset>
             <legend>Dependent</legend>

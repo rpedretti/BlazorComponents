@@ -23,15 +23,16 @@
         font-size: 1.5rem;
     }
 
-    > .checkbox-input {
-        input {
-            display: none
-        }
+    &:focus + .checkbox-label {
+        outline: -webkit-focus-ring-color auto 5px;
     }
 
     > .checkbox-label {
         cursor: default;
-        margin: 0;
-        padding: 0;
+        margin-bottom: 4px;
+
+        &::before {
+            margin-right: 4px;
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace RPedretti.Blazor.Components.Pager
 {
     public class PagerBase : BaseAccessibleComponent
     {
+        [Parameter] protected PagerPosition Position { get; set; } = PagerPosition.CENTER;
         [Parameter] protected Action<int> OnRequestPage { get; set; }
 
         private int _maxIndicators = 5;
@@ -136,5 +137,12 @@ namespace RPedretti.Blazor.Components.Pager
             public bool Active { get; set; }
             public bool Visible { get; set; }
         }
+    }
+
+    public enum PagerPosition
+    {
+        START,
+        END,
+        CENTER
     }
 }

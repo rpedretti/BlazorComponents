@@ -4,7 +4,7 @@ using System;
 
 namespace RPedretti.Blazor.Components.Checkbox
 {
-    public class CheckboxBase : BaseComponent
+    public class CheckboxBase : BaseAccessibleComponent
     {
         [Parameter] protected string Label { get; set; }
         [Parameter] protected bool Checked { get; set; }
@@ -15,16 +15,13 @@ namespace RPedretti.Blazor.Components.Checkbox
 
         protected string CheckboxId = Guid.NewGuid().ToString().Replace("-", "");
 
-        protected void HandleChanged(UIChangeEventArgs a)
+        protected void ToggleCheck()
         {
-            Checked = (bool)a.Value;
-            CheckedChanged?.Invoke(Checked);
-        }
-
-        protected void ToogleCheck()
-        {
-            Checked = !Checked;
-            CheckedChanged?.Invoke(Checked);
+            if (!Disabled)
+            {
+                Checked = !Checked;
+                CheckedChanged?.Invoke(Checked);
+            }
         }
     }
 }

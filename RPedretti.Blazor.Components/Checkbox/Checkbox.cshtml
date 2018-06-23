@@ -1,21 +1,12 @@
 ﻿@inherits CheckboxBase
 
-<div class="@($"checkbox size-{(int)Size}{(Inline ? " -inline" : null)}{(Disabled ? " -disabled" : null)}")">
-    <label class="checkbox-input">
-        <input 
-            type="checkbox"
-            checked="@Checked"
-            disabled="@Disabled"
-            onchange="@HandleChanged" />
-        <span
-            tabindex="0"
-            role="checkbox"
-            aria-label="@Label"
-            aria-checked="@(Checked.ToString().ToLower())"
-            onkeypress="@(k => HandleKeyPress(k, ToogleCheck))"
-            class="checkbox-label" for="@($"checkbox-{CheckboxId}")">
-                <i class="@($"checkbox-label far fa-{(Checked ? "check-": null)}square")"></i>
-        </span>
-    </label>
-    <label class="checkbox-label">@Label</label>
-</div>
+<div class="@($"checkbox size-{(int)Size}{(Inline ? " -inline" : null)}{(Disabled ? " -disabled" : null)}")"
+     role="checkbox"
+     tabindex="0"
+     aria-label="@(A11yLabel ?? Label)"
+     aria-checked="@Checked.ToString().ToLower()"
+     aria-disabled="@Disabled.ToString().ToLower()"
+     onkeypress="@(k => HandleKeyPress(k, ToggleCheck))"
+     onclick="@ToggleCheck">
+    <label aria-hidden="true" class="@($"checkbox-label far fa-{(Checked ? "check-": null)}square")">@Label</label>
+</div> 
