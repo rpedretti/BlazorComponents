@@ -7,16 +7,24 @@ namespace RPedretti.Blazor.Components.Accordeon
 {
     public class AccordeonBase : BaseComponent
     {
+        #region Fields
+
+        private bool _expanded;
         protected bool showChildren;
-        [Parameter] protected string Title { get; set; }
+
+        #endregion Fields
+
+        #region Properties
+
         [Parameter] protected bool CenterTitle { get; set; }
         [Parameter] protected RenderFragment ChildContent { get; set; }
 
-        private bool _expanded;
-        [Parameter] protected bool Expanded
+        [Parameter]
+        protected bool Expanded
         {
             get => _expanded;
-            set => SetParameter(ref _expanded, value, () => {
+            set => SetParameter(ref _expanded, value, () =>
+            {
                 var delay = !value ? 600 : 0;
                 new Timer(_ =>
                 {
@@ -25,9 +33,11 @@ namespace RPedretti.Blazor.Components.Accordeon
                     StateHasChanged();
                 }, null, delay, Timeout.Infinite);
             });
-            
         }
 
         [Parameter] protected Action<bool> ExpandedChanged { get; set; }
+        [Parameter] protected string Title { get; set; }
+
+        #endregion Properties
     }
 }

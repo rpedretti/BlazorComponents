@@ -1,22 +1,49 @@
-﻿namespace BlazorApp40.Pages
+﻿using Blazor.Fluxor;
+using BlazorApp40.Store.Counter;
+using Microsoft.AspNetCore.Blazor.Components;
+using System.Threading.Tasks;
+
+namespace BlazorApp40.Pages
 {
     public class CounterPageBase : BaseBlazorPage
     {
+        #region Fields
+
         protected int IncrementAmount = 1;
-        protected string CounterTitle { get; set; }
+
+        #endregion Fields
+
+        #region Properties
+
         protected string CounterIncrementDescription { get; set; }
 
-        private int _currentCount;
-        public int CurrentCount
+        protected string CounterTitle { get; set; }
+
+        [Inject] protected IDispatcher Dispatcher { get; set; }
+
+        [Inject] protected IState<CounterState> State { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        protected async Task CounterChanged(int v)
         {
-            get => _currentCount;
-            set => SetParameter(ref _currentCount, value);
+            await Dispatcher.DispatchAsync(new IncrementCounterAction());
         }
+
+        #endregion Methods
+
+        #region Constructors
 
         public CounterPageBase()
         {
             CounterTitle = "My counter";
             CounterIncrementDescription = $"Add {IncrementAmount}";
         }
+
+        #endregion Constructors
+
+        public int CurrentCount => State.Current.ClickCount;
     }
 }

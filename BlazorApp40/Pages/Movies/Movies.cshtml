@@ -11,7 +11,7 @@
     <div class="input-group-append">
         <button class="btn btn-outline-secondary"
                 type="button"
-                onclick="@(() => SearchAsync())"
+                onclick="@SearchAsync"
                 disabled="@string.IsNullOrWhiteSpace(SearchMovieTitle)">
             Search
         </button>
@@ -34,7 +34,7 @@
         var movie = Movies[index];
         <MoviePoster Movie="@movie"
                      A11yRole="listitem"
-                     A11ySetSize="@(MoviesCount)"
+                     A11ySetSize="@MoviesCount"
                      A11yPosInSet="@((CurrentPage - 1) * 10 + index + 1)"
                      A11yLabel="@($"{movie.Title}{(movie.Plot != null ? ", " + movie.Plot : null)}")"
                      OnClick="@(() => GoToMovie(movie.Id))" />

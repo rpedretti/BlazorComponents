@@ -1,5 +1,4 @@
-﻿using BlazorApp40.Components;
-using BlazorApp40.Services;
+﻿using BlazorApp40.Services;
 using Microsoft.AspNetCore.Blazor.Components;
 using RPedretti.Blazor.Components;
 using RPedretti.Blazor.Components.DynamicTable;
@@ -12,66 +11,22 @@ namespace BlazorApp40.Pages
 {
     public class ForecastBase : BaseComponent
     {
+        #region Fields
+
+        private bool _grouped;
+
+        private bool _loading;
+
+        #endregion Fields
+
+        #region Properties
+
         [Inject]
         private IForecastService ForecastService { get; set; }
 
-        private bool _loading;
-        protected bool Loading
-        {
-            get => _loading;
-            set => SetParameter(ref _loading, value, StateHasChanged);
-        }
+        #endregion Properties
 
-        private bool _grouped;
-        public bool Grouped
-        {
-            get => _grouped;
-            set => SetParameter(ref _grouped, value, StateHasChanged);
-        }
-
-        protected List<DynamicTableHeader> Headers { get; set; }
-        protected List<DynamicTableRow> Forecasts { get; set; }
-        protected List<DynamicTableGroup> GroupedForecast { get; set; }
-
-        public ForecastBase()
-        {
-            Headers = new List<DynamicTableHeader>()
-            {
-                new DynamicTableHeader{ Title =  "Date", Classes = "-l"},
-                new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l", SortId = "1" },
-                new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
-                new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
-            };
-        }
-
-        public void ToggleColumn(int index)
-        {
-            Headers.ElementAt(index).Hidden = !Headers.ElementAt(index).Hidden;
-        }
-
-        protected override async Task OnInitAsync()
-        {
-            await GetForecastAsync();
-            StateHasChanged();
-        }
-
-        protected async Task Sort(string sortId, bool isAsc)
-        {
-            Loading = true;
-
-            await Task.Delay(1500);
-
-            if (isAsc)
-            {
-                Forecasts = Forecasts.OrderBy(r => r.Cells.ElementAt(int.Parse(sortId)).Content).ToList();
-            }
-            else
-            {
-                Forecasts = Forecasts.OrderByDescending(r => r.Cells.ElementAt(int.Parse(sortId)).Content).ToList();
-            }
-
-            Loading = false;
-        }
+        #region Methods
 
         private async Task GetForecastAsync()
         {
@@ -114,8 +69,67 @@ namespace BlazorApp40.Pages
                 return group;
             }).ToList();
 
+            Loading = false;
+        }
+
+        #endregion Methods
+
+        protected List<DynamicTableRow> Forecasts { get; set; }
+
+        protected List<DynamicTableGroup> GroupedForecast { get; set; }
+
+        protected List<DynamicTableHeader> Headers { get; set; }
+
+        protected bool Loading
+        {
+            get => _loading;
+            set => SetParameter(ref _loading, value, StateHasChanged);
+        }
+
+        protected override async Task OnInitAsync()
+        {
+            await GetForecastAsync();
+            StateHasChanged();
+        }
+
+        protected async Task Sort(string sortId, bool isAsc)
+        {
+            Loading = true;
+
+            await Task.Delay(1500);
+
+            if (isAsc)
+            {
+                Forecasts = Forecasts.OrderBy(r => r.Cells.ElementAt(int.Parse(sortId)).Content).ToList();
+            }
+            else
+            {
+                Forecasts = Forecasts.OrderByDescending(r => r.Cells.ElementAt(int.Parse(sortId)).Content).ToList();
+            }
 
             Loading = false;
+        }
+
+        public ForecastBase()
+        {
+            Headers = new List<DynamicTableHeader>()
+            {
+                new DynamicTableHeader{ Title =  "Date", Classes = "-l"},
+                new DynamicTableHeader{ Title =  "Temp. (C)", CanSort = true, Classes = "-l", SortId = "1" },
+                new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
+                new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
+            };
+        }
+
+        public bool Grouped
+        {
+            get => _grouped;
+            set => SetParameter(ref _grouped, value, StateHasChanged);
+        }
+
+        public void ToggleColumn(int index)
+        {
+            Headers.ElementAt(index).Hidden = !Headers.ElementAt(index).Hidden;
         }
     }
 }

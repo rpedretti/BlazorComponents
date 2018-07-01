@@ -7,8 +7,12 @@ namespace BlazorApp40.Pages
 {
     public class TodoBase : BlazorComponent
     {
-        public IList<TodoItem> Items { get; } = new List<TodoItem>();
+        #region Properties
+
         public int DoneItemsCount => Items.Where(todo => !todo.IsDone).Count();
         public string HeaderA11l => $"{DoneItemsCount} de {Items.Count()} feitos";
+        public IList<TodoItem> Items { get; } = new List<TodoItem>();
+
+        #endregion Properties
     }
 }

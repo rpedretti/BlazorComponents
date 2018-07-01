@@ -2,7 +2,11 @@
 {
     public sealed class TodoItem
     {
-        public string Title { get; set; }
+        #region Properties
+
         public bool IsDone { get; set; }
+        public string Title { get; set; }
+
+        #endregion Properties
     }
 }

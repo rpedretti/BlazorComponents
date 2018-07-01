@@ -8,13 +8,16 @@ namespace BlazorApp40.Components
 {
     public class TodoListBase : BlazorComponent
     {
-        [Parameter] protected Action OnItemsChanged { get; set; }
-
-        [Parameter] protected IList<TodoItem> Items { get; set; }
+        #region Properties
 
         [Parameter] protected string Id { get; set; }
-
+        [Parameter] protected IList<TodoItem> Items { get; set; }
         protected string NewTodoTitle { get; set; }
+        [Parameter] protected Action OnItemsChanged { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         protected void AddTodo()
         {
@@ -34,5 +37,7 @@ namespace BlazorApp40.Components
             item.Title = a.Value as string;
             OnItemsChanged?.Invoke();
         }
+
+        #endregion Methods
     }
 }

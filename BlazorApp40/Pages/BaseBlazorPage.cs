@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Blazor.Components;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BlazorApp40.Pages
 {
-    public abstract class BaseBlazorPage : BlazorComponent
+    public abstract class BaseBlazorPage : Blazor.Fluxor.Temporary.FluxorComponent
     {
+        #region Methods
+
         protected bool SetParameter<T>(ref T prop, T value)
         {
             if (EqualityComparer<T>.Default.Equals(prop, value))
@@ -17,5 +18,7 @@ namespace BlazorApp40.Pages
 
             return true;
         }
+
+        #endregion Methods
     }
 }

@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="content\js\fuctions.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Accordeon\Accordeon.cshtml" />
     <None Include="Checkbox\Checkbox.cshtml" />
     <None Include="DynamicTable\DynamicGroupedTable.cshtml" />
@@ -30,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cloudcrate.AspNetCore.Blazor.Browser.Storage" Version="0.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0" />
   </ItemGroup>

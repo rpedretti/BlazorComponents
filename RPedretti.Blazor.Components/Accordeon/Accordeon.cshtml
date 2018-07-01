@@ -6,7 +6,7 @@
          aria-expanded="@Expanded.ToString().ToLower()"
          aria-label="@Title"
          class="@($"accordeon-title{(CenterTitle ? " -center" : null)}")"
-         onkeypress="@(k => HandleKeyPress(k, () => Expanded = !Expanded))"
+         onkeydown="@(k => HandleKeyPress(k, () => Expanded = !Expanded))"
          onclick="@(() => Expanded = !Expanded)">
         <span aria-hidden="true" id="accordeon-title" class="title">@Title</span>
     </div>

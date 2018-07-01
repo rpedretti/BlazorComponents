@@ -1,8 +1,8 @@
 ﻿@page "/counter"
 @inherits CounterPageBase
 
-<Counter
-    Title="@CounterTitle"
-    ButtonText="@CounterIncrementDescription"
-    IncrementAmount="@IncrementAmount"
-    bind-CurrentCount="@CurrentCount"/>
+<Counter Title="@CounterTitle"
+         ButtonText="@CounterIncrementDescription"
+         IncrementAmount="@IncrementAmount"
+         CurrentCount="CurrentCount" 
+         CurrentCountChanged="@CounterChanged"/>

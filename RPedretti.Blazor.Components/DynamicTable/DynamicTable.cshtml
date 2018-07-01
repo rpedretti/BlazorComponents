@@ -10,7 +10,7 @@
                     var h = header;
                     <th tabindex="@(h.CanSort ? "0" : null)"
                         class="@($"table-header {h.Classes}{(h.Hidden ? " -hidden" : null)}")"
-                        onkeypress="@(k => HandleKeyPress(k, () => { if (h.CanSort) Sort(h); }))"
+                        onkeydown="@(k => HandleKeyPress(k, () => { if (h.CanSort) Sort(h); }))"
                         onclick="@(() => { if (h.CanSort) Sort(h); })">
                         @h.Title
                         @if (h.CanSort)

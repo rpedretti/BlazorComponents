@@ -8,14 +8,26 @@ namespace BlazorApp40.Services
 {
     public sealed class ImdbService : IMovieService
     {
-        private const string key = "5cea5c6";
+        #region Fields
+
         private const string _baseUrl = "http://www.omdbapi.com/?apikey=" + key;
+
+        private const string key = "5cea5c6";
+
         private readonly HttpClient httpClient;
+
+        #endregion Fields
+
+        #region Constructors
 
         public ImdbService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         public async Task<MovieSearchResult> FindMoviesByPattern(string pattern, int page)
         {
@@ -58,5 +70,7 @@ namespace BlazorApp40.Services
             var movie = JsonUtil.Deserialize<Movie>(content);
             return movie;
         }
+
+        #endregion Methods
     }
 }

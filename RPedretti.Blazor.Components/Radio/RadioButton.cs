@@ -2,8 +2,12 @@
 {
     public class RadioButton
     {
+        #region Properties
+
+        public bool Disabled { get; set; }
         public string Label { get; set; }
         public object Value { get; set; }
-        public bool Disabled { get; set; }
+
+        #endregion Properties
     }
 }

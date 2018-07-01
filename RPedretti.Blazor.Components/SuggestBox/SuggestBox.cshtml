@@ -1,41 +1,41 @@
 ﻿@inherits SuggestBoxBase
 @using RPedretti.Blazor.Components.Spinner
 
-<div class="@($"sugest-box{(OpenSuggestion ? " -open" : null)}")">
+<div data-widget="acessible-suggest" class="@($"suggest-box{(!LoadingSuggestion && OpenSuggestion ? " -open" : null)}")">
     <div class="sb-input">
         <input type="text"
+               id="@SuggestBoxId"
+               autocomplete="off"
                class="form-control"
-               onfocusin="@(() => HasFocus = true)"
-               onfocusout="@(() => HasFocus = internalSuggestions?.Count > 0)"
+               aria-describedby="desc"
+               aria-autocomplete="both"
+               aria-owns="results"
+               aria-expanded="@OpenSuggestion"
+               aria-activedescendant="@(_suggestionItems.Any(s => s.Selected) ? "selectedOption" : "")"
+               onfocusout="@(() => OpenSuggestion = false)"
+               onfocusin="@OnFocusIn"
+               onkeydown="@HandleKeyDown"
                bind="@Query" />
-    </div>
-    @if (OpenSuggestion)
-    {
         <div class="sb-flyout">
-            @if (LoadingSuggestion)
-            {
-                <div class="sb-progress">
-                    <ProgressBar Active />
-                </div>
-            }
-            else if (!LoadingSuggestion && internalSuggestions?.Count > 0)
-            {
-                <ol>
-                    @for (var i = 0; i < internalSuggestions.Count; i++)
-                    {
-                        var s = internalSuggestions[i];
-                        var isLast = i == internalSuggestions.Count - 1;
-                        <li tabindex="0"
-                            onclick="@(() => InternalSuggestionSelected(s))">
-                            <p class="sb-suggestion">@s</p>
-                        </li>
-                    }
-                </ol>
-            }
-            else
-            {
-                <p class="sb-noresult">No result</p>
-            }
+            <ul id="results" role="listbox" tabindex="0">
+                @for (var i = 0; i < _suggestionItems.Count; i++)
+                {
+                    var s = _suggestionItems[i];
+                    var isLast = i == _suggestionItems.Count - 1;
+                    <li tabindex="-1"
+                        id="@(s.Selected ? "selectedOption" : null)"
+                        role="option"
+                        aria-selected="@(s.Selected.ToString().ToLower())"
+                        onclick="@(() => InternalSuggestionSelected(s))">
+                        <p class="sb-suggestion">@s.Value</p>
+                    </li>
+                }
+            </ul>
         </div>
-    }
+        <span id="desc" style="display: none;">@Description</span>
+    </div>
+    <div class="sb-progress">
+        <Spinner Active="@LoadingSuggestion" Size="SpinnerSize.EXTRA_SMALL" />
+    </div>
+    <div aria-live="polite" class="screen-reader-text" aria-label="@A11yLabel"></div>
 </div>

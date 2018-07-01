@@ -1,4 +1,6 @@
-﻿$small: 40px;
+﻿$extrasmall: 20px;
+$border-extrasmall: 2px;
+$small: 40px;
 $border-small: 4px;
 $medium: 60px;
 $border-medium: 6px;
@@ -17,6 +19,16 @@ $border-large: 8px;
 }
 
 .spinner-wrapper {
+    &.-extra_small {
+        .spinner {
+            @include spinner-size($extrasmall, $border-extrasmall);
+        }
+
+        &.-centered {
+            @include spinner-center($extrasmall);
+        }
+    }
+
     &.-small {
         .spinner {
             @include spinner-size($small, $border-small);

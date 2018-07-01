@@ -1,5 +1,4 @@
 ﻿using BlazorApp40.Models;
-using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using RPedretti.Blazor.Components;
 using System;
@@ -8,22 +7,25 @@ namespace BlazorApp40.Components.MoviePoster
 {
     public class MoviePosterBase : BaseAccessibleComponent
     {
-        [Parameter] protected Action OnClick { get; set; }
+        #region Fields
+
+        protected bool ImageError;
+        protected bool ImageLoaded = false;
+
+        #endregion Fields
+
+        #region Properties
 
         [Parameter] protected MoviePosterModel Movie { get; set; }
+        [Parameter] protected Action OnClick { get; set; }
 
-        protected bool ImageLoaded = false;
-        protected bool ImageError;
+        #endregion Properties
+
+        #region Methods
 
         protected void HandleClick()
         {
             OnClick?.Invoke();
-        }
-
-        protected void UpdateLoader()
-        {
-            ImageLoaded = true;
-            StateHasChanged();
         }
 
         protected void UpdateError()
@@ -32,5 +34,13 @@ namespace BlazorApp40.Components.MoviePoster
             ImageLoaded = true;
             StateHasChanged();
         }
+
+        protected void UpdateLoader()
+        {
+            ImageLoaded = true;
+            StateHasChanged();
+        }
+
+        #endregion Methods
     }
 }

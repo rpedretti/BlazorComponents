@@ -5,12 +5,17 @@ namespace RPedretti.Blazor.Components.Radio
 {
     public class RadioGroupBase : BaseComponent
     {
+        #region Properties
 
-        [Parameter] protected RadioOrientation Orientation { get; set; } = RadioOrientation.VERTICAL;
         [Parameter] protected RadioButton[] Buttons { get; set; }
+        [Parameter] protected bool CanDeselect { get; set; }
+        [Parameter] protected RadioOrientation Orientation { get; set; } = RadioOrientation.VERTICAL;
         [Parameter] protected RadioButton Selected { get; set; }
         [Parameter] protected Action<RadioButton> SelectedChanged { get; set; }
-        [Parameter] protected bool CanDeselect { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         protected void SelectButton(RadioButton button)
         {
@@ -25,5 +30,7 @@ namespace RPedretti.Blazor.Components.Radio
                 SelectedChanged?.Invoke(button);
             }
         }
+
+        #endregion Methods
     }
 }

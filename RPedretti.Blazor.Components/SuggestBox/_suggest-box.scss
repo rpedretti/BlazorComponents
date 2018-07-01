@@ -1,14 +1,8 @@
-﻿.sugest-box {
+﻿.suggest-box {
     position: relative;
 
-    &.-open > .sb-input {
-        .form-control {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-    }
-
     .sb-flyout {
+        display: none;
         padding: 12px;
         max-height: 200px;
         overflow-x: hidden;
@@ -26,24 +20,43 @@
         border-bottom-right-radius: 4px;
         z-index: 200;
 
-        ol {
+        ul {
             list-style: none;
             padding: 0;
             margin: 0;
+
+            li {
+                &:focus {
+                    outline: 0;
+                    box-shadow: 0 0 0 0.2rem #9A9A9A;
+                }
+            }
+
+            .sb-suggestion:last-of-type {
+                margin-bottom: 0;
+            }
+
+            > .sb-noresult {
+                margin: 0 auto;
+                text-align: center;
+            }
+        }
+    }
+
+    .sb-progress {
+        position: absolute;
+        right: 12px;
+        top: 8px;
+    }
+
+    &.-open {
+        > .sb-input .form-control {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
         }
 
-        > .sb-progress {
-            width: 80%;
-            margin: 0 auto;
-        }
-
-        .sb-suggestion:last-of-type {
-            margin-bottom: 0;
-        }
-
-        > .sb-noresult {
-            margin: 0 auto;
-            text-align: center;
+        > .sb-input .sb-flyout {
+            display: block;
         }
     }
 }

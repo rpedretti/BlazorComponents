@@ -9,7 +9,7 @@
              aria-checked="@(b == Selected ? "true" : "false")"
              aria-disabled="@(b.Disabled ? "true" : "false")"
              tabindex="@(!b.Disabled ? "0" : null)"
-             onkeypress="@(k => HandleKeyPress(k, () => { if (!b.Disabled) SelectButton(b); }))"
+             onkeydown="@(k => HandleKeyPress(k, () => { if (!b.Disabled) SelectButton(b); }))"
              onclick="@(() => { if (!b.Disabled) SelectButton(b); })">
             @b.Label
         </div>

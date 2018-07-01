@@ -1,6 +1,6 @@
 ﻿using BlazorApp40.Models;
 using BlazorApp40.Services;
-using Microsoft.AspNetCore.Blazor;
+using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;
 using System.Collections.Generic;
@@ -10,28 +10,59 @@ using System.Threading.Tasks;
 
 namespace BlazorApp40.Pages.Movies
 {
-    public class MoviesBase : BlazorComponent
+    public class MoviesBase : BlazorComponent, IDisposable
     {
-        [Inject]
-        private IMovieService _movieService { get; set; }
+        #region Fields
+
         private Dictionary<int, IEnumerable<MoviePosterModel>> CachedMovies = new Dictionary<int, IEnumerable<MoviePosterModel>>();
+
         private CancellationTokenSource requestToken;
 
-        protected List<MoviePosterModel> Movies { get; set; } = new List<MoviePosterModel>();
-        protected string SearchMovieTitle { get; set; }
-        protected int MoviesCount { get; set; }
+        #endregion Fields
+
+        #region Properties
+
+        [Inject] private LocalStorage _localStorage { get; set; }
+
+        [Inject] private IMovieService _movieService { get; set; }
+
         protected int CurrentPage { get; set; }
-        protected int PageCount { get; set; }
-        protected bool Loading { get; set; }
+
         protected bool HasContent { get; set; }
+
+        protected bool Loading { get; set; }
+
+        protected List<MoviePosterModel> Movies { get; set; }
+
+        protected int MoviesCount { get; set; }
+
+        protected int PageCount { get; set; }
+
+        protected string SearchMovieTitle { get; set; }
+
+        #endregion Properties
+
+        #region Methods
+
+        protected override void OnInit()
+        {
+            SearchMovieTitle = _localStorage.GetItem("movieTitle");
+            Movies = _localStorage.GetItem<List<MoviePosterModel>>("movies") ?? new List<MoviePosterModel>();
+            MoviesCount = _localStorage.GetItem<int>("moviesCount");
+            PageCount = _localStorage.GetItem<int>("pageCount");
+            CurrentPage = _localStorage.GetItem<int>("page");
+            HasContent = MoviesCount > 0;
+            Console.WriteLine(Movies.Count);
+        }
 
         protected async void RequestPage(int page)
         {
             await GetMoviesAsync(page);
+            _localStorage.SetItem("page", page);
             StateHasChanged();
         }
 
-        public void ClearMovies()
+        protected void ClearMovies()
         {
             Movies.Clear();
             MoviesCount = 0;
@@ -39,18 +70,16 @@ namespace BlazorApp40.Pages.Movies
             CachedMovies.Clear();
         }
 
-        public async Task SearchAsync()
+        public void Dispose()
         {
-            ClearMovies();
-            await GetMoviesAsync();
+            _localStorage.RemoveItem("movies");
+            _localStorage.RemoveItem("moviesCount");
+            _localStorage.RemoveItem("pageCount");
+            _localStorage.RemoveItem("movieTitle");
+            _localStorage.RemoveItem("page");
         }
 
-        public void GoToMovie(string id)
-        {
-            Console.WriteLine($"Olar filme {id}");
-        }
-
-        public async Task GetMoviesAsync(int page = 1)
+        protected async Task GetMoviesAsync(int page = 1)
         {
             IEnumerable<MoviePosterModel> movies;
 
@@ -115,8 +144,26 @@ namespace BlazorApp40.Pages.Movies
                 Movies.AddRange(movies);
             }
 
+            _localStorage.SetItem("movies", Movies);
+            _localStorage.SetItem("moviesCount", MoviesCount);
+            _localStorage.SetItem("pageCount", PageCount);
+            _localStorage.SetItem("movieTitle", SearchMovieTitle);
+
             Loading = false;
             StateHasChanged();
         }
+
+        public void GoToMovie(string id)
+        {
+            Console.WriteLine($"Olar filme {id}");
+        }
+
+        public async Task SearchAsync()
+        {
+            ClearMovies();
+            await GetMoviesAsync();
+        }
+
+        #endregion Methods
     }
 }

@@ -4,8 +4,12 @@ namespace RPedretti.Blazor.Components.DynamicTable
 {
     public class DynamicTableGroup
     {
-        public string Title { get; set; }
-        public List<DynamicTableRow> Rows { get; set; }
+        #region Properties
+
         public bool Collapsed { get; set; }
+        public List<DynamicTableRow> Rows { get; set; }
+        public string Title { get; set; }
+
+        #endregion Properties
     }
 }

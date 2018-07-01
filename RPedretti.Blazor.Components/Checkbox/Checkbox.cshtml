@@ -6,7 +6,7 @@
      aria-label="@(A11yLabel ?? Label)"
      aria-checked="@Checked.ToString().ToLower()"
      aria-disabled="@Disabled.ToString().ToLower()"
-     onkeypress="@(k => HandleKeyPress(k, ToggleCheck))"
+     onkeydown="@(k => HandleKeyPress(k, ToggleCheck))"
      onclick="@ToggleCheck">
     <label aria-hidden="true" class="@($"checkbox-label far fa-{(Checked ? "check-": null)}square")">@Label</label>
 </div> 

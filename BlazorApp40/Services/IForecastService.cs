@@ -5,6 +5,10 @@ namespace BlazorApp40.Services
 {
     public interface IForecastService
     {
+        #region Methods
+
         Task<WeatherForecast[]> GetForecastAsync();
+
+        #endregion Methods
     }
 }

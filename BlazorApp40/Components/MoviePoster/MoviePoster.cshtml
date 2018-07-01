@@ -7,7 +7,7 @@
      aria-setsize="@A11ySetSize"
      role="@A11yRole"
      onclick="@HandleClick"
-     onkeypress="@(k => HandleKeyPress(k, OnClick))">
+     onkeydown="@(k => HandleKeyPress(k, OnClick))">
     <div class="movie-poster_card">
         <div class="movie-poster_face">
             @if (Movie.Poster == "N/A")

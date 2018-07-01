@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
-using Microsoft.AspNetCore.Blazor;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,14 +7,24 @@ namespace RPedretti.Blazor.Components.DynamicTable
 {
     public class DynamicTableBase : BaseComponent
     {
-        [Parameter] protected string Classes { get; set; }
-        [Parameter] protected IEnumerable<DynamicTableHeader> Headers { get; set; }
-        [Parameter] protected IEnumerable<DynamicTableRow> Rows { get; set; }
-        [Parameter] protected bool Loading { get; set; }
-        [Parameter] protected Func<string, bool, Task> SortRequest { get; set; }
+        #region Fields
 
         protected readonly Dictionary<DynamicTableHeader, bool> SortedTable = new Dictionary<DynamicTableHeader, bool>();
+
+        #endregion Fields
+
+        #region Properties
+
+        [Parameter] protected string Classes { get; set; }
         protected DynamicTableHeader CurrentOrdered { get; set; }
+        [Parameter] protected IEnumerable<DynamicTableHeader> Headers { get; set; }
+        [Parameter] protected bool Loading { get; set; }
+        [Parameter] protected IEnumerable<DynamicTableRow> Rows { get; set; }
+        [Parameter] protected Func<string, bool, Task> SortRequest { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         protected void Sort(DynamicTableHeader header)
         {
@@ -37,5 +46,7 @@ namespace RPedretti.Blazor.Components.DynamicTable
 
             SortedTable[CurrentOrdered] = !SortedTable[CurrentOrdered];
         }
+
+        #endregion Methods
     }
 }

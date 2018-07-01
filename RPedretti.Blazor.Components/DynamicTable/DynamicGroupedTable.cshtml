@@ -25,7 +25,7 @@
                 <span class="group-header" 
                       role="heading"
                       tabindex="0"
-                      onkeypress="@(k => HandleKeyPress(k, () => ToggleGroupCollapsed(g)))"
+                      onkeydown="@(k => HandleKeyPress(k, () => ToggleGroupCollapsed(g)))"
                       onclick="@(() => ToggleGroupCollapsed(g))">@g.Title</span>
                 <div class="group-content">
                     <table class="table">
