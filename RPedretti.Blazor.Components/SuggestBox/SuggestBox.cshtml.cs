@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
+using RPedretti.Blazor.Components.Operators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,37 +9,55 @@ using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.Components.SuggestBox
 {
-    public class SuggestBoxBase : BaseComponent
+    public class SuggestBoxBase : BaseComponent, IDisposable
     {
         #region Fields
 
-        private bool init = true;
+        private string _a11ylabel;
         private bool _loading;
+        private bool init = true;
         private string originalQuery;
-        protected readonly string directions = "Keyboard users, use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.";
-        protected List<SuggestionItem> _suggestionItems = new List<SuggestionItem>();
-        protected List<string> _suggestions;
-        protected string internalQuery;
-        protected bool AnnounceA11Y = false;
+        private DebounceDispatcher queryDispatcher = new DebounceDispatcher();
 
         #endregion Fields
 
-        #region Properties
+        #region Methods
 
-        private string _a11ylabel;
-        protected string A11yLabel {
+        private void UpdateLoadingA11yLabel(bool loading)
+        {
+            if (loading)
+            {
+                Console.WriteLine("update");
+                AnnounceA11Y = true;
+                A11yLabel = "Loading";
+            }
+        }
+
+        #endregion Methods
+
+        protected readonly string directions = "Keyboard users, use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.";
+        protected List<SuggestionItem> _suggestionItems = new List<SuggestionItem>();
+        protected List<string> _suggestions;
+        protected bool AnnounceA11Y = false;
+        protected string internalQuery;
+
+        protected string A11yLabel
+        {
             get => _a11ylabel;
             set => SetParameter(ref _a11ylabel, value, () => AnnounceA11Y = true);
         }
+
         [Parameter] protected string Description { get; set; }
         protected bool HasFocus { get; set; }
         protected string ListId { get; set; }
+
         [Parameter]
         protected bool LoadingSuggestion
         {
             get => _loading;
             set => SetParameter(ref _loading, value, () => UpdateLoadingA11yLabel(value));
         }
+
         [Parameter] protected int MaxSuggestions { get; set; }
         protected bool OpenSuggestion { get; set; }
 
@@ -48,13 +67,15 @@ namespace RPedretti.Blazor.Components.SuggestBox
             get => internalQuery;
             set
             {
-                SetParameter(ref internalQuery, value, () => QueryChanged?.Invoke(value));
+                if (SetParameter(ref internalQuery, value))
+                {
+                    queryDispatcher.Debounce(300, (v) => QueryChanged?.Invoke(v as string), value);
+                }
                 originalQuery = internalQuery;
             }
         }
 
         [Parameter] protected Func<string, Task> QueryChanged { get; set; }
-        protected string SuggestBoxId { get; set; }
 
         [Parameter]
         protected List<string> Suggestions
@@ -84,32 +105,12 @@ namespace RPedretti.Blazor.Components.SuggestBox
 
         [Parameter] protected Action<string> SuggestionSelected { get; set; }
 
-        #endregion Properties
-
-        #region Methods
-
-        private void UpdateLoadingA11yLabel(bool loading)
-        {
-            if (loading)
-            {
-                Console.WriteLine("update");
-                AnnounceA11Y = true;
-                A11yLabel = "Loading";
-            }
-        }
-
-        protected void OnFocusIn()
-        {
-            
-        }
-
         protected void HandleKeyDown(UIKeyboardEventArgs args)
         {
             if (_suggestionItems.Any())
             {
-                Console.WriteLine($"olar: {args.Key}");
                 SuggestionItem newSelected;
-                switch (args.Code)
+                switch (args.Key)
                 {
                     case "Enter":
                         if (!OpenSuggestion && _suggestionItems.Any())
@@ -152,6 +153,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
                         }
 
                         break;
+
                     case "ArrowDown":
                         if (OpenSuggestion)
                         {
@@ -179,11 +181,10 @@ namespace RPedretti.Blazor.Components.SuggestBox
                         }
 
                         break;
+
                     case "Tab":
                     case "Escape":
-                        _suggestionItems.ForEach(s => s.Selected = false);
-                        internalQuery = originalQuery;
-                        OpenSuggestion = false;
+                        ClearSelection();
                         break;
                 }
             }
@@ -198,13 +199,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
             Console.WriteLine("selected");
             AnnounceA11Y = true;
             A11yLabel = null;
-            RegisteredFunction.Invoke<int>("focus", SuggestBoxId);
-        }
-
-        protected override void OnInit()
-        {
-            SuggestBoxId = $"sugestbox-{Guid.NewGuid()}";
-            ListId = Guid.NewGuid().ToString();
+            RegisteredFunction.Invoke<int>("focusById", SuggestBoxId);
         }
 
         protected override void OnAfterRender()
@@ -213,7 +208,37 @@ namespace RPedretti.Blazor.Components.SuggestBox
             AnnounceA11Y = false;
         }
 
-        #endregion Methods
+        protected void OnFocusIn()
+        {
+            if (init)
+            {
+                init = false;
+                RegisteredFunction.Invoke<int>("initSuggestBox", SuggestBoxId);
+            }
+        }
+
+        protected override void OnInit()
+        {
+            SuggestBoxId = $"sugestbox-{Guid.NewGuid()}";
+            ListId = Guid.NewGuid().ToString();
+            SuggestBoxList.Add(this);
+        }
+
+        internal string SuggestBoxId { get; set; }
+
+        internal void ClearSelection()
+        {
+            _suggestionItems.ForEach(s => s.Selected = false);
+            internalQuery = originalQuery;
+            OpenSuggestion = false;
+            StateHasChanged();
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+            SuggestBoxList.Remove(this);
+        }
     }
 
     public sealed class SuggestionItem

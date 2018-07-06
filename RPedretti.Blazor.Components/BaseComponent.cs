@@ -1,7 +1,6 @@
 ﻿using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
-using RPedretti.Blazor.Components.Debug;
 using System;
 using System.Collections.Generic;
 

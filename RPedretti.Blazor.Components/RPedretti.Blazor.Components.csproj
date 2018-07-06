@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="content\js\fuctions.js" />
+    <None Remove="content\js\suggest-box\_suggest-box.js" />
+    <None Remove="content\js\_helpers.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildWebCompiler" Version="1.11.326" />
     <PackageReference Include="Cloudcrate.AspNetCore.Blazor.Browser.Storage" Version="0.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0" />

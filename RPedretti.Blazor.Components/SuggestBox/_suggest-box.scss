@@ -20,16 +20,13 @@
         border-bottom-right-radius: 4px;
         z-index: 200;
 
-        ul {
+        > .suggestion-list {
             list-style: none;
             padding: 0;
             margin: 0;
 
-            li {
-                &:focus {
-                    outline: 0;
-                    box-shadow: 0 0 0 0.2rem #9A9A9A;
-                }
+            .suggestion-item {
+                cursor: pointer;
             }
 
             .sb-suggestion:last-of-type {

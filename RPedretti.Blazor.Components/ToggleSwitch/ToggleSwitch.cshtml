@@ -1,7 +1,7 @@
 ﻿@inherits ToggleSwitchBase
 
 <div class="@($"toggle-switch{(Inline ? " -inline" : null)} -{Size.ToString().ToLower()}")">
-    <label class="@($"label{(Fill ? " -fill" : null)}")">@Label</label>
+    <label aria-hidden="true" class="@($"label{(Fill ? " -fill" : null)}")">@Label</label>
     <label class="switch">
         <input
             type="checkbox"
@@ -11,7 +11,7 @@
             tabindex="0"
             role="checkbox"
             aria-label="@Label"
-            aria-checked="@Checked.ToString()"
+            aria-checked="@Checked.ToString().ToLower()"
             class="@($"slider{(Round ? " -round" : null)}")"
             onkeydown="@(k => HandleKeyPress(k, ToggleChecked))"></span>
     </label>

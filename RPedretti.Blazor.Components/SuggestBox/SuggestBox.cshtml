@@ -12,17 +12,18 @@
                aria-owns="results"
                aria-expanded="@OpenSuggestion"
                aria-activedescendant="@(_suggestionItems.Any(s => s.Selected) ? "selectedOption" : "")"
-               onfocusout="@(() => OpenSuggestion = false)"
                onfocusin="@OnFocusIn"
                onkeydown="@HandleKeyDown"
+               oninput="(this.dispatchEvent(new CustomEvent('change', { bubbles: true })))"
                bind="@Query" />
         <div class="sb-flyout">
-            <ul id="results" role="listbox" tabindex="0">
+            <ul id="results" class="suggestion-list" role="listbox" tabindex="0">
                 @for (var i = 0; i < _suggestionItems.Count; i++)
                 {
                     var s = _suggestionItems[i];
                     var isLast = i == _suggestionItems.Count - 1;
                     <li tabindex="-1"
+                        class="suggestion-item"
                         id="@(s.Selected ? "selectedOption" : null)"
                         role="option"
                         aria-selected="@(s.Selected.ToString().ToLower())"
@@ -37,5 +38,5 @@
     <div class="sb-progress">
         <Spinner Active="@LoadingSuggestion" Size="SpinnerSize.EXTRA_SMALL" />
     </div>
-    <div aria-live="polite" class="screen-reader-text" aria-label="@A11yLabel"></div>
+    <div aria-live="polite" role="status" aria-label="@A11yLabel"></div>
 </div>

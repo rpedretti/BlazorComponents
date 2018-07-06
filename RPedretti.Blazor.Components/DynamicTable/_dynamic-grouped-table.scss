@@ -11,6 +11,16 @@
         &-header {
             margin-bottom: -2px;
         }
+
+        .table-row {
+            transition: background-color .2s ease-in-out, font-weight .2s ease-in-out;
+
+            &:focus,
+            &:hover {
+                background-color: #acacac;
+                font-weight: 600;
+            }
+        }
     }
 
     .group {
@@ -25,15 +35,6 @@
             transition: max-height 0.25s ease-in-out;
             overflow: hidden;
             max-height: 200px;
-
-            .table-row {
-                transition: background-color .2s ease-in-out, font-weight .2s ease-in-out;
-
-                &:hover {
-                    background-color: #acacac;
-                    font-weight: 600;
-                }
-            }
 
             .table-cell {
                 &:not(:last-of-type) {
