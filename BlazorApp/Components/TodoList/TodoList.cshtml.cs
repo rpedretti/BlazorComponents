@@ -1,19 +1,31 @@
 ﻿using BlazorApp.Models;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
+using RPedretti.Blazor.Components;
 using System;
 using System.Collections.Generic;
 
 namespace BlazorApp.Components
 {
-    public class TodoListBase : BlazorComponent
+    public class TodoListBase : BaseComponent
     {
         #region Properties
 
         [Parameter] protected string Id { get; set; }
         [Parameter] protected IList<TodoItem> Items { get; set; }
-        protected string NewTodoTitle { get; set; }
         [Parameter] protected Action OnItemsChanged { get; set; }
+
+        private string _previousTitle;
+        private string _newTodoTitle;
+        protected string NewTodoTitle
+        {
+            get => _newTodoTitle;
+            set
+            {
+                _previousTitle = _newTodoTitle;
+                _newTodoTitle = value;
+            }
+        }
 
         #endregion Properties
 
@@ -32,10 +44,10 @@ namespace BlazorApp.Components
             OnItemsChanged?.Invoke();
         }
 
-        protected void TitleChanged(UIChangeEventArgs a, TodoItem item)
+        protected override bool ShouldRender()
         {
-            item.Title = a.Value as string;
-            OnItemsChanged?.Invoke();
+            return string.IsNullOrEmpty(_previousTitle) && !string.IsNullOrEmpty(_newTodoTitle)
+                || string.IsNullOrEmpty(_newTodoTitle) && !string.IsNullOrEmpty(_previousTitle);
         }
 
         #endregion Methods

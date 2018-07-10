@@ -15,6 +15,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
 
         private string _a11ylabel;
         private bool _loading;
+        private bool _shouldRender;
         private bool init = true;
         private string originalQuery;
         private DebounceDispatcher queryDispatcher = new DebounceDispatcher();
@@ -55,7 +56,14 @@ namespace RPedretti.Blazor.Components.SuggestBox
         protected bool LoadingSuggestion
         {
             get => _loading;
-            set => SetParameter(ref _loading, value, () => UpdateLoadingA11yLabel(value));
+            set
+            {
+                SetParameter(ref _loading, value, () =>
+                {
+                    UpdateLoadingA11yLabel(value);
+                    _shouldRender = true;
+                });
+            }
         }
 
         [Parameter] protected int MaxSuggestions { get; set; }
@@ -69,7 +77,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
             {
                 if (SetParameter(ref internalQuery, value))
                 {
-                    queryDispatcher.Debounce(300, (v) => QueryChanged?.Invoke(v as string), value);
+                    queryDispatcher.Debounce(1000, (v) => QueryChanged?.Invoke(v as string), value);
                 }
                 originalQuery = internalQuery;
             }
@@ -83,7 +91,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
             get => _suggestions;
             set
             {
-                if (_suggestions != value)
+                SetParameter(ref _suggestions, value, () =>
                 {
                     OpenSuggestion = value?.Count > 0;
                     _suggestions = value;
@@ -99,7 +107,8 @@ namespace RPedretti.Blazor.Components.SuggestBox
                     Console.WriteLine("suggestion");
                     AnnounceA11Y = true;
                     A11yLabel = _suggestionItems?.Count > 0 ? $"{ _suggestionItems.Count } results. { directions }" : "no results";
-                }
+                    _shouldRender = true;
+                });
             }
         }
 
@@ -125,6 +134,8 @@ namespace RPedretti.Blazor.Components.SuggestBox
                                 InternalSuggestionSelected(selected);
                             }
                         }
+
+                        _shouldRender = true;
                         break;
 
                     case "ArrowUp":
@@ -148,10 +159,10 @@ namespace RPedretti.Blazor.Components.SuggestBox
                                 newSelected = _suggestionItems.Last();
                             }
 
-                            newSelected.Selected = true;
                             internalQuery = newSelected.Value;
+                            newSelected.Selected = true;
                         }
-
+                        _shouldRender = true;
                         break;
 
                     case "ArrowDown":
@@ -178,13 +189,16 @@ namespace RPedretti.Blazor.Components.SuggestBox
 
                             newSelected.Selected = true;
                             internalQuery = newSelected.Value;
+                            _shouldRender = true;
                         }
 
+                        _shouldRender = true;
                         break;
 
                     case "Tab":
                     case "Escape":
                         ClearSelection();
+                        _shouldRender = true;
                         break;
                 }
             }
@@ -200,6 +214,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
             AnnounceA11Y = true;
             A11yLabel = null;
             RegisteredFunction.Invoke<int>("focusById", SuggestBoxId);
+            _shouldRender = true;
         }
 
         protected override void OnAfterRender()
@@ -238,6 +253,11 @@ namespace RPedretti.Blazor.Components.SuggestBox
         {
             base.Dispose();
             SuggestBoxList.Remove(this);
+        }
+
+        protected override bool ShouldRender()
+        {
+            return _shouldRender;
         }
     }
 

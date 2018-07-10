@@ -1,5 +1,6 @@
 ﻿@inherits SuggestBoxBase
 @using RPedretti.Blazor.Components.Spinner
+@RenderCount
 
 <div data-widget="acessible-suggest" class="@($"suggest-box{(!LoadingSuggestion && OpenSuggestion ? " -open" : null)}")">
     <div class="sb-input">
