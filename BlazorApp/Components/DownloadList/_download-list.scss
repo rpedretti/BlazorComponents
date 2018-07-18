@@ -1,0 +1,71 @@
+﻿$spacing: 24px;
+
+.download-list {
+    width: 400px;
+    background-color: red;
+    transition: max-height .2s ease-in-out;
+    max-height: 0;
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    background-color: transparent;
+
+    .list-container {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        > .list-item {
+            height: 24px;
+            margin-bottom: 8px;
+            border-bottom: black 1px solid;
+
+            > .item-description {
+                width: 90%;
+                margin-bottom: 0;
+                margin-right: 4%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: inline-block;
+            }
+
+            > .item-remove {
+                width: 4%;
+                cursor: pointer;
+                vertical-align: super;
+            }
+            
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &.-show {
+        max-height: 300px;
+    }
+
+    &.-bottom-left {
+        bottom: 0;
+        left: $spacing;
+    }
+
+    &.-bottom-right {
+        bottom: 0;
+        right: $spacing;
+    }
+
+    &.-top-left {
+        top: 0;
+        left: $spacing;
+    }
+
+    &.-top-right {
+        top: 0;
+        right: $spacing;
+    }
+}

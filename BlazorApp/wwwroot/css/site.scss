@@ -1,8 +1,4 @@
-﻿@import "../../Components/styles/_all.scss";
-@import "../../Pages/styles/_all.scss";
-
-
-html, body {
+﻿html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -116,8 +112,8 @@ app >.spinner-wrapper {
     }
 
     .main > div {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
+        padding-left: 2rem;
+        padding-right: 1.5rem;
     }
 
     .navbar-toggler {
@@ -129,3 +125,6 @@ app >.spinner-wrapper {
         display: block;
     }
 }
+
+@import "../../Pages/styles/_all.scss";
+@import "../../Components/styles/_all.scss";

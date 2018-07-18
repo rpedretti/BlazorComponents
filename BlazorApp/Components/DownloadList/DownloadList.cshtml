@@ -1,0 +1,16 @@
+﻿@inherits DownloadListBase
+<div class="@($"download-list {FinalPosition} {(AvailableDownloads.Any() ? " -show" : null)}")">
+    @if (AvailableDownloads.Any())
+    {
+        <Accordeon CenterTitle Title="available downloads">
+            <ul class="list-container">
+                @foreach (var download in AvailableDownloads)
+                {
+                    <li class="list-item">
+                        <a href="@download.Url" class="item-description">@download.Description</a>
+                        <i class="fas fa-times item-remove" onclick="@(() => AvailableDownloads.Remove(download))"></i></li>
+                }
+            </ul>
+        </Accordeon>
+    }
+</div>

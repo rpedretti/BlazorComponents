@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Blazor;
+﻿using Blazor.Extensions;
+using BlazorApp.Services;
+using Microsoft.AspNetCore.Blazor;
+using Microsoft.AspNetCore.Blazor.Components;
 using RPedretti.Blazor.Components;
 using RPedretti.Blazor.Components.Radio;
 using System.Collections.Generic;
@@ -74,6 +77,8 @@ namespace BlazorApp.Pages.Index
             get => _someToggled2;
             set => SetParameter(ref _someToggled2, value, StateHasChanged);
         }
+
+        [Inject] protected DownloadManager downloadManager { get; set; }
 
         #endregion Properties
 
@@ -194,6 +199,11 @@ namespace BlazorApp.Pages.Index
         {
             get => _selectedRadioButton3;
             set => SetParameter(ref _selectedRadioButton3, value);
+        }
+
+        protected async Task RequestLongProcessAsync()
+        {
+            await downloadManager.RequestLongRunningProcess();
         }
     }
 }
