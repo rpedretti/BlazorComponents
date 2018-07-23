@@ -5,11 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Constant\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RPedretti.Blazor.Shared\RPedretti.Blazor.Shared.csproj" />
+    <ProjectReference Include="..\RPedretti.Security\RPedretti.Security.csproj" />
   </ItemGroup>
 
 </Project>

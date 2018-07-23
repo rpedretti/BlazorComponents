@@ -1,6 +1,7 @@
 ﻿using Blazor.Extensions;
 using BlazorApp.Domain;
 using Microsoft.AspNetCore.Blazor;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,44 +12,36 @@ namespace BlazorApp.Services
     public class DownloadManager
     {
         private readonly Dictionary<Guid, Action<DownloadResult>> downloadMap = new Dictionary<Guid, Action<DownloadResult>>();
-        private readonly HubConnection connection;
+        private HubConnection connection;
 
         public event EventHandler<NewDownloadAvailableArgs> NewDownloadAvailabe;
-
-        public DownloadManager(HubConnection connection)
+        
+        public void SetConnection(HubConnection connection)
         {
-            this.connection = connection;
+            if (this.connection != null)
+            {
+                //connection.Off();
+            }
 
-            connection.On("LongProcessFinished", NewMethod);
+            this.connection = connection;
+            connection.On<DownloadResult>("LongProcessFinished", NewMethod);
         }
 
-        private Task NewMethod(object o)
+        private async Task NewMethod(DownloadResult result)
         {
-            Console.WriteLine(o.ToString());
-            var deserialized = JsonUtil.Deserialize<DownloadResult>(o.ToString());
-            var guid = Guid.Parse(deserialized.Id);
-            if (downloadMap.ContainsKey(guid))
-            {
-                downloadMap[guid](deserialized);
-                downloadMap.Remove(guid);
-            }
-            return Task.CompletedTask;
+            Console.WriteLine(result);
+            await AddResultToList(result);
         }
 
         public async Task RequestLongRunningProcess()
         {
             var guid = Guid.NewGuid();
-            void instanceFunc(DownloadResult result)
-            {
-                AddResultToList(result);
-            }
-            downloadMap[guid] = instanceFunc;
             await connection.InvokeAsync("RequestLongProcessTaskAsync", guid);
         }
 
         public Task AddResultToList(DownloadResult result)
         {
-            Console.WriteLine($"ended {JsonUtil.Serialize(result)}");
+            Console.WriteLine($"ended {JsonConvert.SerializeObject(result)}");
             NewDownloadAvailabe?.Invoke(this, new NewDownloadAvailableArgs() { DownloadResult = result });
             return Task.CompletedTask;
         }

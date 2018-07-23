@@ -18,15 +18,12 @@ namespace BlazorApp.Shared
     {
         [Inject] protected DownloadManager DownloadManager { get; set; }
         [Inject] protected IStore Store { get; set; }
-        [Inject] protected HubConnection HubConnection { get; set; }
 
         protected List<string> GuestNames = new List<string>();
         protected ObservableCollection<DownloadResult> AvailableDowloads = new ObservableCollection<DownloadResult>();
 
         protected override Task OnInitAsync()
         {
-            HubConnection.On("connected", async o => { await HubConnection.InvokeAsync("NotifyConnected", o); });
-            HubConnection.On("GuestEntered", Notify);
             DownloadManager.NewDownloadAvailabe += ShowDownloads;
             return base.OnInitAsync();
         }
@@ -36,13 +33,6 @@ namespace BlazorApp.Shared
             var result = e.DownloadResult;
             result.Description = $"{result.Url} ({result.Id})";
             AvailableDowloads.Add(result);
-        }
-
-        private Task Notify(object o)
-        {
-            GuestNames.Add(o as string);
-            StateHasChanged();
-            return Task.CompletedTask;
         }
 
         public void Dispose()

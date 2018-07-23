@@ -95,9 +95,6 @@ app > .spinner-wrapper {
     /* Never collapse the sidebar for wide screens */
     display: block; } }
 
-.counter {
-  display: block; }
-
 .toggle-switch {
   margin-bottom: 14px; }
 
@@ -121,6 +118,11 @@ app > .spinner-wrapper {
     .dynamic-table .table .-r,
     .dynamic-grouped-table .table .-r {
       text-align: right; }
+
+.signalr .form-control {
+  max-width: 400px; }
+  .signalr .form-control:first-child {
+    margin-bottom: 12px; }
 
 .spinner-row {
   padding-bottom: 12px;
@@ -221,7 +223,7 @@ fieldset {
     right: 24px; }
 
 .counter {
-  display: -webkit-inline-box; }
+  display: inline-block; }
 
 .movie-poster {
   height: 200px;

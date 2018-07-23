@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using System;
@@ -9,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.SignalRServer.Hubs
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class BlazorHub : Hub
     {
         private Dictionary<Guid, Timer> timers = new Dictionary<Guid, Timer>();
 
         public override async Task OnConnectedAsync()
         {
-            await Clients.Caller.SendAsync("connected", Context.ConnectionId);
+            Console.WriteLine($"user: {Context.UserIdentifier}");
+            await Clients.Caller.SendAsync("connected", Context.UserIdentifier);
             await base.OnConnectedAsync();
         }
 
@@ -26,13 +29,14 @@ namespace RPedretti.Blazor.SignalRServer.Hubs
 
         public Task RequestLongProcessTaskAsync(string id)
         {
+            Console.WriteLine($"user: {Context.UserIdentifier}");
             var guid = Guid.NewGuid();
             var timer = new Timer(o =>
             {
                 (o as IClientProxy).SendAsync("LongProcessFinished", new { Id = id, Url = "http://pudim.com.br" });
                 timers[guid].Dispose();
                 timers.Remove(guid);
-            }, Clients.Caller, 5000, Timeout.Infinite);
+            }, Clients.User(Context.UserIdentifier), 5000, Timeout.Infinite);
 
             timers[guid] = timer;
 

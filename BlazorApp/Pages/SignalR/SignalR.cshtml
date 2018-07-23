@@ -1,0 +1,13 @@
+﻿@page "/signalr"
+@inherits SignalRBase
+
+<div class="signalr">
+    <form>
+        <div class="form-group">
+            <input class="form-control" type="text" autocomplete="username" placeholder="username" bind="@Username" />
+            <input class="form-control" type="password" autocomplete="current-password" placeholder="password" bind="@Password" />
+        </div>
+    </form>
+        <button class="btn btn-primary" onclick="@Login">Login</button>
+        <button class="btn btn-primary" onclick="@RequestLongProcessAsync">Request download (5s delay)</button>
+</div>

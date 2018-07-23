@@ -2,11 +2,16 @@
 using BlazorApp.Services;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
+using Newtonsoft.Json;
 using RPedretti.Blazor.Components;
 using RPedretti.Blazor.Components.Radio;
+using RPedretti.Blazor.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Pages.Index
@@ -40,7 +45,6 @@ namespace BlazorApp.Pages.Index
         #endregion Fields
 
         #region Properties
-
         protected List<string> FilteredList { get; set; }
 
         protected bool HasSelection =>
@@ -78,20 +82,18 @@ namespace BlazorApp.Pages.Index
             set => SetParameter(ref _someToggled2, value, StateHasChanged);
         }
 
-        [Inject] protected DownloadManager downloadManager { get; set; }
-
         #endregion Properties
 
         #region Methods
 
         protected void DragDrop(UIDragEventArgs args)
         {
-            System.Diagnostics.Debug.WriteLine("Drop: " + JsonUtil.Serialize(args));
+            System.Diagnostics.Debug.WriteLine("Drop: " + JsonConvert.SerializeObject(args));
         }
 
         protected void DragEnd(UIDragEventArgs args)
         {
-            System.Diagnostics.Debug.WriteLine("Drag end: " + JsonUtil.Serialize(args));
+            System.Diagnostics.Debug.WriteLine("Drag end: " + JsonConvert.SerializeObject(args));
         }
 
         protected void DragEnter(UIDragEventArgs args)
@@ -105,7 +107,7 @@ namespace BlazorApp.Pages.Index
                 args.DataTransfer.DropEffect = "copy";
             }
 
-            System.Diagnostics.Debug.WriteLine("Drag enter: " + JsonUtil.Serialize(args));
+            System.Diagnostics.Debug.WriteLine("Drag enter: " + JsonConvert.SerializeObject(args));
         }
 
         protected void DragStart(UIDragEventArgs args)
@@ -116,7 +118,7 @@ namespace BlazorApp.Pages.Index
                 new UIDataTransferItem { Type = "text/plain", Kind="olar" }
             };
 
-            System.Diagnostics.Debug.WriteLine("drag start: " + JsonUtil.Serialize(args));
+            System.Diagnostics.Debug.WriteLine("drag start: " + JsonConvert.SerializeObject(args));
         }
 
         protected async Task FetchSuggestions(string query)
@@ -199,11 +201,6 @@ namespace BlazorApp.Pages.Index
         {
             get => _selectedRadioButton3;
             set => SetParameter(ref _selectedRadioButton3, value);
-        }
-
-        protected async Task RequestLongProcessAsync()
-        {
-            await downloadManager.RequestLongRunningProcess();
         }
     }
 }
