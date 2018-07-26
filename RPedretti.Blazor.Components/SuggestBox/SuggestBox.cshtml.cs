@@ -28,7 +28,6 @@ namespace RPedretti.Blazor.Components.SuggestBox
         {
             if (loading)
             {
-                Console.WriteLine("update");
                 AnnounceA11Y = true;
                 A11yLabel = "Loading";
             }
@@ -104,7 +103,6 @@ namespace RPedretti.Blazor.Components.SuggestBox
                         }).ToList();
                     }
 
-                    Console.WriteLine("suggestion");
                     AnnounceA11Y = true;
                     A11yLabel = _suggestionItems?.Count > 0 ? $"{ _suggestionItems.Count } results. { directions }" : "no results";
                     _shouldRender = true;
@@ -210,7 +208,6 @@ namespace RPedretti.Blazor.Components.SuggestBox
             _suggestionItems.Clear();
             OpenSuggestion = false;
             SuggestionSelected?.Invoke(item.Value);
-            Console.WriteLine("selected");
             AnnounceA11Y = true;
             A11yLabel = null;
             RegisteredFunction.Invoke<int>("focusById", SuggestBoxId);

@@ -9,11 +9,12 @@
     <div class="top-row px-4">
         <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
     </div>
-    @foreach (var name in GuestNames)
+    @foreach (var message in Messages)
     {
+        var m = message;
         <div class="alert alert-warning alert-dismissible" role="alert">
-            Guest <strong>@name</strong> has arrived!
-            <button type="button" class="close" aria-label="Close" onclick="@(() => GuestNames.Remove(name))">
+            @m
+            <button type="button" class="close" aria-label="Close" onclick="@(() => Messages.Remove(m))">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -22,5 +23,5 @@
         @Body
     </div>
 
-    <DownloadList AvailableDownloads="@AvailableDowloads"/>
+    <DownloadList/>
 </div>

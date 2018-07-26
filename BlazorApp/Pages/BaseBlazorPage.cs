@@ -2,7 +2,7 @@
 
 namespace BlazorApp.Pages
 {
-    public abstract class BaseBlazorPage : Blazor.Fluxor.Temporary.FluxorComponent
+    public abstract class BaseBlazorPage : Blazor.Fluxor.Components.FluxorComponent
     {
         #region Methods
 

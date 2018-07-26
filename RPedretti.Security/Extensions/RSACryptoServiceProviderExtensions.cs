@@ -56,7 +56,6 @@ namespace RPedretti.Security.Extensions
         public static string CustomToXmlString(this RSA rsa, bool includePrivateParameters = false)
         {
             RSAParameters parameters = rsa.ExportParameters(includePrivateParameters);
-            Console.WriteLine($"rsa params exported");
 
             if (includePrivateParameters)
             {

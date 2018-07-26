@@ -38,7 +38,7 @@
                 cursor: pointer;
                 vertical-align: super;
             }
-            
+
             &:last-child {
                 margin-bottom: 0;
             }
@@ -50,22 +50,12 @@
     }
 
     &.-bottom-left {
-        bottom: 0;
+        bottom: 1px;
         left: $spacing;
     }
 
     &.-bottom-right {
-        bottom: 0;
-        right: $spacing;
-    }
-
-    &.-top-left {
-        top: 0;
-        left: $spacing;
-    }
-
-    &.-top-right {
-        top: 0;
+        bottom: 1px;
         right: $spacing;
     }
 }

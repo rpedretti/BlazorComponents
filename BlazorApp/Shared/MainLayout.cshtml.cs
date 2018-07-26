@@ -1,43 +1,27 @@
-﻿using Blazor.Extensions;
-using Blazor.Fluxor;
-using BlazorApp.Domain;
-using BlazorApp.Services;
-using Microsoft.AspNetCore.Blazor;
+﻿using Blazor.Fluxor;
+using BlazorApp.Managers;
 using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.AspNetCore.Blazor.Layouts;
-using RPedretti.Blazor.Components;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlazorApp.Shared
 {
-    public class MainLayoutBase : BlazorLayoutComponent, IDisposable
+    public class MainLayoutBase : BlazorLayoutComponent
     {
-        [Inject] protected DownloadManager DownloadManager { get; set; }
         [Inject] protected IStore Store { get; set; }
+        [Inject] private NotificationManager NotificationManager { get; set; }
 
-        protected List<string> GuestNames = new List<string>();
-        protected ObservableCollection<DownloadResult> AvailableDowloads = new ObservableCollection<DownloadResult>();
-
-        protected override Task OnInitAsync()
+        protected override void OnInit()
         {
-            DownloadManager.NewDownloadAvailabe += ShowDownloads;
-            return base.OnInitAsync();
+            NotificationManager.ShowNotification += ShowNotification;
         }
 
-        private void ShowDownloads(object sender, NewDownloadAvailableArgs e)
+        private void ShowNotification(object sender, NotificationManager.NotificationEventArgs e)
         {
-            var result = e.DownloadResult;
-            result.Description = $"{result.Url} ({result.Id})";
-            AvailableDowloads.Add(result);
+            Messages.Add(e.Message);
+            StateHasChanged();
         }
 
-        public void Dispose()
-        {
-            DownloadManager.NewDownloadAvailabe -= ShowDownloads;
-        }
+        protected List<string> Messages = new List<string>();
     }
 }

@@ -1,10 +1,7 @@
-﻿using BlazorApp.Domain;
+﻿using BlazorApp.Shared.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BlazorApp.Services
+namespace BlazorApp.Managers
 {
     public class NewDownloadAvailableArgs : EventArgs
     {

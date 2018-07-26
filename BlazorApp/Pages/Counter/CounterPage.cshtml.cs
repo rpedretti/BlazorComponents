@@ -44,6 +44,6 @@ namespace BlazorApp.Pages
 
         #endregion Constructors
 
-        public int CurrentCount => State.Current.ClickCount;
+        public int CurrentCount => State.Value.ClickCount;
     }
 }

@@ -210,16 +210,10 @@ fieldset {
   .download-list.-show {
     max-height: 300px; }
   .download-list.-bottom-left {
-    bottom: 0;
+    bottom: 1px;
     left: 24px; }
   .download-list.-bottom-right {
-    bottom: 0;
-    right: 24px; }
-  .download-list.-top-left {
-    top: 0;
-    left: 24px; }
-  .download-list.-top-right {
-    top: 0;
+    bottom: 1px;
     right: 24px; }
 
 .counter {

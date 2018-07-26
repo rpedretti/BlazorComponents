@@ -9,7 +9,6 @@ namespace BlazorApp.Store.Counter
 
         public override CounterState Reduce(CounterState state, IAction action)
         {
-            Console.WriteLine(action);
             switch (action)
             {
                 case IncrementCounterAction ica:

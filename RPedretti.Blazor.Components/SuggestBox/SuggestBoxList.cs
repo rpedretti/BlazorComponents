@@ -20,7 +20,6 @@ namespace RPedretti.Blazor.Components.SuggestBox
 
         public static void ClearSelection(string id)
         {
-            Console.WriteLine($"has key {id}? {_suggestionsBase.ContainsKey(id)}");
             if (_suggestionsBase.TryGetValue(id, out SuggestBoxBase suggest))
             {
                 suggest.ClearSelection();

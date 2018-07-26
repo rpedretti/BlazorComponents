@@ -8,6 +8,7 @@
             <input class="form-control" type="password" autocomplete="current-password" placeholder="password" bind="@Password" />
         </div>
     </form>
-        <button class="btn btn-primary" onclick="@Login">Login</button>
-        <button class="btn btn-primary" onclick="@RequestLongProcessAsync">Request download (5s delay)</button>
+    <button class="btn btn-primary" onclick="@LoginAsync" disabled="@HasToken">Login</button>
+    <button class="btn btn-primary" onclick="@LogoutAsync" disabled="@(!HasToken)">Logout</button>
+    <button class="btn btn-primary" onclick="@RequestLongProcessAsync" disabled="@(!HasToken)">Request download (5s delay)</button>
 </div>

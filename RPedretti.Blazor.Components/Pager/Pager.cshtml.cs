@@ -53,8 +53,6 @@ namespace RPedretti.Blazor.Components.Pager
                         Indicators[i].Page = page;
                     }
 
-                    Console.WriteLine($"limit: {limit}\tMax: {MaxIndicators}");
-
                     if (limit < MaxIndicators)
                     {
                         for (int i = limit; i < MaxIndicators; i++)

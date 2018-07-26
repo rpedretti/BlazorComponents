@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,10 +9,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using RPedretti.Blazor.Shared;
 using RPedretti.Blazor.SignalRServer.Hubs;
 using RPedretti.Blazor.SignalRServer.Repository;
 
@@ -35,13 +30,7 @@ namespace RPedretti.Blazor.SignalRServer
             services.AddSingleton<IUserRepository, UserRepository>();
 
             services.AddCors();
-            services.AddSignalR().AddMessagePackProtocol(o =>
-            {
-                o.FormatterResolvers = new List<MessagePack.IFormatterResolver>()
-                {
-                    MessagePack.Resolvers.StandardResolver.Instance
-                };
-            });
+            services.AddSignalR();
 
             services.AddAuthentication(options =>
             {
@@ -76,7 +65,6 @@ namespace RPedretti.Blazor.SignalRServer
                     OnMessageReceived = context =>
                     {
                         var accessToken = context.Request.Query["access_token"];
-                        Console.WriteLine($"message with token: {accessToken}");
 
                         // If the request is for our hub...
                         var path = context.HttpContext.Request.Path;

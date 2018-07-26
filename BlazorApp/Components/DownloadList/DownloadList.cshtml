@@ -6,9 +6,10 @@
             <ul class="list-container">
                 @foreach (var download in AvailableDownloads)
                 {
+                    var d = download;
                     <li class="list-item">
-                        <a href="@download.Url" class="item-description">@download.Description</a>
-                        <i class="fas fa-times item-remove" onclick="@(() => AvailableDownloads.Remove(download))"></i></li>
+                        <a href="@download.Url" class="item-description">@d.Description</a>
+                        <i class="fas fa-times item-remove" onclick="@(() => RemoveDownloadFromList(d))"></i></li>
                 }
             </ul>
         </Accordeon>

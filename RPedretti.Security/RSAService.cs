@@ -18,10 +18,8 @@ namespace RPedretti.Security
         {
             using (var rsa = RSA.Create())
             {
-                Console.WriteLine($"rsa created");
                 var publicKey = rsa.CustomToXmlString();
                 var publicPrivate = rsa.CustomToXmlString(true);
-                Console.WriteLine($"rsa parsed");
 
                 return Tuple.Create(publicKey, publicPrivate);
             }

@@ -104,7 +104,6 @@ namespace BlazorApp.Pages.Movies
                 }
                 catch (OperationCanceledException)
                 {
-                    Console.WriteLine("Task cancelled");
                 }
                 catch
                 {
@@ -134,7 +133,6 @@ namespace BlazorApp.Pages.Movies
             PageCount = _localStorage.GetItem<int>("pageCount");
             CurrentPage = _localStorage.GetItem<int>("page");
             HasContent = MoviesCount > 0;
-            Console.WriteLine(Movies.Count);
         }
 
         protected async void RequestPage(int page)

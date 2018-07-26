@@ -1,4 +1,5 @@
 ﻿using Blazor.Fluxor;
+using BlazorApp.Managers;
 using BlazorApp.Services;
 using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 using Microsoft.AspNetCore.Blazor.Browser.Rendering;
@@ -22,7 +23,10 @@ namespace BlazorApp
                     .AddMiddleware<Blazor.Fluxor.ReduxDevTools.ReduxDevToolsMiddleware>()
                     .AddMiddleware<Blazor.Fluxor.Routing.RoutingMiddleware>()
                 );
+
+                services.AddSingleton<NotificationManager>();
                 services.AddSingleton<DownloadManager>();
+                services.AddSingleton<BlazorHubConnectionManager>();
                 services.AddStorage();
             });
 

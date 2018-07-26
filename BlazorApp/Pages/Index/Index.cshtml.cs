@@ -1,17 +1,10 @@
-﻿using Blazor.Extensions;
-using BlazorApp.Services;
-using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor;
 using Newtonsoft.Json;
 using RPedretti.Blazor.Components;
 using RPedretti.Blazor.Components.Radio;
-using RPedretti.Blazor.Shared.Models;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Pages.Index
