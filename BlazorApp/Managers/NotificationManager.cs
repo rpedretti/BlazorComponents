@@ -1,13 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlazorApp.Managers
 {
     public class NotificationManager
     {
+        #region Events
+
         public event EventHandler<NotificationEventArgs> ShowNotification;
+
+        #endregion Events
+
+        #region Methods
 
         public void ShowNotificationMessage(string message, string title)
         {
@@ -18,10 +21,20 @@ namespace BlazorApp.Managers
             });
         }
 
+        #endregion Methods
+
+        #region Classes
+
         public class NotificationEventArgs : EventArgs
         {
+            #region Properties
+
             public string Message { get; set; }
             public string Title { get; set; }
+
+            #endregion Properties
         }
+
+        #endregion Classes
     }
 }

@@ -9,14 +9,18 @@ namespace BlazorApp.Components
 {
     public class TodoListBase : BaseComponent
     {
+        #region Fields
+
+        private string _newTodoTitle;
+        private string _previousTitle;
+
+        #endregion Fields
+
         #region Properties
 
         [Parameter] protected string Id { get; set; }
         [Parameter] protected IList<TodoItem> Items { get; set; }
-        [Parameter] protected Action OnItemsChanged { get; set; }
 
-        private string _previousTitle;
-        private string _newTodoTitle;
         protected string NewTodoTitle
         {
             get => _newTodoTitle;
@@ -26,6 +30,8 @@ namespace BlazorApp.Components
                 _newTodoTitle = value;
             }
         }
+
+        [Parameter] protected Action OnItemsChanged { get; set; }
 
         #endregion Properties
 

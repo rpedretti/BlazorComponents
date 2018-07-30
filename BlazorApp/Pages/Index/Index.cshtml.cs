@@ -38,6 +38,7 @@ namespace BlazorApp.Pages.Index
         #endregion Fields
 
         #region Properties
+
         protected List<string> FilteredList { get; set; }
 
         protected bool HasSelection =>

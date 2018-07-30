@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Browser.Interop;
 using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.JSInterop;
 using RPedretti.Blazor.Components.Operators;
 using System;
 using System.Collections.Generic;
@@ -210,7 +210,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
             SuggestionSelected?.Invoke(item.Value);
             AnnounceA11Y = true;
             A11yLabel = null;
-            RegisteredFunction.Invoke<int>("focusById", SuggestBoxId);
+            JSRuntime.Current.InvokeAsync<int>("focusById", SuggestBoxId);
             _shouldRender = true;
         }
 
@@ -225,7 +225,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
             if (init)
             {
                 init = false;
-                RegisteredFunction.Invoke<int>("initSuggestBox", SuggestBoxId);
+                JSRuntime.Current.InvokeAsync<int>("initSuggestBox", SuggestBoxId);
             }
         }
 
@@ -234,6 +234,11 @@ namespace RPedretti.Blazor.Components.SuggestBox
             SuggestBoxId = $"sugestbox-{Guid.NewGuid()}";
             ListId = Guid.NewGuid().ToString();
             SuggestBoxList.Add(this);
+        }
+
+        protected override bool ShouldRender()
+        {
+            return _shouldRender;
         }
 
         internal string SuggestBoxId { get; set; }
@@ -250,11 +255,6 @@ namespace RPedretti.Blazor.Components.SuggestBox
         {
             base.Dispose();
             SuggestBoxList.Remove(this);
-        }
-
-        protected override bool ShouldRender()
-        {
-            return _shouldRender;
         }
     }
 

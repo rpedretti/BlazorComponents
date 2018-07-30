@@ -8,6 +8,18 @@ namespace RPedretti.Blazor.Shared.Models
     /// </summary>
     public sealed class SecureAuthenticationModel
     {
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the content.
+        /// </summary>
+        /// <value>
+        /// The content.
+        /// </value>
+        [JsonProperty(PropertyName = "content")]
+        [Required]
+        [Display(Name = "content")]
+        public string Content { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier.
@@ -20,15 +32,6 @@ namespace RPedretti.Blazor.Shared.Models
         [Display(Name = "id")]
         public string Id { get; set; }
 
-        /// <summary>
-        /// Gets or sets the content.
-        /// </summary>
-        /// <value>
-        /// The content.
-        /// </value>
-        [JsonProperty(PropertyName = "content")]
-        [Required]
-        [Display(Name = "content")]
-        public string Content { get; set; }
+        #endregion Properties
     }
 }

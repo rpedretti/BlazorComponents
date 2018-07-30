@@ -12,9 +12,29 @@ namespace RPedretti.Blazor.SignalRServer.Hubs
     [Authorize(AuthenticationSchemes = "Bearer")]
     public class BlazorHub : Hub
     {
+        #region Fields
+
         private static Dictionary<string, List<string>> connections = new Dictionary<string, List<string>>();
-        private static Dictionary<Guid, Timer> timers = new Dictionary<Guid, Timer>();
         private static Dictionary<string, List<DownloadResult>> downloads = new Dictionary<string, List<DownloadResult>>();
+        private static Dictionary<Guid, Timer> timers = new Dictionary<Guid, Timer>();
+
+        #endregion Fields
+
+        #region Classes
+
+        private class TaskId
+        {
+            #region Properties
+
+            public string Id { get; set; }
+            public IClientProxy User { get; set; }
+
+            #endregion Properties
+        }
+
+        #endregion Classes
+
+        #region Methods
 
         public override async Task OnConnectedAsync()
         {
@@ -33,6 +53,16 @@ namespace RPedretti.Blazor.SignalRServer.Hubs
             if (!connections[Context.UserIdentifier].Any())
             {
                 await Clients.Others.SendAsync("GuestLeft", Context.UserIdentifier);
+            }
+        }
+
+        public async Task RemoveFromDownloads(string id)
+        {
+            var download = downloads[Context.UserIdentifier].FirstOrDefault();
+            if (download != null)
+            {
+                downloads[Context.UserIdentifier].Remove(download);
+                await Clients.User(Context.UserIdentifier).SendAsync("DownloadRemoved", id);
             }
         }
 
@@ -58,20 +88,6 @@ namespace RPedretti.Blazor.SignalRServer.Hubs
             return Task.CompletedTask;
         }
 
-        public async Task RemoveFromDownloads(string id)
-        {
-            var download = downloads[Context.UserIdentifier].FirstOrDefault();
-            if (download != null)
-            {
-                downloads[Context.UserIdentifier].Remove(download);
-                await Clients.User(Context.UserIdentifier).SendAsync("DownloadRemoved", id);
-            }
-        }
-
-        private class TaskId
-        {
-            public string Id { get; set; }
-            public IClientProxy User { get; set; }
-        }
+        #endregion Methods
     }
 }

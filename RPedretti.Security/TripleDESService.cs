@@ -9,16 +9,34 @@ namespace RPedretti.Security
     /// </summary>
     public class TripleDESService
     {
+        #region Methods
+
         /// <summary>
-        /// Generates a key.
+        /// Decrypts the specified encrypted text.
         /// </summary>
-        /// <returns>A byte array of the generated key</returns>
-        public byte[] GenerateKey()
+        /// <param name="encryptedText">The encrypted text to be decrypted.</param>
+        /// <param name="key">The key to be used at the decryption.</param>
+        /// <returns></returns>
+        public string Decrypt(byte[] encryptedText, byte[] key)
         {
+            var iv = new byte[8];
+            var cipher = new byte[encryptedText.Length - iv.Length];
+
+            Buffer.BlockCopy(encryptedText, 0, iv, 0, iv.Length);
+            Buffer.BlockCopy(encryptedText, iv.Length, cipher, 0, cipher.Length);
+
             using (var tripleDes = TripleDES.Create())
+            using (var decryptor = tripleDes.CreateDecryptor(key, iv))
             {
-                tripleDes.GenerateKey();
-                return tripleDes.Key;
+                string result;
+                using (var msDecrypt = new MemoryStream(cipher))
+                using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                using (var srDecrypt = new StreamReader(csDecrypt))
+                {
+                    result = srDecrypt.ReadToEnd();
+                }
+
+                return result;
             }
         }
 
@@ -54,32 +72,18 @@ namespace RPedretti.Security
         }
 
         /// <summary>
-        /// Decrypts the specified encrypted text.
+        /// Generates a key.
         /// </summary>
-        /// <param name="encryptedText">The encrypted text to be decrypted.</param>
-        /// <param name="key">The key to be used at the decryption.</param>
-        /// <returns></returns>
-        public string Decrypt(byte[] encryptedText, byte[] key)
+        /// <returns>A byte array of the generated key</returns>
+        public byte[] GenerateKey()
         {
-            var iv = new byte[8];
-            var cipher = new byte[encryptedText.Length - iv.Length];
-
-            Buffer.BlockCopy(encryptedText, 0, iv, 0, iv.Length);
-            Buffer.BlockCopy(encryptedText, iv.Length, cipher, 0, cipher.Length);
-
             using (var tripleDes = TripleDES.Create())
-            using (var decryptor = tripleDes.CreateDecryptor(key, iv))
             {
-                string result;
-                using (var msDecrypt = new MemoryStream(cipher))
-                using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                using (var srDecrypt = new StreamReader(csDecrypt))
-                {
-                    result = srDecrypt.ReadToEnd();
-                }
-
-                return result;
+                tripleDes.GenerateKey();
+                return tripleDes.Key;
             }
         }
+
+        #endregion Methods
     }
 }

@@ -1,35 +1,23 @@
-﻿using Blazor.Extensions;
-using BlazorApp.Managers;
-using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+﻿using BlazorApp.Managers;
 using Microsoft.AspNetCore.Blazor.Components;
-using Newtonsoft.Json;
-using RPedretti.Blazor.Shared.Models;
-using System;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Pages.SignalR
 {
     public class SignalRBase : BaseBlazorPage
     {
+        #region Properties
+
         [Inject] private DownloadManager DownloadManager { get; set; }
         [Inject] private BlazorHubConnectionManager HubConnectionManager { get; set; }
 
-        protected string Username { get; set; } = "rafa";
-        protected string Password { get; set; } = "bla";
         protected bool HasToken { get; set; }
+        protected string Password { get; set; } = "bla";
+        protected string Username { get; set; } = "rafa";
 
-        protected override void OnInit()
-        {
-            HasToken = HubConnectionManager.IsConnected;
-            base.OnInit();
-        }
+        #endregion Properties
 
-        protected async Task RequestLongProcessAsync()
-        {
-            await DownloadManager.RequestLongRunningProcess();
-        }
+        #region Methods
 
         protected async Task LoginAsync()
         {
@@ -46,5 +34,17 @@ namespace BlazorApp.Pages.SignalR
             StateHasChanged();
         }
 
+        protected override void OnInit()
+        {
+            HasToken = HubConnectionManager.IsConnected;
+            base.OnInit();
+        }
+
+        protected async Task RequestLongProcessAsync()
+        {
+            await DownloadManager.RequestLongRunningProcess();
+        }
+
+        #endregion Methods
     }
 }

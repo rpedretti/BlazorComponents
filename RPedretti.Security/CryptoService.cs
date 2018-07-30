@@ -12,20 +12,36 @@ namespace RPedretti.Security
     /// <seealso cref="RPedretti.Security.ICryptoService" />
     public sealed class CryptoService : ICryptoService
     {
+        #region Fields
+
         private static Dictionary<string, byte[]> _mergedTripleDesKeys = new Dictionary<string, byte[]>();
         private RSAService _rsaService = new RSAService();
         private TripleDESService _tripleDESService = new TripleDESService();
 
+        #endregion Fields
+
+        #region Methods
+
         /// <summary>
-        /// Generates the RSA key pair asynchronous.
+        /// Decrypts a value with RSA asynchronous.
         /// </summary>
-        /// <returns>
-        /// A tuple of public/private key
-        /// </returns>
-        public async Task<Tuple<string, string>> GenerateRSAKeyPairAsync()
+        /// <param name="value">The value to be decrypted</param>
+        /// <param name="key">The key to be used at the decryption</param>
+        /// <returns></returns>
+        public async Task<string> DecryptRSAAsync(byte[] value, string key)
         {
-            var keys = await Task.FromResult(_rsaService.GenerateKeyPair());
-            return keys;
+            return await Task.Run(() => { return _rsaService.Decrypt(value, key); });
+        }
+
+        /// <summary>
+        /// Decrypts a value with 3DES asynchronous.
+        /// </summary>
+        /// <param name="value">The value to be decrypted</param>
+        /// <param name="key">The key to be used at the decryption</param>
+        /// <returns></returns>
+        public async Task<string> DecryptTripleDESAsync(byte[] value, byte[] key)
+        {
+            return await Task.Run(() => { return _tripleDESService.Decrypt(value, key); });
         }
 
         /// <summary>
@@ -42,28 +58,6 @@ namespace RPedretti.Security
         }
 
         /// <summary>
-        /// Decrypts a value with RSA asynchronous.
-        /// </summary>
-        /// <param name="value">The value to be decrypted</param>
-        /// <param name="key">The key to be used at the decryption</param>
-        /// <returns></returns>
-        public async Task<string> DecryptRSAAsync(byte[] value, string key)
-        {
-            return await Task.Run(() => { return _rsaService.Decrypt(value, key); });
-        }
-
-        /// <summary>
-        /// Generates the triple DES key asynchronous.
-        /// </summary>
-        /// <returns>
-        /// the key as bytes
-        /// </returns>
-        public async Task<byte[]> GenerateTripleDESKeyAsync()
-        {
-            return await Task.Run(() => { return _tripleDESService.GenerateKey(); });
-        }
-
-        /// <summary>
         /// Encrypts a value with 3DES asynchronous.
         /// </summary>
         /// <param name="value">The value to be encrypted</param>
@@ -74,17 +68,6 @@ namespace RPedretti.Security
         public async Task<byte[]> EncryptTripleDESAsync(string value, byte[] key)
         {
             return await Task.Run(() => { return _tripleDESService.Encrypt(value, key); });
-        }
-
-        /// <summary>
-        /// Decrypts a value with 3DES asynchronous.
-        /// </summary>
-        /// <param name="value">The value to be decrypted</param>
-        /// <param name="key">The key to be used at the decryption</param>
-        /// <returns></returns>
-        public async Task<string> DecryptTripleDESAsync(byte[] value, byte[] key)
-        {
-            return await Task.Run(() => { return _tripleDESService.Decrypt(value, key); });
         }
 
         /// <summary>
@@ -106,38 +89,26 @@ namespace RPedretti.Security
         }
 
         /// <summary>
-        /// Registers the merged key.
+        /// Generates the RSA key pair asynchronous.
         /// </summary>
-        /// <param name="id">The key identifier</param>
-        /// <param name="key">The key itself</param>
-        public void RegisterMergedKey(string id, byte[] key)
+        /// <returns>
+        /// A tuple of public/private key
+        /// </returns>
+        public async Task<Tuple<string, string>> GenerateRSAKeyPairAsync()
         {
-            _mergedTripleDesKeys[id] = key;
+            var keys = await Task.FromResult(_rsaService.GenerateKeyPair());
+            return keys;
         }
 
         /// <summary>
-        /// Retrieves the merged key for the given id.
+        /// Generates the triple DES key asynchronous.
         /// </summary>
-        /// <param name="id">The key identifier</param>
         /// <returns>
         /// the key as bytes
         /// </returns>
-        public byte[] RetrieveMergedKey(string id)
+        public async Task<byte[]> GenerateTripleDESKeyAsync()
         {
-            _mergedTripleDesKeys.TryGetValue(id, out byte[] key);
-            return key;
-        }
-
-        /// <summary>
-        /// Removes the merged key for the given id.
-        /// </summary>
-        /// <param name="id">The key identifier</param>
-        /// <returns>
-        /// a boolean indicating weather the key was removed
-        /// </returns>
-        public bool RemoveMergedKey(string id)
-        {
-            return _mergedTripleDesKeys.Remove(id);
+            return await Task.Run(() => { return _tripleDESService.GenerateKey(); });
         }
 
         /// <summary>
@@ -158,5 +129,42 @@ namespace RPedretti.Security
                 return sb.ToString();
             }
         }
+
+        /// <summary>
+        /// Registers the merged key.
+        /// </summary>
+        /// <param name="id">The key identifier</param>
+        /// <param name="key">The key itself</param>
+        public void RegisterMergedKey(string id, byte[] key)
+        {
+            _mergedTripleDesKeys[id] = key;
+        }
+
+        /// <summary>
+        /// Removes the merged key for the given id.
+        /// </summary>
+        /// <param name="id">The key identifier</param>
+        /// <returns>
+        /// a boolean indicating weather the key was removed
+        /// </returns>
+        public bool RemoveMergedKey(string id)
+        {
+            return _mergedTripleDesKeys.Remove(id);
+        }
+
+        /// <summary>
+        /// Retrieves the merged key for the given id.
+        /// </summary>
+        /// <param name="id">The key identifier</param>
+        /// <returns>
+        /// the key as bytes
+        /// </returns>
+        public byte[] RetrieveMergedKey(string id)
+        {
+            _mergedTripleDesKeys.TryGetValue(id, out byte[] key);
+            return key;
+        }
+
+        #endregion Methods
     }
 }

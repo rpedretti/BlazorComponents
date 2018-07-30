@@ -11,22 +11,7 @@ namespace BlazorApp.Components.DownloadList
 {
     public class DownloadListBase : BaseAccessibleComponent, IDisposable
     {
-        [Inject] protected DownloadManager DownloadManager { get; set; }
-
-        [Parameter] protected DownloadListPosition Position { get; set; } = DownloadListPosition.BOTTOM_RIGHT;
-
-        protected List<DownloadResult> AvailableDownloads = new List<DownloadResult>();
-
-        protected override void OnInit()
-        {
-            DownloadManager.NewDownloadAvailable += ShowDownloads;
-            DownloadManager.DownloadRemoved += RemoveDownload;
-        }
-
-        protected async Task RemoveDownloadFromList(DownloadResult download)
-        {
-            await DownloadManager.RequestDownloadRemoveAsync(download.Id);
-        }
+        #region Methods
 
         private void RemoveDownload(object sender, DownloadRemovedArgs e)
         {
@@ -46,12 +31,38 @@ namespace BlazorApp.Components.DownloadList
             StateHasChanged();
         }
 
+        #endregion Methods
+
+        #region Fields
+
+        protected List<DownloadResult> AvailableDownloads = new List<DownloadResult>();
+
+        #endregion Fields
+
+        #region Properties
+
+        [Inject] protected DownloadManager DownloadManager { get; set; }
+
+        protected string FinalPosition => "-" + Position.ToString().ToLower().Replace("_", "-");
+        [Parameter] protected DownloadListPosition Position { get; set; } = DownloadListPosition.BOTTOM_RIGHT;
+
+        #endregion Properties
+
+        protected override void OnInit()
+        {
+            DownloadManager.NewDownloadAvailable += ShowDownloads;
+            DownloadManager.DownloadRemoved += RemoveDownload;
+        }
+
+        protected async Task RemoveDownloadFromList(DownloadResult download)
+        {
+            await DownloadManager.RequestDownloadRemoveAsync(download.Id);
+        }
+
         public new void Dispose()
         {
             DownloadManager.NewDownloadAvailable -= ShowDownloads;
             base.Dispose();
         }
-
-        protected string FinalPosition => "-" + Position.ToString().ToLower().Replace("_", "-");
     }
 }

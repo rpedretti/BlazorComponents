@@ -8,16 +8,7 @@ namespace RPedretti.Blazor.Shared.Models
     /// </summary>
     public sealed class UserAuthenticationModel
     {
-        /// <summary>
-        /// Gets or sets the username.
-        /// </summary>
-        /// <value>
-        /// The username.
-        /// </value>
-        [JsonProperty(PropertyName = "username")]
-        [Required]
-        [Display(Name = "username")]
-        public string Username { get; set; }
+        #region Properties
 
         /// <summary>
         /// Gets or sets the password.
@@ -29,5 +20,18 @@ namespace RPedretti.Blazor.Shared.Models
         [Required]
         [Display(Name = "password")]
         public string Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets the username.
+        /// </summary>
+        /// <value>
+        /// The username.
+        /// </value>
+        [JsonProperty(PropertyName = "username")]
+        [Required]
+        [Display(Name = "username")]
+        public string Username { get; set; }
+
+        #endregion Properties
     }
 }

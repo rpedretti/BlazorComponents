@@ -1,5 +1,6 @@
 ﻿using BlazorApp.Domain;
 using Microsoft.AspNetCore.Blazor;
+using Microsoft.JSInterop;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace BlazorApp.Services
         {
             var responseJson = await httpClient.GetAsync($"{_baseUrl}&s={pattern}&page={page}", cancelationToken);
             var content = await responseJson.Content.ReadAsStringAsync();
-            var movies = JsonUtil.Deserialize<MovieSearchResult>(content);
+            var movies = Json.Deserialize<MovieSearchResult>(content);
 
             return movies;
         }
@@ -53,7 +54,7 @@ namespace BlazorApp.Services
             var responseJson = await httpClient.GetAsync($"{_baseUrl}&i={id}");
             var content = await responseJson.Content.ReadAsStringAsync();
 
-            var movie = JsonUtil.Deserialize<Movie>(content);
+            var movie = Json.Deserialize<Movie>(content);
             return movie;
         }
 
@@ -67,7 +68,7 @@ namespace BlazorApp.Services
             var responseJson = await httpClient.GetAsync($"{_baseUrl}&t={title}");
             var content = await responseJson.Content.ReadAsStringAsync();
 
-            var movie = JsonUtil.Deserialize<Movie>(content);
+            var movie = Json.Deserialize<Movie>(content);
             return movie;
         }
 

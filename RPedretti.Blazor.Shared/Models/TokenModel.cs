@@ -8,14 +8,24 @@ namespace RPedretti.Blazor.Shared.Models
     /// </summary>
     public sealed class TokenModel
     {
+        #region Properties
+
         /// <summary>
-        /// Gets or sets the token.
+        /// Gets or sets the expires.
         /// </summary>
         /// <value>
-        /// The token.
+        /// The expires.
         /// </value>
-        [JsonProperty(PropertyName = "token")]
-        public string Token { get; set; }
+        [JsonProperty(PropertyName = "expires")]
+        public DateTime Expires { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is expired.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is expired; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsExpired => new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds() > new DateTimeOffset(Expires).ToUnixTimeSeconds();
 
         /// <summary>
         /// Gets or sets the refresh token.
@@ -36,20 +46,14 @@ namespace RPedretti.Blazor.Shared.Models
         public string RefreshUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the expires.
+        /// Gets or sets the token.
         /// </summary>
         /// <value>
-        /// The expires.
+        /// The token.
         /// </value>
-        [JsonProperty(PropertyName = "expires")]
-        public DateTime Expires { get; set; }
+        [JsonProperty(PropertyName = "token")]
+        public string Token { get; set; }
 
-        /// <summary>
-        /// Gets a value indicating whether this instance is expired.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is expired; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsExpired => new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds() > new DateTimeOffset(Expires).ToUnixTimeSeconds();
+        #endregion Properties
     }
 }

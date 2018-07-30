@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using RPedretti.Blazor.Shared.Domain;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using RPedretti.Blazor.Shared.Domain;
 
 namespace RPedretti.Blazor.SignalRServer.Repository
 {
     public class UserRepository : IUserRepository
     {
+        #region Fields
+
         private readonly List<User> users = new List<User>();
+
+        #endregion Fields
+
+        #region Methods
 
         public Task<bool> AddUserAsync(User user)
         {
@@ -24,5 +30,7 @@ namespace RPedretti.Blazor.SignalRServer.Repository
         {
             return Task.FromResult(users.RemoveAll(u => u.Username == username) > 0);
         }
+
+        #endregion Methods
     }
 }

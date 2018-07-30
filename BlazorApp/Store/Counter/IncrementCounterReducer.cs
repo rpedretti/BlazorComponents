@@ -1,5 +1,4 @@
 ﻿using Blazor.Fluxor;
-using System;
 
 namespace BlazorApp.Store.Counter
 {

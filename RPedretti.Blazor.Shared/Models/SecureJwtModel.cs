@@ -8,6 +8,8 @@ namespace RPedretti.Blazor.Shared.Models
     /// </summary>
     public sealed class SecureJwtModel
     {
+        #region Properties
+
         /// <summary>
         /// Gets or sets the origin identifier.
         /// </summary>
@@ -29,5 +31,7 @@ namespace RPedretti.Blazor.Shared.Models
         [Required]
         [Display(Name = "token")]
         public TokenModel TokenModel { get; set; }
+
+        #endregion Properties
     }
 }

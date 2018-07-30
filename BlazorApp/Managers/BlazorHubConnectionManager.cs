@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using RPedretti.Blazor.Shared.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +10,21 @@ namespace BlazorApp.Managers
 {
     public class BlazorHubConnectionManager : IDisposable
     {
-
-        private HttpClient HttpClient;
-        private TokenModel Jwt;
-        private HubConnection connection;
-        private NotificationManager NotificationManager;
+        #region Fields
 
 #if DEBUG
         private readonly string baseUrl = "http://localhost:5000";
 #else
         private readonly string baseUrl = "http://blazorsignalr.azurewebsites.net";
 #endif
+        private HubConnection connection;
+        private HttpClient HttpClient;
+        private TokenModel Jwt;
+        private NotificationManager NotificationManager;
+
+        #endregion Fields
+
+        #region Constructors
 
         public BlazorHubConnectionManager(HttpClient httpClient, NotificationManager notificationManager)
         {
@@ -30,7 +32,22 @@ namespace BlazorApp.Managers
             NotificationManager = notificationManager;
         }
 
+        #endregion Constructors
+
+        #region Properties
+
         public bool IsConnected => connection != null;
+
+        #endregion Properties
+
+        #region Methods
+
+        public async Task<bool> CloseConnectionAsync()
+        {
+            await connection?.StopAsync();
+            connection = null;
+            return true;
+        }
 
         public async Task<HubConnection> ConnectAsync(string username, string password)
         {
@@ -99,16 +116,11 @@ namespace BlazorApp.Managers
             return connection;
         }
 
-        public async Task<bool> CloseConnectionAsync()
-        {
-            await connection?.StopAsync();
-            connection = null;
-            return true;
-        }
-
         public async void Dispose()
         {
             await CloseConnectionAsync();
         }
+
+        #endregion Methods
     }
 }

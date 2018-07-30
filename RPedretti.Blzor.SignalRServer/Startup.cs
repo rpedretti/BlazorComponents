@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,17 +9,61 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using RPedretti.Blazor.SignalRServer.Hubs;
 using RPedretti.Blazor.SignalRServer.Repository;
+using System;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.SignalRServer
 {
     public class Startup
     {
+        #region Constructors
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        #endregion Constructors
+
+        #region Properties
+
         public IConfiguration Configuration { get; }
+
+        #endregion Properties
+
+        #region Methods
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins(
+                        "http://192.168.15.13:1234",
+                        "http://192.168.15.10:1234",
+                        "http://localhost:1234",
+                        "http://blazorapp40.azurewebsites.net"
+                    )
+                    .AllowCredentials();
+            });
+
+            app.UseAuthentication();
+            app.UseSignalR(route =>
+            {
+                route.MapHub<BlazorHub>("/blazorhub");
+            });
+
+            app.UseMvc();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -58,7 +99,7 @@ namespace RPedretti.Blazor.SignalRServer
 
                 // We have to hook the OnMessageReceived event in order to
                 // allow the JWT authentication handler to read the access
-                // token from the query string when a WebSocket or 
+                // token from the query string when a WebSocket or
                 // Server-Sent Events request comes in.
                 options.Events = new JwtBearerEvents
                 {
@@ -73,7 +114,6 @@ namespace RPedretti.Blazor.SignalRServer
                             // Read the token out of the query string
                             context.Token = accessToken;
                         }
-
 
                         return Task.CompletedTask;
                     }
@@ -91,35 +131,6 @@ namespace RPedretti.Blazor.SignalRServer
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseCors(builder =>
-            {
-                builder
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .WithOrigins(
-                        "http://192.168.15.13:1234",
-                        "http://192.168.15.10:1234",
-                        "http://localhost:1234",
-                        "http://blazorapp40.azurewebsites.net"
-                    )
-                    .AllowCredentials();
-            });
-
-            app.UseAuthentication();
-            app.UseSignalR(route =>
-            {
-                route.MapHub<BlazorHub>("/blazorhub");
-            });
-
-            app.UseMvc();
-        }
+        #endregion Methods
     }
 }

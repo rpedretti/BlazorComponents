@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using RPedretti.Blazor.Shared.Models;
+using RPedretti.Blazor.SignalRServer.Repository;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using RPedretti.Blazor.Shared.Models;
-using RPedretti.Blazor.SignalRServer.Repository;
 
 namespace RPedretti.Blazor.SignalRServer.Controllers
 {
@@ -20,8 +20,60 @@ namespace RPedretti.Blazor.SignalRServer.Controllers
     [Route("[controller]")]
     public class JwtController : Controller
     {
-        private ILogger<JwtController> _logger;
+        #region Fields
+
         private static Dictionary<string, string> refreshTokens = new Dictionary<string, string>();
+        private ILogger<JwtController> _logger;
+
+        #endregion Fields
+
+        #region Methods
+
+        private string BuildJwt(UserAuthenticationModel userModel)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SomeSecureRandomKey"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[] {
+                new Claim(JwtRegisteredClaimNames.Sub, userModel.Username),
+                new Claim(ClaimTypes.NameIdentifier, userModel.Username),
+                new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
+                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddMinutes(1)).ToUnixTimeSeconds().ToString()),
+                new Claim(ClaimTypes.Role, userModel.Username == "admin" ? "Admin" : "User"),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                new JwtHeader(creds),
+                new JwtPayload(claims)
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private string BuildRefreshJwt(UserAuthenticationModel userModel)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SomeSecureRandomKey"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[] {
+                new Claim(JwtRegisteredClaimNames.Sub, userModel.Username),
+                new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
+                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(5)).ToUnixTimeSeconds().ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                new JwtHeader(creds),
+                new JwtPayload(claims)
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        #endregion Methods
+
+        #region Constructors
 
         /// <summary>
         /// Constructor
@@ -31,6 +83,8 @@ namespace RPedretti.Blazor.SignalRServer.Controllers
         {
             _logger = logger;
         }
+
+        #endregion Constructors
 
         /// <summary>
         /// Requests a new JWT Token
@@ -126,48 +180,6 @@ namespace RPedretti.Blazor.SignalRServer.Controllers
             {
                 return BadRequest(ModelState.ValidationState);
             }
-        }
-
-        private string BuildJwt(UserAuthenticationModel userModel)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SomeSecureRandomKey"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Sub, userModel.Username),
-                new Claim(ClaimTypes.NameIdentifier, userModel.Username),
-                new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
-                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddMinutes(1)).ToUnixTimeSeconds().ToString()),
-                new Claim(ClaimTypes.Role, userModel.Username == "admin" ? "Admin" : "User"),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = new JwtSecurityToken(
-                new JwtHeader(creds),
-                new JwtPayload(claims)
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private string BuildRefreshJwt(UserAuthenticationModel userModel)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SomeSecureRandomKey"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Sub, userModel.Username),
-                new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
-                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(5)).ToUnixTimeSeconds().ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = new JwtSecurityToken(
-                new JwtHeader(creds),
-                new JwtPayload(claims)
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

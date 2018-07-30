@@ -9,6 +9,8 @@ namespace RPedretti.Security.Extensions
     /// </summary>
     public static class RSACryptoServiceProviderExtensions
     {
+        #region Methods
+
         /// <summary>
         /// Converts a <see cref="RSA"/> key from XML string.
         /// </summary>
@@ -74,5 +76,7 @@ namespace RPedretti.Security.Extensions
                 Convert.ToBase64String(parameters.Modulus),
                 Convert.ToBase64String(parameters.Exponent));
         }
+
+        #endregion Methods
     }
 }

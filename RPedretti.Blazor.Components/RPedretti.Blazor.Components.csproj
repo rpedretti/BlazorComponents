@@ -36,9 +36,9 @@
 
   <ItemGroup>
     <PackageReference Include="BuildWebCompiler" Version="1.11.375" />
-    <PackageReference Include="Cloudcrate.AspNetCore.Blazor.Browser.Storage" Version="0.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0" />
+    <PackageReference Include="Cloudcrate.AspNetCore.Blazor.Browser.Storage" Version="0.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.1" />
   </ItemGroup>
 
 </Project>

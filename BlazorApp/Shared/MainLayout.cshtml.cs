@@ -8,13 +8,13 @@ namespace BlazorApp.Shared
 {
     public class MainLayoutBase : BlazorLayoutComponent
     {
-        [Inject] protected IStore Store { get; set; }
+        #region Properties
+
         [Inject] private NotificationManager NotificationManager { get; set; }
 
-        protected override void OnInit()
-        {
-            NotificationManager.ShowNotification += ShowNotification;
-        }
+        #endregion Properties
+
+        #region Methods
 
         private void ShowNotification(object sender, NotificationManager.NotificationEventArgs e)
         {
@@ -22,6 +22,19 @@ namespace BlazorApp.Shared
             StateHasChanged();
         }
 
+        #endregion Methods
+
+        #region Fields
+
         protected List<string> Messages = new List<string>();
+
+        #endregion Fields
+
+        [Inject] protected IStore Store { get; set; }
+
+        protected override void OnInit()
+        {
+            NotificationManager.ShowNotification += ShowNotification;
+        }
     }
 }

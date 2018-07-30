@@ -33,6 +33,6 @@ namespace BlazorApp
             new BrowserRenderer(serviceProvider).AddComponent<App>("app");
         }
 
-#endregion Methods
+        #endregion Methods
     }
 }

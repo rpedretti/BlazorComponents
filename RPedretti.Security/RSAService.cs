@@ -1,7 +1,7 @@
-﻿using System;
+﻿using RPedretti.Security.Extensions;
+using System;
 using System.Security.Cryptography;
 using System.Text;
-using RPedretti.Security.Extensions;
 
 namespace RPedretti.Security
 {
@@ -10,18 +10,20 @@ namespace RPedretti.Security
     /// </summary>
     public class RSAService
     {
+        #region Methods
+
         /// <summary>
-        /// Generates the key pair.
+        /// Decrypts the specified value.
         /// </summary>
-        /// <returns>A tuple with a public/private key pair</returns>
-        public Tuple<string, string> GenerateKeyPair()
+        /// <param name="value">The value to be decrypted.</param>
+        /// <param name="key">The key to be used at the decryption.</param>
+        /// <returns></returns>
+        public string Decrypt(byte[] value, string key)
         {
             using (var rsa = RSA.Create())
             {
-                var publicKey = rsa.CustomToXmlString();
-                var publicPrivate = rsa.CustomToXmlString(true);
-
-                return Tuple.Create(publicKey, publicPrivate);
+                rsa.CustomFromXmlString(key);
+                return Encoding.UTF8.GetString(rsa.Decrypt(value, RSAEncryptionPadding.Pkcs1));
             }
         }
 
@@ -41,18 +43,20 @@ namespace RPedretti.Security
         }
 
         /// <summary>
-        /// Decrypts the specified value.
+        /// Generates the key pair.
         /// </summary>
-        /// <param name="value">The value to be decrypted.</param>
-        /// <param name="key">The key to be used at the decryption.</param>
-        /// <returns></returns>
-        public string Decrypt(byte[] value, string key)
+        /// <returns>A tuple with a public/private key pair</returns>
+        public Tuple<string, string> GenerateKeyPair()
         {
             using (var rsa = RSA.Create())
             {
-                rsa.CustomFromXmlString(key);
-                return Encoding.UTF8.GetString(rsa.Decrypt(value, RSAEncryptionPadding.Pkcs1));
+                var publicKey = rsa.CustomToXmlString();
+                var publicPrivate = rsa.CustomToXmlString(true);
+
+                return Tuple.Create(publicKey, publicPrivate);
             }
         }
+
+        #endregion Methods
     }
 }
