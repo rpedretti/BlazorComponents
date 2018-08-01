@@ -1,5 +1,4 @@
-﻿using Blazor.Fluxor;
-using BlazorApp.Managers;
+﻿using BlazorApp.Managers;
 using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.AspNetCore.Blazor.Layouts;
 using System.Collections.Generic;
@@ -29,8 +28,6 @@ namespace BlazorApp.Shared
         protected List<string> Messages = new List<string>();
 
         #endregion Fields
-
-        [Inject] protected IStore Store { get; set; }
 
         protected override void OnInit()
         {

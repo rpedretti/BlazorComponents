@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp\Blaz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.Blazor.Components", "RPedretti.Blazor.Components\RPedretti.Blazor.Components.csproj", "{BEA0773E-609B-44F1-BEB2-310F5467CD04}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.Blazor.SignalRServer", "RPedretti.Blzor.SignalRServer\RPedretti.Blazor.SignalRServer.csproj", "{0B1DFA7F-B7BF-48AE-B106-BE967575B823}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.Blazor.SignalRServer", "RPedretti.Blazor.SignalRServer\RPedretti.Blazor.SignalRServer.csproj", "{0B1DFA7F-B7BF-48AE-B106-BE967575B823}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.Blazor.Shared", "RPedretti.Blazor.Shared\RPedretti.Blazor.Shared.csproj", "{0E135C7E-81B8-49F8-ABFB-663DB801643E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPedretti.Security", "RPedretti.Security\RPedretti.Security.csproj", "{5C04AD58-FB42-4310-B005-5C8850A65327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.Security", "RPedretti.Security\RPedretti.Security.csproj", "{5C04AD58-FB42-4310-B005-5C8850A65327}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

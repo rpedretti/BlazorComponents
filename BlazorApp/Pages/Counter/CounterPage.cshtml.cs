@@ -1,11 +1,10 @@
-﻿using Blazor.Fluxor;
-using BlazorApp.Store.Counter;
-using Microsoft.AspNetCore.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor.Components;
+using RPedretti.Blazor.Components;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Pages
 {
-    public class CounterPageBase : BaseBlazorPage
+    public class CounterPageBase : BaseComponent
     {
         #region Fields
 
@@ -19,17 +18,13 @@ namespace BlazorApp.Pages
 
         protected string CounterTitle { get; set; }
 
-        [Inject] protected IDispatcher Dispatcher { get; set; }
-
-        [Inject] protected IState<CounterState> State { get; set; }
-
         #endregion Properties
 
         #region Methods
 
-        protected async Task CounterChanged(int v)
+        protected void CounterChanged(int v)
         {
-            await Dispatcher.DispatchAsync(new IncrementCounterAction());
+            CurrentCount++;
         }
 
         #endregion Methods
@@ -44,6 +39,6 @@ namespace BlazorApp.Pages
 
         #endregion Constructors
 
-        public int CurrentCount => State.Value.ClickCount;
+        public int CurrentCount { get; set; }
     }
 }

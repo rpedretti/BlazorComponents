@@ -12,7 +12,7 @@ namespace BlazorApp.Components
 
         [Parameter] protected int CurrentCount { get; set; } = 0;
 
-        [Parameter] protected Func<int, Task> CurrentCountChanged { get; set; }
+        [Parameter] protected Action<int> CurrentCountChanged { get; set; }
 
         [Parameter] protected int IncrementAmount { get; set; } = 1;
 
@@ -27,10 +27,10 @@ namespace BlazorApp.Components
             CurrentCount -= IncrementAmount;
         }
 
-        public async Task IncrementCountAsync()
+        public void IncrementCountAsync()
         {
             CurrentCount += IncrementAmount;
-            await CurrentCountChanged?.Invoke(CurrentCount);
+            CurrentCountChanged?.Invoke(CurrentCount);
         }
 
         #endregion Methods

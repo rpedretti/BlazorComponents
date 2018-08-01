@@ -4,7 +4,7 @@
 
     $(document).on('click', function (e) {
         if (senseClickOutside($(e.target), element)) {
-            Blazor.invokeDotNetMethod({
+            DotNet.invokeMethodAsync({
                 type: {
                     assembly: 'RPedretti.Blazor.Components',
                     name: 'RPedretti.Blazor.Components.SuggestBox.SuggestBoxList'
@@ -35,5 +35,3 @@
 
     return 1;
 }
-
-Blazor.registerFunction('initSuggestBox', initSuggestBox);

@@ -1,10 +1,11 @@
 ﻿using BlazorApp.Managers;
 using Microsoft.AspNetCore.Blazor.Components;
+using RPedretti.Blazor.Components;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Pages.SignalR
 {
-    public class SignalRBase : BaseBlazorPage
+    public class SignalRBase : BaseComponent
     {
         #region Properties
 

@@ -7,8 +7,7 @@
 .card {
   background-color: white;
   border-radius: 4px;
-  box-shadow: #A1A1A1 0px 2px 10px;
-  padding: 12px, 16px; }
+  box-shadow: #A1A1A1 0px 2px 10px; }
 
 .accordeon > .accordeon-title {
   display: block;

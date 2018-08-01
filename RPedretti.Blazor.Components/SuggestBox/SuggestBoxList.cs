@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.Components.SuggestBox
 {
@@ -17,12 +18,14 @@ namespace RPedretti.Blazor.Components.SuggestBox
             _suggestionsBase[suggestBox.SuggestBoxId] = suggestBox;
         }
 
-        public static void ClearSelection(string id)
+        public static Task ClearSelection(string id)
         {
             if (_suggestionsBase.TryGetValue(id, out SuggestBoxBase suggest))
             {
                 suggest.ClearSelection();
             }
+
+            return Task.CompletedTask;
         }
 
         public static void Remove(SuggestBoxBase suggestBox)
