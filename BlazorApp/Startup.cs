@@ -22,6 +22,7 @@ namespace BlazorApp
             services.AddSingleton<BlazorHubConnectionManager>();
             services.AddStorage();
             services.AddAmbientLightSensor();
+            services.AddGeolocationSensor();
         }
 
         public void Configure(IBlazorApplicationBuilder app)

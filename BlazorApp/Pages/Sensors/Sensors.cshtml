@@ -1,0 +1,9 @@
+﻿@page "/sensors"
+@inherits SensorsBase
+
+<p> Ambient ligh is @Light</p>
+
+<button type="button" class="btn" onclick="@StartWatch" disabled="@(Watching)">Start Watch</button>
+<button type="button" class="btn" onclick="@StopWatch" disabled="@(!Watching)">Stop Watch</button>
+<p>Position is:</p>
+<pre>@Position</pre>

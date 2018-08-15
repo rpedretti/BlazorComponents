@@ -6,7 +6,7 @@ rpedrettiBlazorComponents.helpers = {
     },
 
     senseClickOutside: function ($evtTarget, $container) {
-        if (($evtTarget).closest($container).length === 0) {
+        if ($evtTarget.closest($container).length === 0) {
             return true;
         }
     }

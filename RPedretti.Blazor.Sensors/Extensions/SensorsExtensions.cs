@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
 using RPedretti.Blazor.Sensors.AmbientLight;
+using RPedretti.Blazor.Sensors.Geolocation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace RPedretti.Blazor.Sensors.Extensions
 {
     public static class SensorsExtensions
     {
+        #region Ambient Light
+
         public static IServiceCollection AddAmbientLightSensor(this IServiceCollection services)
         {
             services.AddSingleton<AmbientLightSensor>();
@@ -22,5 +25,17 @@ namespace RPedretti.Blazor.Sensors.Extensions
             var sensor = app.Services.GetService<AmbientLightSensor>();
             sensor.Init();
         }
+
+        #endregion Ambient Light
+
+        #region Geolocation
+
+        public static IServiceCollection AddGeolocationSensor(this IServiceCollection services)
+        {
+            services.AddSingleton<GeolocationSensor>();
+            return services;
+        }
+
+        #endregion Geolocation
     }
 }
