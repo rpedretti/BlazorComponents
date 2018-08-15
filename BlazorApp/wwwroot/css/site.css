@@ -8,7 +8,8 @@ app {
   flex-direction: column; }
 
 app > .spinner-wrapper {
-  width: 100%; }
+  width: 100%;
+  height: 80px; }
 
 .top-row {
   height: 3.5rem;

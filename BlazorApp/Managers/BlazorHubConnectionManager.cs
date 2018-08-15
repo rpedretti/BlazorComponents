@@ -89,6 +89,7 @@ namespace BlazorApp.Managers
                             opt.SkipNegotiation = true;
                             opt.Transport = HttpTransportType.WebSockets;
                         })
+                        .AddMessagePackProtocol()
                         .Build();
 
                     connection.On<string>("GuestEntered", id =>

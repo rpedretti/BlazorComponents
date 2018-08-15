@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Blazor;
+using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using RPedretti.Blazor.Components;
 using RPedretti.Blazor.Components.Radio;
+using RPedretti.Blazor.Sensors.AmbientLight;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,13 +13,15 @@ using System.Threading.Tasks;
 
 namespace BlazorApp.Pages.Index
 {
-    public class IndexBase : BaseComponent
+    public class IndexBase : BaseComponent, IDisposable
     {
         #region Fields
 
         private readonly List<string> someList = new List<string>() {
             "olar 1", "olar 2", "banana", "apple", "bacalhau", "blabous", "bla", "abacate","abacate"
         };
+
+        public int Light { get; set; }
 
         private bool _loadingSuggestions;
 
@@ -40,6 +46,8 @@ namespace BlazorApp.Pages.Index
         #region Properties
 
         protected List<string> FilteredList { get; set; }
+
+        [Inject] protected AmbientLightSensor LightSensor { get; set; }
 
         protected bool HasSelection =>
             SelectedRadioButton1 != null ||
@@ -79,6 +87,23 @@ namespace BlazorApp.Pages.Index
         #endregion Properties
 
         #region Methods
+
+        protected override void OnInit()
+        {
+            LightSensor.OnReading += OnReading;
+            LightSensor.OnError += OnError;
+        }
+
+        private void OnError(object sender, object e)
+        {
+            Console.WriteLine($"On error .NET: {e}");
+        }
+
+        private void OnReading(object sender, int reading)
+        {
+            Light = reading;
+            StateHasChanged();
+        }
 
         protected void DragDrop(UIDragEventArgs args)
         {
@@ -195,6 +220,12 @@ namespace BlazorApp.Pages.Index
         {
             get => _selectedRadioButton3;
             set => SetParameter(ref _selectedRadioButton3, value);
+        }
+
+        public new void Dispose()
+        {
+            LightSensor.OnReading -= OnReading;
+            LightSensor.OnError -= OnError;
         }
     }
 }

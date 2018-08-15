@@ -71,7 +71,7 @@ namespace RPedretti.Blazor.SignalRServer
             services.AddSingleton<IUserRepository, UserRepository>();
 
             services.AddCors();
-            services.AddSignalR();
+            services.AddSignalR().AddMessagePackProtocol();
 
             services.AddAuthentication(options =>
             {

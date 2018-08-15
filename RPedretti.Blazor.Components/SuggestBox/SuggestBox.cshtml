@@ -12,7 +12,6 @@
                aria-owns="results"
                aria-expanded="@OpenSuggestion"
                aria-activedescendant="@(_suggestionItems.Any(s => s.Selected) ? "selectedOption" : "")"
-               onfocusin="@OnFocusIn"
                onkeydown="@HandleKeyDown"
                oninput="(this.dispatchEvent(new CustomEvent('change', { bubbles: true })))"
                bind="@Query" />
