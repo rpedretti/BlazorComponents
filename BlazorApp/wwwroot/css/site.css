@@ -166,6 +166,12 @@ fieldset {
     .paged-grid .movies > .movie-poster {
       justify-self: center; }
 
+.sensors-ambientlight {
+  margin-bottom: 24px; }
+
+.sensors-geolocation-table {
+  margin-top: 12px; }
+
 .new-item--input {
   height: inherit; }
 

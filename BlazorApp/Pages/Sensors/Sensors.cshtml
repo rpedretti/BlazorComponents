@@ -1,9 +1,40 @@
 ﻿@page "/sensors"
 @inherits SensorsBase
 
-<p> Ambient ligh is @Light</p>
-
-<button type="button" class="btn" onclick="@StartWatch" disabled="@(Watching)">Start Watch</button>
-<button type="button" class="btn" onclick="@StopWatch" disabled="@(!Watching)">Stop Watch</button>
-<p>Position is:</p>
-<pre>@Position</pre>
+<div class="sensors">
+    <div class="sensors-ambientlight">
+        <h1>Ambient light</h1>
+        <p>Ambient light is @Light</p>
+    </div>
+    <div class="sensors-geolocation">
+        <h1>Position</h1>
+        <div class="sensors-geolocation-controls">
+            <button type="button" class="btn" onclick="@StartWatch" disabled="@(Watching)">Start Watch</button>
+            <button type="button" class="btn" onclick="@StopWatch" disabled="@(!Watching)">Stop Watch</button>
+        </div>
+        @if (Position != null)
+        {
+            <div class="sensors-geolocation-table">
+                <table class="table table-bordered">
+                    <caption>Position</caption>
+                    <thead>
+                        <tr>
+                            <th>Latitute</th>
+                            <th>Longitude</th>
+                            <th>Altitude</th>
+                            <th>Speed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Position.Coords.Latitude</td>
+                            <td>@Position.Coords.Longitude</td>
+                            <td>@(Position.Coords.Altitude != null ? Position.Coords.Altitude.ToString() : "N/A")</td>
+                            <td>@(Position.Coords.Speed != null ? Position.Coords.Speed.ToString() : "N/A")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

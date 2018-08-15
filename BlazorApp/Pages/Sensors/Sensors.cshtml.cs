@@ -19,12 +19,12 @@ namespace BlazorApp.Pages.Sensors
 
         private void OnPositionError(object sender, PositionError e)
         {
-            Position = $"{e.Code.ToString()}: {e.Message}";
+            Console.WriteLine($"{e.Code.ToString()}: {e.Message}");
         }
 
         private void OnPositionUpdate(object sender, Position e)
         {
-            Position = JsonConvert.SerializeObject(e, Formatting.Indented);
+            Position = e;
             StateHasChanged();
         }
 
@@ -42,7 +42,7 @@ namespace BlazorApp.Pages.Sensors
         [Inject] protected AmbientLightSensor LightSensor { get; set; }
 
         public int Light { get; set; }
-        public string Position { get; set; } = "Not Watching";
+        public Position Position { get; set; }
         public bool Watching { get; set; }
 
         #endregion Properties
@@ -65,7 +65,7 @@ namespace BlazorApp.Pages.Sensors
         {
             GeolocationSensor.OnPositionUpdate -= OnPositionUpdate;
             GeolocationSensor.OnPositionError -= OnPositionError;
-            Position = "Not Watching";
+            Position = null;
             Watching = false;
 
             return Task.CompletedTask;
