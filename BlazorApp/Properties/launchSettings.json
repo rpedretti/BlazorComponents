@@ -21,7 +21,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:1234/"
+      "applicationUrl": "http://localhost:1234/;https://localhost:1235"
     },
     "BlazorAppProd": {
       "commandName": "Project",
@@ -29,7 +29,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       },
-      "applicationUrl": "http://*:1234/"
+      "applicationUrl": "http://*:1234/;https://*:1235"
     }
   }
 }

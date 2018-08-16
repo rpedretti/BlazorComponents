@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using System;
-using System.Threading.Tasks;
 
 namespace BlazorApp.Components
 {

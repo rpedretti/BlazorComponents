@@ -10,6 +10,8 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
 
         private DotNetObjectRef ambientLightSensorRef;
 
+        public string Error { get; private set; }
+
         #endregion Fields
 
         #region Methods
@@ -24,9 +26,39 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
 
         #region Events
 
-        public event EventHandler<object> OnError;
+        private event EventHandler<string> _onError;
+        public event EventHandler<string> OnError
+        {
+            add
+            {
+                _onError += value;
+                if (Error != null)
+                {
+                    value.Invoke(this, Error);
+                }
+            }
+            remove
+            {
+                _onError -= value;
+            }
+        }
 
-        public event EventHandler<int> OnReading;
+        public event EventHandler<int> _onReading;
+        public event EventHandler<int> OnReading
+        {
+            add
+            {
+                _onReading += value;
+                if (Error != null)
+                {
+                    _onError?.Invoke(this, Error);
+                }
+            }
+            remove
+            {
+                _onReading -= value;
+            }
+        }
 
         #endregion Events
 
@@ -36,16 +68,17 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
         }
 
         [JSInvokable]
-        public Task NotifyError(object error)
+        public Task NotifyError(string error)
         {
-            OnError?.Invoke(this, error);
+            Error = error;
+            _onError?.Invoke(this, error);
             return Task.CompletedTask;
         }
 
         [JSInvokable]
         public Task NotifyReading(int illuminance)
         {
-            OnReading?.Invoke(this, illuminance);
+            _onReading?.Invoke(this, illuminance);
             return Task.CompletedTask;
         }
     }

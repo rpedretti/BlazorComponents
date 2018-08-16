@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
-using Newtonsoft.Json;
 using RPedretti.Blazor.Components;
+using RPedretti.Blazor.Components.BingMaps;
 using RPedretti.Blazor.Sensors.AmbientLight;
 using RPedretti.Blazor.Sensors.Geolocation;
 using System;
@@ -10,42 +10,58 @@ namespace BlazorApp.Pages.Sensors
 {
     public class SensorsBase : BaseComponent, IDisposable
     {
+        #region Properties
+
+        [Inject] protected GeolocationSensor GeolocationSensor { get; set; }
+        [Inject] protected AmbientLightSensor LightSensor { get; set; }
+        public int Light { get; set; }
+        public string LightError { get; set; }
+        public Position Position { get; set; }
+        public bool Watching { get; set; }
+
+        protected BingMapsViewConfig MapsViewConfig { get; set; } = new BingMapsViewConfig
+        {
+            MapTypeId = BingMapsTypes.GrayScale,
+            Zoom = 12
+        };
+
+        #endregion Properties
+
         #region Methods
 
-        private void OnError(object sender, object e)
+        private void OnError(object sender, string error)
         {
-            Console.WriteLine($"On error .NET: {e}");
+            LightError = error;
+            StateHasChanged();
         }
 
         private void OnPositionError(object sender, PositionError e)
         {
             Console.WriteLine($"{e.Code.ToString()}: {e.Message}");
+            StateHasChanged();
         }
 
         private void OnPositionUpdate(object sender, Position e)
         {
             Position = e;
+            MapsViewConfig = new BingMapsViewConfig
+            {
+                Center = new Geocoordinate { Latitude = e.Coords.Latitude, Longitude = e.Coords.Longitude, Altitude = e.Coords.Altitude ?? 0},
+                Zoom = 15
+            };
             StateHasChanged();
         }
 
         private void OnReading(object sender, int reading)
         {
             Light = reading;
+            MapsViewConfig = new BingMapsViewConfig
+            {
+                MapTypeId = reading > 100 ? BingMapsTypes.CanvasLight : BingMapsTypes.CanvasDark
+            };
+
             StateHasChanged();
         }
-
-        #endregion Methods
-
-        #region Properties
-
-        [Inject] protected GeolocationSensor GeolocationSensor { get; set; }
-        [Inject] protected AmbientLightSensor LightSensor { get; set; }
-
-        public int Light { get; set; }
-        public Position Position { get; set; }
-        public bool Watching { get; set; }
-
-        #endregion Properties
 
         protected override void OnInit()
         {
@@ -55,6 +71,7 @@ namespace BlazorApp.Pages.Sensors
 
         protected Task StartWatch()
         {
+            MapsViewConfig = null;
             GeolocationSensor.OnPositionUpdate += OnPositionUpdate;
             GeolocationSensor.OnPositionError += OnPositionError;
             Watching = true;
@@ -79,5 +96,7 @@ namespace BlazorApp.Pages.Sensors
             GeolocationSensor.OnPositionError -= OnPositionError;
             base.Dispose();
         }
+
+        #endregion Methods
     }
 }

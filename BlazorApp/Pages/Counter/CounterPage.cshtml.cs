@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Blazor.Components;
-using RPedretti.Blazor.Components;
-using System.Threading.Tasks;
+﻿using RPedretti.Blazor.Components;
 
 namespace BlazorApp.Pages
 {

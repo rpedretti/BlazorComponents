@@ -34,7 +34,6 @@ namespace RPedretti.Blazor.Sensors.Geolocation
                 JSRuntime.Current.InvokeAsync<int>("rpedrettiBlazorSensors.geolocation.watchPosition", thisRef).ContinueWith(id =>
                 {
                     watchId = id.Result;
-                    Console.WriteLine($"received watch id {watchId}");
                 });
             }
             catch

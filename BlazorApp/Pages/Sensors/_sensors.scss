@@ -4,12 +4,18 @@
     }
 
     &-geolocation {
-        &-controls {
+        > .bing-maps {
+            margin-top: 12px;
+            float: left;
+        }
 
+        &-controls {
         }
 
         &-table {
+            float: left;
             margin-top: 12px;
+            margin-left: 12px;
         }
     }
 }

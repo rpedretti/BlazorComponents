@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="content\js\suggest-box\_suggest-box.js" />
+    <None Remove="content\js\_bing-maps.js" />
+    <None Remove="content\js\_suggest-box.js" />
     <None Remove="content\js\_helpers.js" />
   </ItemGroup>
 

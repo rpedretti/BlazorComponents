@@ -1,10 +1,11 @@
 ﻿@page "/sensors"
+@using RPedretti.Blazor.Components.BingMaps
 @inherits SensorsBase
 
 <div class="sensors">
     <div class="sensors-ambientlight">
         <h1>Ambient light</h1>
-        <p>Ambient light is @Light</p>
+        <p>Ambient light is @(LightError ?? Light.ToString())</p>
     </div>
     <div class="sensors-geolocation">
         <h1>Position</h1>
@@ -12,6 +13,7 @@
             <button type="button" class="btn" onclick="@StartWatch" disabled="@(Watching)">Start Watch</button>
             <button type="button" class="btn" onclick="@StopWatch" disabled="@(!Watching)">Stop Watch</button>
         </div>
+        <BingMaps ApiKey="AkUyQ5km3V0tUHk_BL1gRFWunbT1x6dlbH_0mUHDREAHPgsJ1LlpS0ma2-0SIvV7" Config="@MapsViewConfig" />
         @if (Position != null)
         {
             <div class="sensors-geolocation-table">
@@ -36,5 +38,6 @@
                 </table>
             </div>
         }
+
     </div>
 </div>

@@ -6,7 +6,7 @@ namespace BlazorApp.Pages
     public abstract class BaseBlazorPage : BaseComponent
     {
         #region Methods
-          
+
         protected bool SetParameter<T>(ref T prop, T value)
         {
             if (EqualityComparer<T>.Default.Equals(prop, value))
