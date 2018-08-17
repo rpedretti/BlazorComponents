@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using RPedretti.Blazor.Components;
 using RPedretti.Blazor.Components.BingMaps;
+using RPedretti.Blazor.Components.BingMaps.Modules;
+using RPedretti.Blazor.Components.BingMaps.Modules.Directions;
 using RPedretti.Blazor.Sensors.AmbientLight;
 using RPedretti.Blazor.Sensors.Geolocation;
 using System;
@@ -18,6 +20,13 @@ namespace BlazorApp.Pages.Sensors
         public string LightError { get; set; }
         public Position Position { get; set; }
         public bool Watching { get; set; }
+
+        protected IBingMapModule[] Modules = new IBingMapModule[] {
+            new BingMapsDirectionsModule {
+                InputPanelId = "inputPannel",
+                ItineraryPanelId = "itineraryPanel"
+            }
+        };
 
         protected BingMapsViewConfig MapsViewConfig { get; set; } = new BingMapsViewConfig
         {

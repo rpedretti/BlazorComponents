@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Blazor.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.JSInterop;
 using RPedretti.Blazor.Sensors.AmbientLight;
 using RPedretti.Blazor.Sensors.Geolocation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.Sensors.Extensions
 {

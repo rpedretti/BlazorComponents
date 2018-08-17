@@ -10,22 +10,27 @@ window.rpedrettiBlazorComponents.bingMaps = (function () {
             mapScriptTag.src = `https://www.bing.com/api/maps/mapcontrol?callback=getBingMaps`;
         },
         initMaps: function () {
-            notInit.forEach(({ mapId, config }) => {
+            notInit.forEach(({ mapId, mapRef, config }) => {
                 const map = Microsoft.Maps.Map(`#${mapId}`, config);
-                _maps.set(mapId, map);
+                _maps.set(mapId, { mapRef, map });
+                mapRef.invokeMethodAsync('MapLoaded');
             });
         },
-        getMap: function (mapId, config) {
-            
+        getMap: function (mapRef, mapId, config) {
             try {
                 const map = Microsoft.Maps.Map(`#${mapId}`, config);
-                _maps.set(mapId, map);
+                _maps.set(mapId, { mapRef, map });
+                mapRef.invokeMethodAsync('MapLoaded');
             } catch {
-                notInit.push({ mapId: mapId, config: config });
+                notInit.push({ mapId, mapRef, config });
             }
         },
         updateView: function (mapId, config) {
-            _maps.get(mapId).setView(config);
+            _maps.get(mapId).map.setView(config);
+        },
+        loadModule(mapId, moduleId, funcName, funcParams) {
+            const map = _maps.get(mapId).map;
+            Microsoft.Maps.loadModule(moduleId, window[funcName].bind(Object.assign({}, funcParams, { map })));
         }
     };
 })();

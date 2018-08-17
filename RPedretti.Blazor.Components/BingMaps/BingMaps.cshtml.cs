@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.JSInterop;
+using RPedretti.Blazor.Components.BingMaps.Modules;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.Components.BingMaps
@@ -12,8 +12,10 @@ namespace RPedretti.Blazor.Components.BingMaps
         protected const string scriptUrl = "https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=";
         protected bool init;
         private bool _shouldRender;
+        private DotNetObjectRef thisRef;
 
         [Parameter] protected string ApiKey { get; set; }
+        [Parameter] protected IEnumerable<IBingMapModule> Modules { get; set; } = new IBingMapModule[0];
 
         private BingMapsViewConfig _config;
         [Parameter] protected BingMapsViewConfig Config {
@@ -40,8 +42,9 @@ namespace RPedretti.Blazor.Components.BingMaps
             if (!init)
             {
                 init = true;
+                thisRef = new DotNetObjectRef(this);
                 var initialConfig = new { Credentials = ApiKey, Config.MapTypeId, Config.Zoom };
-                JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.getMap", Id, initialConfig);
+                JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.getMap", thisRef, Id, initialConfig);
             }
 
             _shouldRender = false;
@@ -55,6 +58,15 @@ namespace RPedretti.Blazor.Components.BingMaps
         private void UpdateView(BingMapsViewConfig viewConfig)
         {
             JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.updateView", Id, viewConfig);
+        }
+
+        [JSInvokable]
+        public async Task MapLoaded()
+        {
+            foreach (var module in Modules)
+            {
+                await module.InitAsync(Id);
+            }
         }
     }
 }
