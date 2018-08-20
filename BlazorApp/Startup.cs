@@ -3,6 +3,7 @@ using BlazorApp.Services;
 using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 using Microsoft.AspNetCore.Blazor.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using RPedretti.Blazor.Components.BingMaps.Services;
 using RPedretti.Blazor.Components.Extensions;
 using RPedretti.Blazor.Sensors.Extensions;
 
@@ -30,6 +31,7 @@ namespace BlazorApp
             services.AddStorage();
             services.AddAmbientLightSensor();
             services.AddGeolocationSensor();
+            services.AddBingMapPushpinService();
         }
 
         #endregion Methods

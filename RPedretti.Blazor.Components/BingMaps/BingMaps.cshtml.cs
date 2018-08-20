@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.JSInterop;
+using RPedretti.Blazor.Components.BingMaps.Entities;
 using RPedretti.Blazor.Components.BingMaps.Modules;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace RPedretti.Blazor.Components.BingMaps
         [Parameter] protected string ApiKey { get; set; }
         [Parameter] protected IEnumerable<IBingMapModule> Modules { get; set; } = new IBingMapModule[0];
 
-        private BingMapsViewConfig _config;
-        [Parameter] protected BingMapsViewConfig Config {
-            get => _config;
+        [Parameter] protected BingMapsConfig MapsConfig { get; set; } = new BingMapsConfig();
+
+        private BingMapsViewConfig _viewConfig;
+        [Parameter] protected BingMapsViewConfig ViewConfig {
+            get => _viewConfig;
             set {
-                if (SetParameter(ref _config, value))
+                if (SetParameter(ref _viewConfig, value))
                 {
                     UpdateView(value);
                 }
@@ -30,12 +33,7 @@ namespace RPedretti.Blazor.Components.BingMaps
             }
         }
 
-        protected string Id { get; set; }
-
-        public BingMapsBase()
-        {
-            Id = $"bing-maps-{Guid.NewGuid().ToString().Replace("-", "")}";
-        }
+        [Parameter] protected string Id { get; set; } = $"bing-maps-{Guid.NewGuid().ToString().Replace("-", "")}";
 
         protected override void OnAfterRender()
         {
@@ -43,8 +41,7 @@ namespace RPedretti.Blazor.Components.BingMaps
             {
                 init = true;
                 thisRef = new DotNetObjectRef(this);
-                var initialConfig = new { Credentials = ApiKey, Config.MapTypeId, Config.Zoom };
-                JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.getMap", thisRef, Id, initialConfig);
+                JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.getMap", thisRef, Id, MapsConfig);
             }
 
             _shouldRender = false;

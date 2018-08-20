@@ -1,13 +1,23 @@
 ﻿var rpedrettiBlazorComponents = window.rpedrettiBlazorComponents || {};
-rpedrettiBlazorComponents.helpers = {
-    focusById: function (id) {
-        $(`#${id}`).focus();
-        return 1;
-    },
+rpedrettiBlazorComponents.helpers = (function () {
+    return {
+        focusById: (id) => {
+            $(`#${id}`).focus();
+            return 1;
+        },
 
-    senseClickOutside: function ($evtTarget, $container) {
-        if ($evtTarget.closest($container).length === 0) {
-            return true;
+        senseClickOutside: ($evtTarget, $container) => {
+            if ($evtTarget.closest($container).length === 0) {
+                return true;
+            }
+        },
+
+        removeEmpty: (obj) => {
+            Object.keys(obj).forEach(k =>
+                obj[k] && typeof obj[k] === 'object' && rpedrettiBlazorComponents.helpers.removeEmpty(obj[k]) ||
+                !obj[k] && obj[k] === undefined && obj[k] === null && delete obj[k]
+            );
+            return obj;
         }
-    }
-};
+    };
+})();

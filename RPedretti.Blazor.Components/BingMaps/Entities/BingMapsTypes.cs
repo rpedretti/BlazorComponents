@@ -1,4 +1,4 @@
-﻿namespace RPedretti.Blazor.Components.BingMaps
+﻿namespace RPedretti.Blazor.Components.BingMaps.Entities
 {
     public class BingMapsTypes
     {

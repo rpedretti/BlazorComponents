@@ -155,6 +155,30 @@ fieldset {
   fieldset .radio-group {
     margin-bottom: 16px; }
 
+.radio-group .radio-button {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-height: 50px;
+  min-width: 100px;
+  margin-bottom: 8px;
+  padding: 12px 8px;
+  background-color: gainsboro;
+  box-shadow: #A1A1A1 0px 0px 4px;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out, font-size .15s ease-in-out; }
+  .radio-group .radio-button.-disabled {
+    opacity: .65;
+    cursor: default; }
+  .radio-group .radio-button.-checked {
+    font-size: .96rem;
+    background-color: #CFCFCF;
+    box-shadow: #A1A1A1 0px 0px 0px; }
+  .radio-group .radio-button:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem #9A9A9A; }
+    .radio-group .radio-button:focus.-checked {
+      box-shadow: #4C4C4C 0px 0px 0.2rem; }
+
 .paged-grid {
   height: calc(100vh - 140px);
   min-width: 360px; }
@@ -169,14 +193,19 @@ fieldset {
 .sensors-ambientlight {
   margin-bottom: 24px; }
 
-.sensors-geolocation > .bing-maps {
-  margin-top: 12px;
-  float: left; }
-
-.sensors-geolocation-table {
-  float: left;
-  margin-top: 12px;
-  margin-left: 12px; }
+.sensors-geolocation {
+  width: 100%; }
+  .sensors-geolocation > .bing-maps {
+    margin-top: 12px;
+    float: left;
+    width: 100%;
+    height: 400px;
+    max-width: 400px;
+    position: relative; }
+  .sensors-geolocation-table {
+    float: left;
+    margin-top: 12px;
+    margin-left: 12px; }
 
 .new-item--input {
   height: inherit; }

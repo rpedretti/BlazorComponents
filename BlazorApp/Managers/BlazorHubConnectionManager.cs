@@ -13,9 +13,9 @@ namespace BlazorApp.Managers
         #region Fields
 
 #if DEBUG
-        private readonly string baseUrl = "http://localhost:5000";
+        private readonly string baseUrl = "https://localhost:5001";
 #else
-        private readonly string baseUrl = "http://blazorsignalr.azurewebsites.net";
+        private readonly string baseUrl = "https://blazorsignalr.azurewebsites.net";
 #endif
         private HubConnection connection;
         private HttpClient HttpClient;

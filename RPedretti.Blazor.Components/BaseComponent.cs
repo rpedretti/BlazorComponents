@@ -11,7 +11,7 @@ namespace RPedretti.Blazor.Components
 {
     public abstract class BaseComponent : BlazorComponent, IDisposable
     {
-        private string renderCounterId;
+        private readonly string renderCounterId;
         [Inject] private SessionStorage SessionStorage { get; set; }
 
         public BaseComponent()
