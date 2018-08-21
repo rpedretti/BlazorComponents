@@ -15,9 +15,14 @@ rpedrettiBlazorComponents.helpers = (function () {
         removeEmpty: (obj) => {
             Object.keys(obj).forEach(k =>
                 obj[k] && typeof obj[k] === 'object' && rpedrettiBlazorComponents.helpers.removeEmpty(obj[k]) ||
-                !obj[k] && obj[k] === undefined && obj[k] === null && delete obj[k]
+                !obj[k] && (obj[k] === undefined || obj[k] === null) && delete obj[k]
             );
             return obj;
+        },
+        genericFunction: (path) => {
+            return [window].concat(path.split('.')).reduce(function (prev, curr) {
+                return prev[curr];
+            });
         }
     };
 })();

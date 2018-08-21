@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using RPedretti.Blazor.Components.BingMaps.Services;
 using RPedretti.Blazor.Components.Extensions;
 using RPedretti.Blazor.Sensors.Extensions;
+using System;
+using System.Globalization;
+using System.Threading;
 
 namespace BlazorApp
 {

@@ -4,26 +4,59 @@ using RPedretti.Blazor.Components.BingMaps.Entities;
 using RPedretti.Blazor.Components.BingMaps.Modules;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.Components.BingMaps
 {
     public class BingMapsBase : BaseComponent
     {
-        protected const string scriptUrl = "https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=";
         protected bool init;
         private bool _shouldRender;
         private DotNetObjectRef thisRef;
 
-        [Parameter] protected string ApiKey { get; set; }
-        [Parameter] protected IEnumerable<IBingMapModule> Modules { get; set; } = new IBingMapModule[0];
+        [Parameter] protected Func<Task> MapLoaded { get; set; }
+
+        private ObservableCollection<IBingMapModule> _modules;
+        [Parameter]
+        protected ObservableCollection<IBingMapModule> Modules
+        {
+            get => _modules;
+            set
+            {
+                if (_modules != null)
+                {
+                    _modules.CollectionChanged -= ModulesChanged;
+                }
+
+                _modules = value;
+                _modules.CollectionChanged += ModulesChanged;
+            }
+        }
+
+        private void ModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add && modulesLoaded)
+            {
+                foreach (IBingMapModule item in e.NewItems)
+                {
+                    item.InitAsync(Id);
+                }
+            }
+        }
 
         [Parameter] protected BingMapsConfig MapsConfig { get; set; } = new BingMapsConfig();
 
         private BingMapsViewConfig _viewConfig;
-        [Parameter] protected BingMapsViewConfig ViewConfig {
+        private bool modulesLoaded;
+
+        [Parameter]
+        protected BingMapsViewConfig ViewConfig
+        {
             get => _viewConfig;
-            set {
+            set
+            {
                 if (SetParameter(ref _viewConfig, value))
                 {
                     UpdateView(value);
@@ -58,12 +91,17 @@ namespace RPedretti.Blazor.Components.BingMaps
         }
 
         [JSInvokable]
-        public async Task MapLoaded()
+        public async Task NotifyMapLoaded()
         {
-            foreach (var module in Modules)
+            MapLoaded?.Invoke();
+            if (Modules != null)
             {
-                await module.InitAsync(Id);
+                foreach (var module in Modules)
+                {
+                    await module.InitAsync(Id);
+                }
             }
+            modulesLoaded = true;
         }
     }
 }

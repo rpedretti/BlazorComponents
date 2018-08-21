@@ -16,8 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.1" />
+    <None Remove="content\js\BingMaps\_Modules\_bing-maps-traffic.module.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.6.0-preview1-20180817.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.6.0-preview1-20180817.1" />
     <PackageReference Include="Cloudcrate.AspNetCore.Blazor.Browser.Storage" Version="0.5.1" />
   </ItemGroup>
 

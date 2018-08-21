@@ -96,6 +96,25 @@ app > .spinner-wrapper {
     /* Never collapse the sidebar for wide screens */
     display: block; } }
 
+.bing-maps-page > .bing-maps-controls {
+  display: inline-block;
+  float: left; }
+  .bing-maps-page > .bing-maps-controls > .directions-container {
+    display: inline-block;
+    margin-right: 12px;
+    float: left; }
+    .bing-maps-page > .bing-maps-controls > .directions-container > .itineraryPanel {
+      height: 400px;
+      overflow: auto; }
+
+.bing-maps-page > .bing-maps {
+  margin-top: 12px;
+  float: left;
+  width: 100%;
+  height: 400px;
+  max-width: 400px;
+  position: relative; }
+
 .toggle-switch {
   margin-bottom: 14px; }
 
@@ -195,13 +214,6 @@ fieldset {
 
 .sensors-geolocation {
   width: 100%; }
-  .sensors-geolocation > .bing-maps {
-    margin-top: 12px;
-    float: left;
-    width: 100%;
-    height: 400px;
-    max-width: 400px;
-    position: relative; }
   .sensors-geolocation-table {
     float: left;
     margin-top: 12px;

@@ -1,5 +1,5 @@
 ﻿@page "/sensors"
-@using RPedretti.Blazor.Components.BingMaps
+@using RPedretti.Blazor.Components.Checkbox
 @inherits SensorsBase
 
 <div class="sensors">
@@ -13,36 +13,5 @@
             <button type="button" class="btn" onclick="@StartWatch" disabled="@(Watching)">Start Watch</button>
             <button type="button" class="btn" onclick="@StopWatch" disabled="@(!Watching)">Stop Watch</button>
         </div>
-        <BingMaps 
-            Id="@BingMapId"
-            ApiKey="AkUyQ5km3V0tUHk_BL1gRFWunbT1x6dlbH_0mUHDREAHPgsJ1LlpS0ma2-0SIvV7"
-            MapsConfig="@MapsConfig"
-            ViewConfig="@MapsViewConfig" 
-            Modules="@Modules"/>
-        @if (Position != null)
-        {
-            <div class="sensors-geolocation-table">
-                <table class="table table-bordered">
-                    <caption>Position</caption>
-                    <thead>
-                        <tr>
-                            <th>Latitute</th>
-                            <th>Longitude</th>
-                            <th>Altitude</th>
-                            <th>Speed</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>@Position.Coords.Latitude</td>
-                            <td>@Position.Coords.Longitude</td>
-                            <td>@(Position.Coords.Altitude != null ? Position.Coords.Altitude.ToString() : "N/A")</td>
-                            <td>@(Position.Coords.Speed != null ? Position.Coords.Speed.ToString() : "N/A")</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        }
-
     </div>
 </div>

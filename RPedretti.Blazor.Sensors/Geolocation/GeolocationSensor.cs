@@ -42,7 +42,6 @@ namespace RPedretti.Blazor.Sensors.Geolocation
 
         private void StopWatch()
         {
-            Console.WriteLine($"stop id: {watchId}");
             JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorSensors.geolocation.stopWatchPosition", watchId);
             watchId = null;
             init = false;

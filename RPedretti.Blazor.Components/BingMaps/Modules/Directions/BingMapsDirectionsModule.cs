@@ -1,24 +1,38 @@
 ﻿using Microsoft.JSInterop;
+using System;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.Components.BingMaps.Modules.Directions
 {
-    public class BingMapsDirectionsModule : IBingMapModule
+    public class BingMapsDirectionsModule : BaseBingMapModule, IDisposable
     {
-        public static string ModuleId = "Microsoft.Maps.Directions";
+        private DotNetObjectRef thisRef;
+        private const string ModuleId = "Microsoft.Maps.Directions";
+        private string InitFunctionName =>
+            "rpedrettiBlazorComponents.bingMaps.modules.directions.init";
+
+        public event EventHandler DirectionsUpdated;
+
         public string InputPanelId { get; set; }
         public string ItineraryPanelId { get; set; }
-        public string InitFunctionName { get; set; } =
-            "window.rpedrettiBlazorComponents.bingMaps.modules.directions.init";
-
-        public async Task InitAsync(string mapId)
+        
+        public override async Task InitAsync(string mapId)
         {
-            await JSRuntime.Current.InvokeAsync<object>(
-                "window.rpedrettiBlazorComponents.bingMaps.loadModule",
-                mapId,
-                ModuleId,
-                InitFunctionName,
-                new { InputPanelId, ItineraryPanelId });
+            thisRef = new DotNetObjectRef(this);
+            var param = new { InputPanelId, ItineraryPanelId, ModuleRef = thisRef };
+            await InitModuleAsync(mapId, ModuleId, InitFunctionName, param);
+        }
+
+        [JSInvokable]
+        public Task DirectionsUpdatedAsync()
+        {
+            DirectionsUpdated?.Invoke(this, EventArgs.Empty);
+            return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            thisRef.Dispose();
         }
     }
 }

@@ -1,19 +1,20 @@
 ﻿window.rpedrettiBlazorComponents = window.rpedrettiBlazorComponents || {};
-window.rpedrettiBlazorComponents.bingMaps = (function () {
+window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazorComponents.bingMaps || {}, (function () {
     const _maps = new Map();
     const notInit = [];
     return {
-        initScript: function (apiKey) {
+        initScript: function (apiKey, mapLanguage) {
             var mapScriptTag = document.createElement('script');
             mapScriptTag.type = 'text/javascript';
             document.head.appendChild(mapScriptTag);
-            mapScriptTag.src = `https://www.bing.com/api/maps/mapcontrol?callback=getBingMaps&key=${apiKey}`;
+            const language = mapLanguage || window.navigator.userLanguage || window.navigator.language;
+            mapScriptTag.src = `https://www.bing.com/api/maps/mapcontrol?callback=getBingMaps&key=${apiKey}&setLang=${language}`;
         },
         initMaps: function () {
             notInit.forEach(({ mapId, mapRef, config }) => {
                 const map = Microsoft.Maps.Map(`#${mapId}`, config);
                 _maps.set(mapId, { mapRef, map });
-                mapRef.invokeMethodAsync('MapLoaded');
+                mapRef.invokeMethodAsync('NotifyMapLoaded');
             });
         },
         getMap: function (mapRef, mapId, config) {
@@ -21,10 +22,14 @@ window.rpedrettiBlazorComponents.bingMaps = (function () {
             try {
                 const map = Microsoft.Maps.Map(`#${mapId}`, config);
                 _maps.set(mapId, { mapRef, map });
-                mapRef.invokeMethodAsync('MapLoaded');
+                mapRef.invokeMethodAsync('NotifyMapLoaded');
             } catch {
                 notInit.push({ mapId, mapRef, config });
             }
+        },
+        unloadMap: function (mapID) {
+            _maps.get(mapID).map.entities.clear();
+            _maps.delete(mapID);
         },
         updateView: function (mapId, config) {
             rpedrettiBlazorComponents.helpers.removeEmpty(config);
@@ -32,7 +37,12 @@ window.rpedrettiBlazorComponents.bingMaps = (function () {
         },
         loadModule(mapId, moduleId, funcName, funcParams) {
             const map = _maps.get(mapId).map;
-            Microsoft.Maps.loadModule(moduleId, window[funcName].bind(Object.assign({}, funcParams, { map })));
+            if (funcName !== null) {
+                const func = rpedrettiBlazorComponents.helpers.genericFunction(funcName);
+                Microsoft.Maps.loadModule(moduleId, func.bind(Object.assign({}, funcParams, { map })));
+            } else {
+                Microsoft.Maps.loadModule(moduleId, () => { });
+            }
         },
 
         pushpin: (function () {
@@ -69,7 +79,7 @@ window.rpedrettiBlazorComponents.bingMaps = (function () {
                     const instance = _pushpins.get(mapId).get(pushpinId).setOption(pushpinOptions);
                 },
                 updateLocation: function (mapId, pushpinId, location) {
-                    const instance = _pushpins.get(mapId).get(pushpinId).setLocation(location);
+                    _pushpins.get(mapId).get(pushpinId).setLocation(location);
                 },
                 remove: function (mapId, pushpinId) {
                     const instance = _pushpins.get(mapId).get(pushpinId);
@@ -78,7 +88,7 @@ window.rpedrettiBlazorComponents.bingMaps = (function () {
             };
         })()
     };
-})();
+})());
 
 function getBingMaps() {
     rpedrettiBlazorComponents.bingMaps.initMaps();
