@@ -9,10 +9,9 @@
     <ul class="nav flex-column">
         @foreach (var link in links)
         {
-            var l = link;
             <li class="nav-item px-3">
-                <NavLink class="nav-link" href="@(l.Url)" Match=@(l.Match)>
-                    <span class="oi oi-home" aria-hidden="true"></span> @l.Label
+                <NavLink class="nav-link" href="@(link.Url)" Match=@(link.Match)>
+                    <span class="oi oi-home" aria-hidden="true"></span> @link.Label
                 </NavLink>
             </li>
         }
@@ -27,7 +26,6 @@
         new NavItem { Label = "Home", Match = NavLinkMatch.All, Url="/" },
         new NavItem { Label = "Counter", Url="/counter" },
         new NavItem { Label = "SignalR", Url="/signalr" },
-        new NavItem { Label = "Bing Maps", Url="/bing-maps" },
         new NavItem { Label = "Sensors", Url="/sensors" },
         new NavItem { Label = "Forecast", Url="/forecast" },
         new NavItem { Label = "Todo", Url="/todo" },

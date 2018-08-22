@@ -1,7 +1,7 @@
 ﻿using BlazorApp.Services;
 using Microsoft.AspNetCore.Blazor.Components;
 using RPedretti.Blazor.Components;
-using RPedretti.Blazor.Components.DynamicTable;
+using RPedretti.Blazor.Components.Layout.DynamicTable;
 using System;
 using System.Collections.Generic;
 using System.Linq;

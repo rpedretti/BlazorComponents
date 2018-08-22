@@ -59,10 +59,9 @@ namespace BlazorApp.Components.DownloadList
             await DownloadManager.RequestDownloadRemoveAsync(download.Id);
         }
 
-        public new void Dispose()
+        public void Dispose()
         {
             DownloadManager.NewDownloadAvailable -= ShowDownloads;
-            base.Dispose();
         }
     }
 }

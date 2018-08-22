@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+    <PackageId>RPedretti.Blazor.Sensors</PackageId>
+    <Version>0.0.4-preview</Version>
+    <Authors>Rafael Pedretti</Authors>
+    <Company>RJPSoft</Company>
+    
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
@@ -16,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.6.0-preview1-20180817.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.6.0-preview1-20180817.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.6.0-preview1-20180821.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.6.0-preview1-20180821.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 

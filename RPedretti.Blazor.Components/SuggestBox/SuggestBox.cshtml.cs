@@ -256,11 +256,10 @@ namespace RPedretti.Blazor.Components.SuggestBox
             return Task.CompletedTask;
         }
 
-        public new void Dispose()
+        public void Dispose()
         {
             JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.unregisterSuggestBox", SuggestBoxId);
             thisRef.Dispose();
-            base.Dispose();
         }
     }
 

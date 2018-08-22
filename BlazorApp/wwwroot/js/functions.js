@@ -10,7 +10,7 @@ function dragEnter(event) {
 }
 
 function dragDrop(event) {
-    const data = event.dataTransfer.getData("text/plain");
+    var data = event.dataTransfer.getData("text/plain");
     event.target.innerHTML = data;
     console.debug('drag drop', data);
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlazorApp.Pages.Index
 {
-    public class IndexBase : BaseComponent, IDisposable
+    public class IndexBase : BaseComponent
     {
         #region Fields
 

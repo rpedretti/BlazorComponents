@@ -1,0 +1,8 @@
+﻿{
+  "overrides": [
+    {
+      "files": "**/*.js",
+      "excludedFiles": "lib/**/*.js"
+    }
+  ]
+}

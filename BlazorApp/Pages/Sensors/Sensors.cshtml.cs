@@ -1,17 +1,8 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using RPedretti.Blazor.Components;
-using RPedretti.Blazor.Components.BingMaps;
-using RPedretti.Blazor.Components.BingMaps.Entities;
-using RPedretti.Blazor.Components.BingMaps.Modules;
-using RPedretti.Blazor.Components.BingMaps.Modules.Directions;
-using RPedretti.Blazor.Components.BingMaps.Modules.Traffic;
-using RPedretti.Blazor.Components.BingMaps.Services;
 using RPedretti.Blazor.Sensors.AmbientLight;
 using RPedretti.Blazor.Sensors.Geolocation;
 using System;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlazorApp.Pages.Sensors
@@ -85,13 +76,12 @@ namespace BlazorApp.Pages.Sensors
             return Task.CompletedTask;
         }
 
-        public new void Dispose()
+        public void Dispose()
         {
             LightSensor.OnReading -= OnReading;
             LightSensor.OnError -= OnError;
             GeolocationSensor.OnPositionUpdate -= OnPositionUpdate;
             GeolocationSensor.OnPositionError -= OnPositionError;
-            base.Dispose();
         }
 
         #endregion Methods
