@@ -48,10 +48,12 @@ namespace RPedretti.Blazor.SignalRServer
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .WithOrigins(
-                        "http://192.168.15.13:1234",
-                        "http://192.168.15.10:1234",
-                        "http://localhost:1234",
-                        "http://blazorapp40.azurewebsites.net"
+#if DEBUG
+                        "http://192.168.15.13:1234", "https://192.168.15.13:1235",
+                        "http://192.168.15.10:1234", "https://192.168.15.10:1235",
+                        "http://localhost:1234", "https://localhost:1235",
+#endif
+                        "https://RPedretti.Blazor.Components.Sample40.azurewebsites.net"
                     )
                     .AllowCredentials();
             });
@@ -71,7 +73,7 @@ namespace RPedretti.Blazor.SignalRServer
             services.AddSingleton<IUserRepository, UserRepository>();
 
             services.AddCors();
-            services.AddSignalR();
+            services.AddSignalR().AddMessagePackProtocol();
 
             services.AddAuthentication(options =>
             {
@@ -131,6 +133,6 @@ namespace RPedretti.Blazor.SignalRServer
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        #endregion Methods
+#endregion Methods
     }
 }

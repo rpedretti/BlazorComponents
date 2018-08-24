@@ -51,6 +51,8 @@ namespace RPedretti.Blazor.Components.SuggestBox
         protected bool HasFocus { get; set; }
         protected string ListId { get; set; }
 
+        private DotNetObjectRef thisRef;
+
         [Parameter]
         protected bool LoadingSuggestion
         {
@@ -210,7 +212,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
             SuggestionSelected?.Invoke(item.Value);
             AnnounceA11Y = true;
             A11yLabel = null;
-            JSRuntime.Current.InvokeAsync<int>("focusById", SuggestBoxId);
+            JSRuntime.Current.InvokeAsync<int>("suggestbox.focusById", SuggestBoxId);
             _shouldRender = true;
         }
 
@@ -220,20 +222,21 @@ namespace RPedretti.Blazor.Components.SuggestBox
             AnnounceA11Y = false;
         }
 
-        protected void OnFocusIn()
+        protected override void OnInit()
+        {
+            SuggestBoxId = $"suggestbox-{Guid.NewGuid()}";
+        }
+
+        protected override Task OnAfterRenderAsync()
         {
             if (init)
             {
                 init = false;
-                JSRuntime.Current.InvokeAsync<int>("initSuggestBox", SuggestBoxId);
+                thisRef = new DotNetObjectRef(this);
+                JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.initSuggestBox", thisRef, SuggestBoxId);
             }
-        }
 
-        protected override void OnInit()
-        {
-            SuggestBoxId = $"sugestbox-{Guid.NewGuid()}";
-            ListId = Guid.NewGuid().ToString();
-            SuggestBoxList.Add(this);
+            return base.OnAfterRenderAsync();
         }
 
         protected override bool ShouldRender()
@@ -243,18 +246,20 @@ namespace RPedretti.Blazor.Components.SuggestBox
 
         internal string SuggestBoxId { get; set; }
 
-        internal void ClearSelection()
+        [JSInvokable]
+        public Task ClearSelection()
         {
             _suggestionItems.ForEach(s => s.Selected = false);
             internalQuery = originalQuery;
             OpenSuggestion = false;
             StateHasChanged();
+            return Task.CompletedTask;
         }
 
-        public new void Dispose()
+        public void Dispose()
         {
-            base.Dispose();
-            SuggestBoxList.Remove(this);
+            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.unregisterSuggestBox", SuggestBoxId);
+            thisRef.Dispose();
         }
     }
 

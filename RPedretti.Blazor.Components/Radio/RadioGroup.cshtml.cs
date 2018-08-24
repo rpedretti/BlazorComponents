@@ -26,9 +26,10 @@ namespace RPedretti.Blazor.Components.Radio
             else if (Selected != button)
             {
                 Selected = button;
-                StateHasChanged();
                 SelectedChanged?.Invoke(button);
             }
+
+            StateHasChanged();
         }
 
         #endregion Methods

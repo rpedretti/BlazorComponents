@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+    <PackageId>RPedretti.Blazor.Components</PackageId>
+    <Version>0.0.4-preview</Version>
+    <Authors>Rafael Pedretti</Authors>
+    <Company>RJPSoft</Company>
+    
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
@@ -16,29 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="content\js\suggest-box\_suggest-box.js" />
-    <None Remove="content\js\_helpers.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Accordeon\Accordeon.cshtml" />
-    <None Include="Checkbox\Checkbox.cshtml" />
-    <None Include="DynamicTable\DynamicGroupedTable.cshtml" />
-    <None Include="DynamicTable\DynamicTable.cshtml" />
-    <None Include="PagedGrid\PagedGrid.cshtml" />
-    <None Include="Pager\Pager.cshtml" />
-    <None Include="ProgressBar\ProgressBar.cshtml" />
-    <None Include="Radio\RadioGroup.cshtml" />
-    <None Include="Spinner\Spinner.cshtml" />
-    <None Include="SuggestBox\SuggestBox.cshtml" />
-    <None Include="ToggleSwitch\ToggleSwitch.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="BuildWebCompiler" Version="1.11.375" />
-    <PackageReference Include="Cloudcrate.AspNetCore.Blazor.Browser.Storage" Version="0.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.6.0-preview1-20180822.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.6.0-preview1-20180822.3" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,36 @@
+﻿@page "/loaders"
+@inherits LoadersBase
+@using RPedretti.Blazor.Components.Spinner
+
+<div class="loaders-page">
+    <div class="accordeon-container">
+        <Accordeon Title="Loaders" CenterTitle bind-Expanded="@ExpandLoaderAccordeon">
+            <fieldset>
+                <legend>Progress</legend>
+                <div class="spinner-row" style="width: 90%; margin:0 auto;">
+                    <ProgressBar Active="@ExpandLoaderAccordeon" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Not centered</legend>
+                <div class="spinner-row">
+                    <Spinner Active="@ExpandLoaderAccordeon" />
+                    <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" />
+                    <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Centered</legend>
+
+                <div class="spinner-row">
+                    <Spinner Active="@ExpandLoaderAccordeon" Centered />
+                    <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.MEDIUM" Centered />
+                    <Spinner Active="@ExpandLoaderAccordeon" Size="@SpinnerSize.LARGE" Centered />
+                </div>
+
+            </fieldset>
+
+
+        </Accordeon>
+    </div>
+</div>

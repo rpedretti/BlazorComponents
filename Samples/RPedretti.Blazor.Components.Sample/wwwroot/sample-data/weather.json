@@ -1,0 +1,62 @@
+﻿[
+  {
+    "Date": "2018-05-06 10:00:00",
+    "Temperature": 16,
+    "RainChangePercent": "10",
+    "RainAmmount": 33
+  },
+  {
+    "Date": "2018-05-07 10:00:00",
+    "Temperature": 14,
+    "RainChangePercent": "20",
+    "RainAmmount": 57
+  },
+  {
+    "Date": "2018-05-07 12:00:00",
+    "Temperature": 12,
+    "RainChangePercent": "40",
+    "RainAmmount": 57
+  },
+  {
+    "Date": "2018-05-07 14:00:00",
+    "Temperature": 10,
+    "RainChangePercent": "100",
+    "RainAmmount": 57
+  },
+  {
+    "Date": "2018-05-08 10:00:00",
+    "Temperature": 22,
+    "RainChangePercent": "34",
+    "RainAmmount": 9
+  },
+  {
+    "Date": "2018-05-08 12:00:00",
+    "Temperature": 25,
+    "RainChangePercent": "12",
+    "RainAmmount": 9
+  },
+  {
+    "Date": "2018-05-08 14:00:00",
+    "Temperature": 20,
+    "RainChangePercent": "73",
+    "RainAmmount": 9
+  },
+  {
+    "Date": "2018-05-09 10:00:00",
+    "Temperature": 25,
+    "RainChangePercent": "12",
+    "RainAmmount": 4
+  },
+  {
+    "Date": "2018-05-09 12:00:00",
+    "Temperature": 20,
+    "RainChangePercent": "85",
+    "RainAmmount": 4
+  },
+  {
+    "Date": "2018-05-10 10:00:00",
+    "Temperature": 22,
+    "RainChangePercent": "55",
+    "RainAmmount": 29
+  }
+]

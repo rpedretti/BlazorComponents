@@ -1,24 +1,12 @@
-﻿using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
-using Microsoft.AspNetCore.Blazor;
+﻿using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
-#if DEBUG
-using RPedretti.Blazor.Components.Debug;
-#endif
 using System;
 using System.Collections.Generic;
 
 namespace RPedretti.Blazor.Components
 {
-    public abstract class BaseComponent : BlazorComponent, IDisposable
+    public abstract class BaseComponent : BlazorComponent
     {
-        private string renderCounterId;
-        [Inject] private SessionStorage SessionStorage { get; set; }
-
-        public BaseComponent()
-        {
-            renderCounterId = Guid.NewGuid().ToString();
-        }
-
         #region Methods
 
         protected void HandleKeyPress(UIKeyboardEventArgs args, Action action)
@@ -40,34 +28,6 @@ namespace RPedretti.Blazor.Components
             onChange?.Invoke();
 
             return true;
-        }
-
-        protected int RenderCount { get; set; }
-
-        protected override void OnAfterRender()
-        {
-            RenderCount++;
-#if DEBUG
-            var currentCountList = SessionStorage.GetItem<List<ComponentRenderCount>>("render_count") ?? new List<ComponentRenderCount>();
-            var dict = new Dictionary<string, int>();
-            currentCountList.ForEach(c => dict[c.Key] = c.Value);
-
-            dict[$"{GetType().Name}_{renderCounterId}"] = RenderCount;
-            SessionStorage.SetItem("render_count", dict);
-#endif
-            base.OnAfterRender();
-        }
-
-        public void Dispose()
-        {
-#if DEBUG
-            var currentCountList = SessionStorage.GetItem<List<ComponentRenderCount>>("render_count") ?? new List<ComponentRenderCount>();
-            var dict = new Dictionary<string, int>();
-            currentCountList.ForEach(c => dict[c.Key] = c.Value);
-
-            dict.Remove(GetType().Name);
-            SessionStorage.SetItem("render_count", dict);
-#endif
         }
 
         #endregion Methods

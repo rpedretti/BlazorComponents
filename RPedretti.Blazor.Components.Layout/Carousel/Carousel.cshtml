@@ -1,0 +1,13 @@
+﻿@inherits CarouselBase
+
+<div class="carousel">
+    <div class="carousel-container">
+        <div class="carousel-content">
+
+        </div>
+    </div>
+    <div class="controls">
+        <button role="link" aria-label="próximo" disabled="@(!HasNext)" onclick="@(() => GoToNext())" class="next"><i class="icon_seta_right"></i></button>
+        <button role="link" aria-label="anterior" disabled="@(!HasPrev)" onclick="@(() => GoToPrev())" class="prev"><i class="icon_seta"></i></button>
+    </div>
+</div>

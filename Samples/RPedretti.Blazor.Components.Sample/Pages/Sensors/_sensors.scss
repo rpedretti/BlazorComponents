@@ -1,0 +1,18 @@
+﻿.sensors {
+    &-ambientlight {
+        margin-bottom: 24px;
+    }
+
+    &-geolocation {
+        width: 100%;
+
+        &-controls {
+        }
+
+        &-table {
+            float: left;
+            margin-top: 12px;
+            margin-left: 12px;
+        }
+    }
+}

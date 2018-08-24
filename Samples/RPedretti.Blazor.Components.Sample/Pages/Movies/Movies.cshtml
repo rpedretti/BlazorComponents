@@ -1,0 +1,43 @@
+﻿@page "/movies"
+@inherits MoviesBase
+@using RPedretti.Blazor.Components.Layout.Pager
+
+<div class="input-group mb-3">
+    <input type="text"
+           class="form-control"
+           aria-label="title"
+           placeholder="Movie title..."
+           oninput="(this.dispatchEvent(new CustomEvent('change', { bubbles: true })))"
+           bind="@SearchMovieTitle" />
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary"
+                type="button"
+                onclick="@SearchAsync"
+                disabled="@string.IsNullOrWhiteSpace(SearchMovieTitle)">
+            Search
+        </button>
+    </div>
+</div>
+
+<h1>Movies (@MoviesCount)</h1>
+
+<PagedGrid MaxIndicators="3"
+           SmallPager
+           A11yLabel="Movies"
+           Loading="@Loading"
+           HasContent="@HasContent"
+           CurrentPage="@CurrentPage"
+           PageCount="@PageCount"
+           OnRequestPage="@RequestPage">
+    @for (int i = 0; i < Movies.Count; i++)
+    {
+        var index = i;
+        var movie = Movies[index];
+        <MoviePoster Movie="@movie"
+                     A11yRole="listitem"
+                     A11ySetSize="@MoviesCount"
+                     A11yPosInSet="@((CurrentPage - 1) * 10 + index + 1)"
+                     A11yLabel="@($"{movie.Title}{(movie.Plot != null ? ", " + movie.Plot : null)}")"
+                     OnClick="@(() => GoToMovie(movie.Id))" />
+    }
+</PagedGrid>
