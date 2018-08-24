@@ -1,4 +1,4 @@
-﻿using BlazorApp.Shared.Domain;
+﻿using RPedretti.Blazor.Shared.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;

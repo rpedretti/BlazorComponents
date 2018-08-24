@@ -1,0 +1,68 @@
+﻿@import "../../Shared/Styles/_mixins.scss";
+
+.inputs-page {
+    > .accordeon-container {
+        max-width: 400px;
+        margin: 24px 0;
+
+        &.suggest-box-container {
+            .accordeon-content.-expand {
+                overflow: visible;
+            }
+        }
+    }
+
+    legend {
+        width: auto;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    fieldset {
+        display: block;
+        margin-left: 2px;
+        margin-right: 2px;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        min-width: min-content;
+        border-width: 2px;
+        border-style: groove;
+        border-color: threedface;
+        border-image: initial;
+
+        .radio-group {
+            margin-bottom: 16px;
+        }
+    }
+
+    .radio-group .radio-button {
+        @include intrinsic(width, fit-content);
+        min-height: 50px;
+        min-width: 100px;
+        margin-bottom: 8px;
+        padding: 12px 8px;
+        background-color: gainsboro;
+        box-shadow: #A1A1A1 0px 0px 4px;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out, font-size .15s ease-in-out;
+
+        &.-disabled {
+            opacity: .65;
+            cursor: default;
+        }
+
+        &.-checked {
+            font-size: .96rem;
+            background-color: #CFCFCF;
+            box-shadow: #A1A1A1 0px 0px 0px;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem #9A9A9A;
+
+            &.-checked {
+                box-shadow: #4C4C4C 0px 0px 0.2rem;
+            }
+        }
+    }
+}

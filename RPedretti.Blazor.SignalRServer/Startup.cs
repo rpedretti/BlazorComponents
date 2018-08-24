@@ -53,7 +53,7 @@ namespace RPedretti.Blazor.SignalRServer
                         "http://192.168.15.10:1234", "https://192.168.15.10:1235",
                         "http://localhost:1234", "https://localhost:1235",
 #endif
-                        "https://blazorapp40.azurewebsites.net"
+                        "https://RPedretti.Blazor.Components.Sample40.azurewebsites.net"
                     )
                     .AllowCredentials();
             });

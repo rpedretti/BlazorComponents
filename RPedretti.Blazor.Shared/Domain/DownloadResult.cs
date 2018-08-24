@@ -1,4 +1,4 @@
-﻿namespace BlazorApp.Shared.Domain
+﻿namespace RPedretti.Blazor.Shared.Domain
 {
     public class DownloadResult
     {

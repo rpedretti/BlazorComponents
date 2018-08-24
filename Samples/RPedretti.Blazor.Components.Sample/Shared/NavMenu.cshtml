@@ -1,0 +1,45 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="/">BlazorApp</a>
+    <button class="navbar-toggler" onclick=@ToggleNavMenu>
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class=@(collapseNavMenu ? "collapse" : null) onclick=@ToggleNavMenu>
+    <ul class="nav flex-column">
+        @foreach (var link in links)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="@(link.Url)" Match=@(link.Match)>
+                    <span class="oi oi-home" aria-hidden="true"></span> @link.Label
+                </NavLink>
+            </li>
+        }
+    </ul>
+</div>
+
+@functions {
+    bool collapseNavMenu = true;
+
+    List<NavItem> links = new List<NavItem>()
+    {
+    new NavItem { Label = "Inputs", Match = NavLinkMatch.All, Url="/" },
+    new NavItem { Label = "Loaders", Url="/loaders" },
+    new NavItem { Label = "SignalR", Url="/signalr" },
+    new NavItem { Label = "Sensors", Url="/sensors" },
+    new NavItem { Label = "Forecast", Url="/forecast" },
+    new NavItem { Label = "Movies", Url="/movies" }
+    };
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    class NavItem
+    {
+        public string Url { get; set; }
+        public string Label { get; set; }
+        public NavLinkMatch Match { get; set; }
+    }
+}

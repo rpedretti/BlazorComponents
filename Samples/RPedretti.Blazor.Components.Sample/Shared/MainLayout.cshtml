@@ -1,0 +1,26 @@
+@inherits MainLayoutBase
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+    </div>
+    @foreach (var message in Messages)
+    {
+        var m = message;
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            @m
+            <button type="button" class="close" aria-label="Close" onclick="@(() => Messages.Remove(m))">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <div class="content px-4">
+        @Body
+    </div>
+
+    <DownloadList />
+</div>
