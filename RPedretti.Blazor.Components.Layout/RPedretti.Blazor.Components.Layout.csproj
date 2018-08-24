@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>RPedretti.Blazor.Components.Layout</PackageId>
-    <Version>0.0.4-preview</Version>
+    <Version>0.0.5-preview</Version>
     <Authors>Rafael Pedretti</Authors>
     <Company>RJPSoft</Company>
     
