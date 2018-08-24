@@ -23,7 +23,7 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 const map = Microsoft.Maps.Map(`#${mapId}`, config);
                 _maps.set(mapId, { mapRef, map });
                 mapRef.invokeMethodAsync('NotifyMapLoaded');
-            } catch {
+            } catch (e) {
                 notInit.push({ mapId, mapRef, config });
             }
         },

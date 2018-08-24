@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <BlazorLinkerDescriptor Include="Linker.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BuildWebCompiler" Version="1.11.375" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.6.0-preview1-20180822.3" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.6.0-preview1-20180822.3" />
