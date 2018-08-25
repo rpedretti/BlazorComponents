@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RPedretti.Blazor.Components.Sample.Pages.Loaders
+﻿namespace RPedretti.Blazor.Components.Sample.Pages.Loaders
 {
     public class LoadersBase : BaseComponent
     {
+        #region Properties
+
         public bool ExpandLoaderAccordeon { get; set; }
+
+        #endregion Properties
     }
 }

@@ -4,7 +4,21 @@ namespace RPedretti.Blazor.BingMaps.Entities
 {
     public class BingMapsViewConfig
     {
-        public BingMapsViewConfig() { }
+        #region Properties
+
+        public Geocoordinate Center { get; set; }
+
+        public string MapTypeId { get; set; }
+
+        public int Zoom { get; set; } = 10;
+
+        #endregion Properties
+
+        #region Constructors
+
+        public BingMapsViewConfig()
+        {
+        }
 
         public BingMapsViewConfig(BingMapsViewConfig viewConfig)
         {
@@ -12,9 +26,9 @@ namespace RPedretti.Blazor.BingMaps.Entities
             MapTypeId = viewConfig.MapTypeId;
         }
 
-        public int Zoom { get; set; } = 10;
-        public string MapTypeId { get; set; }
-        public Geocoordinate Center { get; set; }
+        #endregion Constructors
+
+        #region Methods
 
         public override bool Equals(object obj)
         {
@@ -33,5 +47,7 @@ namespace RPedretti.Blazor.BingMaps.Entities
             hashCode = hashCode * -1521134295 + EqualityComparer<Geocoordinate>.Default.GetHashCode(Center);
             return hashCode;
         }
+
+        #endregion Methods
     }
 }

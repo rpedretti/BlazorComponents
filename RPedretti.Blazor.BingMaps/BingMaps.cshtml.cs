@@ -12,26 +12,17 @@ namespace RPedretti.Blazor.BingMaps
 {
     public class BingMapsBase : BlazorComponent
     {
-        protected bool init;
-        private bool _shouldRender;
-        private DotNetObjectRef thisRef;
-
-        [Parameter] protected Func<Task> MapLoaded { get; set; }
+        #region Fields
 
         private ObservableCollection<IBingMapModule> _modules;
-        [Parameter]
-        protected ObservableCollection<IBingMapModule> Modules
-        {
-            get => _modules;
-            set
-            {
-                if (_modules != null) _modules.CollectionChanged -= ModulesChanged;
+        private bool _shouldRender;
+        private BingMapsViewConfig _viewConfig;
+        private bool modulesLoaded;
+        private DotNetObjectRef thisRef;
 
-                _modules = value;
+        #endregion Fields
 
-                if (_modules != null) _modules.CollectionChanged += ModulesChanged;
-            }
-        }
+        #region Methods
 
         private void ModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -45,10 +36,44 @@ namespace RPedretti.Blazor.BingMaps
             }
         }
 
+        private bool SetParameter<T>(ref T prop, T value, Action onChange = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(prop, value))
+            {
+                return false;
+            }
+
+            prop = value;
+            onChange?.Invoke();
+
+            return true;
+        }
+
+        private void UpdateView(BingMapsViewConfig viewConfig)
+        {
+            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.updateView", Id, viewConfig);
+        }
+
+        #endregion Methods
+
+        protected bool init;
+        [Parameter] protected string Id { get; set; } = $"bing-maps-{Guid.NewGuid().ToString().Replace("-", "")}";
+        [Parameter] protected Func<Task> MapLoaded { get; set; }
         [Parameter] protected BingMapsConfig MapsConfig { get; set; } = new BingMapsConfig();
 
-        private BingMapsViewConfig _viewConfig;
-        private bool modulesLoaded;
+        [Parameter]
+        protected ObservableCollection<IBingMapModule> Modules
+        {
+            get => _modules;
+            set
+            {
+                if (_modules != null) _modules.CollectionChanged -= ModulesChanged;
+
+                _modules = value;
+
+                if (_modules != null) _modules.CollectionChanged += ModulesChanged;
+            }
+        }
 
         [Parameter]
         protected BingMapsViewConfig ViewConfig
@@ -64,8 +89,6 @@ namespace RPedretti.Blazor.BingMaps
                 _shouldRender = true;
             }
         }
-
-        [Parameter] protected string Id { get; set; } = $"bing-maps-{Guid.NewGuid().ToString().Replace("-", "")}";
 
         protected override void OnAfterRender()
         {
@@ -84,11 +107,6 @@ namespace RPedretti.Blazor.BingMaps
             return _shouldRender;
         }
 
-        private void UpdateView(BingMapsViewConfig viewConfig)
-        {
-            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.updateView", Id, viewConfig);
-        }
-
         [JSInvokable]
         public async Task NotifyMapLoaded()
         {
@@ -102,19 +120,6 @@ namespace RPedretti.Blazor.BingMaps
                 }
             }
             modulesLoaded = true;
-        }
-
-        private bool SetParameter<T>(ref T prop, T value, Action onChange = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(prop, value))
-            {
-                return false;
-            }
-
-            prop = value;
-            onChange?.Invoke();
-
-            return true;
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿using RPedretti.Blazor.Components.Sample.Managers;
-using Microsoft.AspNetCore.Blazor.Components;
-using RPedretti.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor.Components;
+using RPedretti.Blazor.Components.Sample.Managers;
+using RPedretti.Blazor.Shared.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using RPedretti.Blazor.Shared.Domain;
 
 namespace RPedretti.Blazor.Components.Sample.Components.DownloadList
 {

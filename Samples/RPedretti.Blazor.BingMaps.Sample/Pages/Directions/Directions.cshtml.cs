@@ -2,26 +2,30 @@
 using RPedretti.Blazor.BingMaps.Modules;
 using RPedretti.Blazor.BingMaps.Modules.Directions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.BingMaps.Sample.Pages.Directions
 {
     public class DirectionsBase : BaseComponent
     {
+        #region Fields
+
         private BingMapsDirectionsModule _directionsModule;
-        protected ObservableCollection<IBingMapModule> Modules;
-        protected string BingMapId = $"bing-maps-{Guid.NewGuid().ToString().Replace("-", "")}";
 
+        #endregion Fields
 
-        public Task MapLoaded()
+        #region Methods
+
+        private void DirectionsUpdated(object sender, EventArgs e)
         {
-            return Task.CompletedTask;
+            Console.WriteLine("path updated");
         }
 
-        protected BingMapsViewConfig MapsViewConfig { get; set; } = new BingMapsViewConfig();
+        #endregion Methods
+
+        protected string BingMapId = $"bing-maps-{Guid.NewGuid().ToString().Replace("-", "")}";
+        protected ObservableCollection<IBingMapModule> Modules;
 
         protected BingMapsConfig MapsConfig { get; set; } = new BingMapsConfig
         {
@@ -35,8 +39,9 @@ namespace RPedretti.Blazor.BingMaps.Sample.Pages.Directions
             EnableHighDpi = true,
             Zoom = 12,
             ShowTrafficButton = true
-
         };
+
+        protected BingMapsViewConfig MapsViewConfig { get; set; } = new BingMapsViewConfig();
 
         public DirectionsBase()
         {
@@ -50,9 +55,9 @@ namespace RPedretti.Blazor.BingMaps.Sample.Pages.Directions
             Modules = new ObservableCollection<IBingMapModule> { _directionsModule };
         }
 
-        private void DirectionsUpdated(object sender, EventArgs e)
+        public Task MapLoaded()
         {
-            Console.WriteLine("path updated");
+            return Task.CompletedTask;
         }
     }
 }

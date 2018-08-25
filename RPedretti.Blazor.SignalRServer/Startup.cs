@@ -135,6 +135,6 @@ namespace RPedretti.Blazor.SignalRServer
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-#endregion Methods
+        #endregion Methods
     }
 }

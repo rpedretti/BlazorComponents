@@ -4,6 +4,8 @@ namespace RPedretti.Blazor.BingMaps.Entities
 {
     public class BingMapsConfig : BingMapsViewConfig
     {
+        #region Properties
+
         public bool? AllowHidingLabelsOfRoad { get; set; }
         public bool? AllowInfoboxOverflow { get; set; }
         public Color? BackgroundColor { get; set; }
@@ -31,11 +33,12 @@ namespace RPedretti.Blazor.BingMaps.Entities
         public bool? ShowLocateMeButton { get; set; }
         public bool? ShowMapTypeSelector { get; set; }
         public bool? ShowScalebar { get; set; }
-        public bool? ShowTrafficButton { get; set; }
         public bool? ShowTermsLink { get; set; }
+        public bool? ShowTrafficButton { get; set; }
         public bool? ShowZoomButtons { get; set; }
         public StreetsideOptions StreetsideOptions { get; set; }
         public string[] SupportedMapTypes { get; set; }
 
+        #endregion Properties
     }
 }

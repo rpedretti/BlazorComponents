@@ -1,5 +1,5 @@
-﻿using RPedretti.Blazor.BingMaps.Entities;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
+using RPedretti.Blazor.BingMaps.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,7 +7,13 @@ namespace RPedretti.Blazor.BingMaps.Services
 {
     public class BingMapPushpinService
     {
+        #region Properties
+
         public Dictionary<string, HashSet<string>> pushpins { get; set; } = new Dictionary<string, HashSet<string>>();
+
+        #endregion Properties
+
+        #region Methods
 
         public Task AddPushpin(string mapId, BingMapPushpin pushpin)
         {
@@ -26,6 +32,13 @@ namespace RPedretti.Blazor.BingMaps.Services
             return pushpins.ContainsKey(mapId) && pushpins[mapId].Contains(pushpinId);
         }
 
+        public Task DeletePushpin(string mapId, string pushpinId)
+        {
+            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.pushpin.remove", mapId, pushpinId);
+            pushpins[mapId].Remove(pushpinId);
+            return Task.CompletedTask;
+        }
+
         public Task UpdatePushpinLocation(string mapId, string pushpinId, Geocoordinate location)
         {
             JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.pushpin.updateLocation", mapId, pushpinId, location);
@@ -38,11 +51,6 @@ namespace RPedretti.Blazor.BingMaps.Services
             return Task.CompletedTask;
         }
 
-        public Task DeletePushpin(string mapId, string pushpinId)
-        {
-            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.pushpin.remove", mapId, pushpinId);
-            pushpins[mapId].Remove(pushpinId);
-            return Task.CompletedTask;
-        }
+        #endregion Methods
     }
 }

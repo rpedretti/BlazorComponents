@@ -1,6 +1,5 @@
-﻿using RPedretti.Blazor.Components.Sample.Models;
-using Microsoft.AspNetCore.Blazor.Components;
-using RPedretti.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor.Components;
+using RPedretti.Blazor.Components.Sample.Models;
 using System;
 
 namespace RPedretti.Blazor.Components.Sample.Components.MoviePoster

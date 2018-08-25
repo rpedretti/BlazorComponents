@@ -1,7 +1,7 @@
-﻿using RPedretti.Blazor.Components.Sample.Models;
-using RPedretti.Blazor.Components.Sample.Services;
-using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
+﻿using Cloudcrate.AspNetCore.Blazor.Browser.Storage;
 using Microsoft.AspNetCore.Blazor.Components;
+using RPedretti.Blazor.Components.Sample.Models;
+using RPedretti.Blazor.Components.Sample.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

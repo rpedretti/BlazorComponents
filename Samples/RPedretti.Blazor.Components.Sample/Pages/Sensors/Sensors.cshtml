@@ -1,5 +1,6 @@
 ﻿@page "/sensors"
 @using RPedretti.Blazor.Components.Checkbox
+@using Newtonsoft.Json
 @inherits SensorsBase
 
 <div class="sensors">
@@ -13,5 +14,13 @@
             <button type="button" class="btn" onclick="@StartWatch" disabled="@(Watching)">Start Watch</button>
             <button type="button" class="btn" onclick="@StopWatch" disabled="@(!Watching)">Stop Watch</button>
         </div>
+        @if (Position != null)
+        {
+            <pre>@(JsonConvert.SerializeObject(Position, Formatting.Indented))</pre>
+        }
+        else
+        {
+            <p>No readings</p>
+        }
     </div>
 </div>

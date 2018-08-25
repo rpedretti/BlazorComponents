@@ -2,6 +2,8 @@
 {
     public class BingMapsTypes
     {
+        #region Properties
+
         public static string Aerial => "a";
         public static string BirdsEyes => "be";
         public static string BirdsEyes2 => "be2";
@@ -21,5 +23,7 @@
         public static string UserStudy2 => "s2";
         public static string UserStudy3 => "s3";
         public static string UserStudy4 => "s4";
+
+        #endregion Properties
     }
 }

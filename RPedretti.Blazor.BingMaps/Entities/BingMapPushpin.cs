@@ -2,8 +2,12 @@
 {
     public class BingMapPushpin
     {
-        public string Id { get; set; }
+        #region Properties
+
         public Geocoordinate Center { get; set; }
+        public string Id { get; set; }
         public PushpinOptions Options { get; set; }
+
+        #endregion Properties
     }
 }

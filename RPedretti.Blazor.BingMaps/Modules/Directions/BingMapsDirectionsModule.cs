@@ -6,22 +6,31 @@ namespace RPedretti.Blazor.BingMaps.Modules.Directions
 {
     public class BingMapsDirectionsModule : BaseBingMapModule, IDisposable
     {
-        private DotNetObjectRef thisRef;
+        #region Fields
+
         private const string ModuleId = "Microsoft.Maps.Directions";
+        private DotNetObjectRef thisRef;
+
+        #endregion Fields
+
+        #region Properties
+
         private string InitFunctionName =>
             "rpedrettiBlazorComponents.bingMaps.modules.directions.init";
 
+        public string InputPanelId { get; set; }
+
+        public string ItineraryPanelId { get; set; }
+
+        #endregion Properties
+
+        #region Events
+
         public event EventHandler DirectionsUpdated;
 
-        public string InputPanelId { get; set; }
-        public string ItineraryPanelId { get; set; }
-        
-        public override async Task InitAsync(string mapId)
-        {
-            thisRef = new DotNetObjectRef(this);
-            var param = new { InputPanelId, ItineraryPanelId, ModuleRef = thisRef };
-            await InitModuleAsync(mapId, ModuleId, InitFunctionName, param);
-        }
+        #endregion Events
+
+        #region Methods
 
         [JSInvokable]
         public Task DirectionsUpdatedAsync()
@@ -34,5 +43,14 @@ namespace RPedretti.Blazor.BingMaps.Modules.Directions
         {
             thisRef.Dispose();
         }
+
+        public override async Task InitAsync(string mapId)
+        {
+            thisRef = new DotNetObjectRef(this);
+            var param = new { InputPanelId, ItineraryPanelId, ModuleRef = thisRef };
+            await InitModuleAsync(mapId, ModuleId, InitFunctionName, param);
+        }
+
+        #endregion Methods
     }
 }

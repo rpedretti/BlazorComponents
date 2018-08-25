@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
-using RPedretti.Blazor.Components;
 using RPedretti.Blazor.Sensors.AmbientLight;
 using RPedretti.Blazor.Sensors.Geolocation;
 using System;
@@ -11,23 +10,20 @@ namespace RPedretti.Blazor.Components.Sample.Pages.Sensors
     {
         #region Properties
 
-        [Inject] protected GeolocationSensor GeolocationSensor { get; set; }
-        [Inject] protected AmbientLightSensor LightSensor { get; set; }
-        
+        [Inject]
+        protected GeolocationSensor GeolocationSensor { get; set; }
 
-        public int Light { get; set; }
-        public string LightError { get; set; }
-        public Position Position { get; set; }
-        public bool Watching { get; set; }
+        [Inject]
+        protected AmbientLightSensor LightSensor { get; set; }
 
         #endregion Properties
+
+        #region Methods
 
         private void DirectionsUpdated(object sender, EventArgs e)
         {
             Console.WriteLine("directions updated");
         }
-
-        #region Methods
 
         private void OnError(object sender, string error)
         {
@@ -44,7 +40,7 @@ namespace RPedretti.Blazor.Components.Sample.Pages.Sensors
         private void OnPositionUpdate(object sender, Position e)
         {
             Position = e;
-
+            StateHasChanged();
         }
 
         private void OnReading(object sender, int reading)
@@ -52,6 +48,8 @@ namespace RPedretti.Blazor.Components.Sample.Pages.Sensors
             Light = reading;
             StateHasChanged();
         }
+
+        #endregion Methods
 
         protected override void OnInit()
         {
@@ -76,6 +74,11 @@ namespace RPedretti.Blazor.Components.Sample.Pages.Sensors
             return Task.CompletedTask;
         }
 
+        public int Light { get; set; }
+        public string LightError { get; set; }
+        public Position Position { get; set; }
+        public bool Watching { get; set; }
+
         public void Dispose()
         {
             LightSensor.OnReading -= OnReading;
@@ -83,7 +86,5 @@ namespace RPedretti.Blazor.Components.Sample.Pages.Sensors
             GeolocationSensor.OnPositionUpdate -= OnPositionUpdate;
             GeolocationSensor.OnPositionError -= OnPositionError;
         }
-
-        #endregion Methods
     }
 }

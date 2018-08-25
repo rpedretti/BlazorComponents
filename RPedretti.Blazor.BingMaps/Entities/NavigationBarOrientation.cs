@@ -2,7 +2,11 @@
 {
     public class NavigationBarOrientation
     {
-        public static byte Vertical => 0;
+        #region Properties
+
         public static byte Hotizontal => 1;
+        public static byte Vertical => 0;
+
+        #endregion Properties
     }
 }

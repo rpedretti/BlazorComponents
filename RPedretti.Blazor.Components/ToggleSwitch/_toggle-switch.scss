@@ -115,4 +115,17 @@ $translate: ( small: 16px, medium: 22px, large: 26px );
     &.-large {
         @include toggle-size('large');
     }
+
+    &.-disabled > .switch {
+        > input {
+            display: none;
+
+            &:checked + .slider {
+                background-color: #00447A;
+            }
+        }
+        > .slider:before {
+            background-color: darkgray;
+        }
+    }
 }

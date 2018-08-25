@@ -1,6 +1,6 @@
-﻿using RPedretti.Blazor.Components.Sample.Managers;
-using Microsoft.AspNetCore.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.AspNetCore.Blazor.Layouts;
+using RPedretti.Blazor.Components.Sample.Managers;
 using System.Collections.Generic;
 
 namespace RPedretti.Blazor.Components.Sample.Shared

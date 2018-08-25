@@ -1,6 +1,5 @@
-﻿using RPedretti.Blazor.Components.Sample.Managers;
-using Microsoft.AspNetCore.Blazor.Components;
-using RPedretti.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor.Components;
+using RPedretti.Blazor.Components.Sample.Managers;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.Components.Sample.Pages.SignalR

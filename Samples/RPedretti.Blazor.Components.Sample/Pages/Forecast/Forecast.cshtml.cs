@@ -1,7 +1,6 @@
-﻿using RPedretti.Blazor.Components.Sample.Services;
-using Microsoft.AspNetCore.Blazor.Components;
-using RPedretti.Blazor.Components;
+﻿using Microsoft.AspNetCore.Blazor.Components;
 using RPedretti.Blazor.Components.Layout.DynamicTable;
+using RPedretti.Blazor.Components.Sample.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,6 +109,12 @@ namespace RPedretti.Blazor.Components.Sample.Pages
             Loading = false;
         }
 
+        public bool Grouped
+        {
+            get => _grouped;
+            set => SetParameter(ref _grouped, value, StateHasChanged);
+        }
+
         public ForecastBase()
         {
             Headers = new List<DynamicTableHeader>()
@@ -119,12 +124,6 @@ namespace RPedretti.Blazor.Components.Sample.Pages
                 new DynamicTableHeader{ Title =  "Rain chance (%)", CanSort = true, Classes = "-r", SortId = "2" },
                 new DynamicTableHeader{ Title =  "Rain Ammount (mm)", CanSort = true, Classes = "-r", SortId = "3" }
             };
-        }
-
-        public bool Grouped
-        {
-            get => _grouped;
-            set => SetParameter(ref _grouped, value, StateHasChanged);
         }
 
         public void ToggleColumn(int index)

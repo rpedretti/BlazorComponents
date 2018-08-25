@@ -20,6 +20,8 @@ namespace RPedretti.Blazor.Components.SuggestBox
         private string originalQuery;
         private DebounceDispatcher queryDispatcher = new DebounceDispatcher();
 
+        private DotNetObjectRef thisRef;
+
         #endregion Fields
 
         #region Methods
@@ -50,8 +52,6 @@ namespace RPedretti.Blazor.Components.SuggestBox
         [Parameter] protected string Description { get; set; }
         protected bool HasFocus { get; set; }
         protected string ListId { get; set; }
-
-        private DotNetObjectRef thisRef;
 
         [Parameter]
         protected bool LoadingSuggestion
@@ -222,11 +222,6 @@ namespace RPedretti.Blazor.Components.SuggestBox
             AnnounceA11Y = false;
         }
 
-        protected override void OnInit()
-        {
-            SuggestBoxId = $"suggestbox-{Guid.NewGuid()}";
-        }
-
         protected override Task OnAfterRenderAsync()
         {
             if (init)
@@ -237,6 +232,11 @@ namespace RPedretti.Blazor.Components.SuggestBox
             }
 
             return base.OnAfterRenderAsync();
+        }
+
+        protected override void OnInit()
+        {
+            SuggestBoxId = $"suggestbox-{Guid.NewGuid()}";
         }
 
         protected override bool ShouldRender()

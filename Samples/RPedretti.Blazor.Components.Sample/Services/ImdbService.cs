@@ -1,5 +1,5 @@
-﻿using RPedretti.Blazor.Components.Sample.Domain;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
+using RPedretti.Blazor.Components.Sample.Domain;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;

@@ -8,21 +8,46 @@ namespace RPedretti.Blazor.Sensors.Geolocation
     {
         #region Fields
 
+        private object _lock = new Object();
+        private bool init;
         private DotNetObjectRef thisRef;
 
         private int? watchId;
-        private bool init;
 
         #endregion Fields
 
         #region Events
 
-        private event EventHandler<Position> _onPositionUpdate;
         private event EventHandler<PositionError> _onPositionError;
+
+        private event EventHandler<Position> _onPositionUpdate;
 
         #endregion Events
 
         #region Methods
+
+        private void AssureInit()
+        {
+            lock (_lock)
+            {
+                if (!init)
+                {
+                    init = true;
+                    StartWatch();
+                }
+            }
+        }
+
+        private void AssureStop()
+        {
+            lock (_lock)
+            {
+                if (_onPositionUpdate == null && _onPositionError == null)
+                {
+                    StopWatch();
+                }
+            }
+        }
 
         private void StartWatch()
         {
@@ -49,31 +74,6 @@ namespace RPedretti.Blazor.Sensors.Geolocation
 
         #endregion Methods
 
-        public event EventHandler<Position> OnPositionUpdate
-        {
-            add
-            {
-                AssureInit();
-                _onPositionUpdate += value;
-            }
-            remove
-            {
-                _onPositionUpdate -= value;
-                AssureStop();
-            }
-        }
-
-        private void AssureStop()
-        {
-            lock (_lock)
-            {
-                if (_onPositionUpdate == null && _onPositionError == null)
-                {
-                    StopWatch();
-                }
-            }
-        }
-
         public event EventHandler<PositionError> OnPositionError
         {
             add
@@ -88,15 +88,17 @@ namespace RPedretti.Blazor.Sensors.Geolocation
             }
         }
 
-        private void AssureInit()
+        public event EventHandler<Position> OnPositionUpdate
         {
-            lock (_lock)
+            add
             {
-                if (!init)
-                {
-                    init = true;
-                    StartWatch();
-                }
+                AssureInit();
+                _onPositionUpdate += value;
+            }
+            remove
+            {
+                _onPositionUpdate -= value;
+                AssureStop();
             }
         }
 
@@ -107,19 +109,17 @@ namespace RPedretti.Blazor.Sensors.Geolocation
         }
 
         [JSInvokable]
-        public Task WatchPositionResponse(Position position)
-        {
-            _onPositionUpdate?.Invoke(this, position);
-            return Task.CompletedTask;
-        }
-
-        [JSInvokable]
         public Task WatchPositionError(PositionError error)
         {
             _onPositionError?.Invoke(this, error);
             return Task.CompletedTask;
         }
 
-        private object _lock = new Object();
+        [JSInvokable]
+        public Task WatchPositionResponse(Position position)
+        {
+            _onPositionUpdate?.Invoke(this, position);
+            return Task.CompletedTask;
+        }
     }
 }

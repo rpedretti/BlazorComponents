@@ -11,12 +11,13 @@ namespace RPedretti.Blazor.Components.ToggleSwitch
         LARGE
     }
 
-    public class ToggleSwitchBase : BaseComponent
+    public class ToggleSwitchBase : BaseAccessibleComponent
     {
         #region Properties
 
         [Parameter] protected bool Checked { get; set; }
         [Parameter] protected Action<bool> CheckedChanged { get; set; }
+        [Parameter] protected bool Disabled { get; set; }
         [Parameter] protected bool Fill { get; set; }
         [Parameter] protected bool Inline { get; set; }
         [Parameter] protected string Label { get; set; }

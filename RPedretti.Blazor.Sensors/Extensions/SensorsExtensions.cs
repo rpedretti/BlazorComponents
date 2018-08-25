@@ -7,11 +7,17 @@ namespace RPedretti.Blazor.Sensors.Extensions
 {
     public static class SensorsExtensions
     {
-        #region Ambient Light
+        #region Methods
 
         public static IServiceCollection AddAmbientLightSensor(this IServiceCollection services)
         {
             services.AddSingleton<AmbientLightSensor>();
+            return services;
+        }
+
+        public static IServiceCollection AddGeolocationSensor(this IServiceCollection services)
+        {
+            services.AddSingleton<GeolocationSensor>();
             return services;
         }
 
@@ -21,16 +27,6 @@ namespace RPedretti.Blazor.Sensors.Extensions
             sensor.Init();
         }
 
-        #endregion Ambient Light
-
-        #region Geolocation
-
-        public static IServiceCollection AddGeolocationSensor(this IServiceCollection services)
-        {
-            services.AddSingleton<GeolocationSensor>();
-            return services;
-        }
-
-        #endregion Geolocation
+        #endregion Methods
     }
 }

@@ -1,6 +1,6 @@
-﻿using RPedretti.Blazor.Shared.Domain;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using RPedretti.Blazor.Shared.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -10,9 +10,13 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
 
         private DotNetObjectRef ambientLightSensorRef;
 
-        public string Error { get; private set; }
-
         #endregion Fields
+
+        #region Events
+
+        private event EventHandler<string> _onError;
+
+        #endregion Events
 
         #region Methods
 
@@ -24,9 +28,14 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
 
         #endregion Methods
 
-        #region Events
+        #region Properties
 
-        private event EventHandler<string> _onError;
+        public string Error { get; private set; }
+
+        #endregion Properties
+
+        public event EventHandler<int> _onReading;
+
         public event EventHandler<string> OnError
         {
             add
@@ -43,7 +52,6 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
             }
         }
 
-        public event EventHandler<int> _onReading;
         public event EventHandler<int> OnReading
         {
             add
@@ -59,8 +67,6 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
                 _onReading -= value;
             }
         }
-
-        #endregion Events
 
         public void Dispose()
         {

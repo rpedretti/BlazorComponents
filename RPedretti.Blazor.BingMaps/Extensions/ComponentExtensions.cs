@@ -5,6 +5,8 @@ namespace RPedretti.Blazor.BingMaps.Extensions
 {
     public static class ComponentExtensions
     {
+        #region Methods
+
         public static IBlazorApplicationBuilder UseBingMaps(
             this IBlazorApplicationBuilder applicationBuilder,
             string apiKey,
@@ -13,5 +15,7 @@ namespace RPedretti.Blazor.BingMaps.Extensions
             JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.initScript", apiKey, mapLanguage);
             return applicationBuilder;
         }
+
+        #endregion Methods
     }
 }

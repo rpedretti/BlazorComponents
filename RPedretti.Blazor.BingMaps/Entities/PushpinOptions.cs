@@ -15,9 +15,9 @@ namespace RPedretti.Blazor.BingMaps.Entities
         public string Icon { get; set; }
         public bool? RoundClickableArea { get; set; }
         public string SubTitlte { get; set; }
-        public string Titlte { get; set; }
         public string Text { get; set; }
         public Point? TextOffset { get; set; }
+        public string Titlte { get; set; }
         public bool? Visible { get; set; }
 
         #endregion Properties

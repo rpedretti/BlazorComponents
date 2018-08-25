@@ -2,10 +2,16 @@
 {
     public class Geocoordinate
     {
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        #region Properties
+
         public double Altitude { get; set; }
         public double AltitudeReference { get; set; } = -1;
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         public override bool Equals(object obj)
         {
@@ -25,5 +31,7 @@
             hashCode = hashCode * -1521134295 + AltitudeReference.GetHashCode();
             return hashCode;
         }
+
+        #endregion Methods
     }
 }

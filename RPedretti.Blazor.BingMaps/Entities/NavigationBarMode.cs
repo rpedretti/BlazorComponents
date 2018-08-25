@@ -2,8 +2,12 @@
 {
     public class NavigationBarMode
     {
-        public static byte Default => 0;
+        #region Properties
+
         public static byte Compact => 1;
+        public static byte Default => 0;
         public static byte Minified => 2;
+
+        #endregion Properties
     }
 }
