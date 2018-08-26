@@ -23,6 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.Blazor.BingMaps.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPedretti.Blazor.Components.Sample", "Samples\RPedretti.Blazor.Components.Sample\RPedretti.Blazor.Components.Sample.csproj", "{0A45C21F-4F8B-4487-A636-BB31FE3385AC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{960D9D04-7642-49A6-B210-65FACF032709}"
+	ProjectSection(SolutionItems) = preProject
+		pushNuget.ps1 = pushNuget.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

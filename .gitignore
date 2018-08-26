@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /Samples/RPedretti.Blazor.BingMaps.Sample/Properties/PublishProfiles
 /Samples/RPedretti.Blazor.Components.Sample/Properties/PublishProfiles
+/nuget.key
