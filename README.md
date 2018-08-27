@@ -7,7 +7,15 @@ As for now to be able to use these components the CI build nuget repository for 
 Live samples at
 
 https://blazorcomponents.azurewebsites.net/ for inputs, layouts, spinners, dynamic grid, dynamic (grouped) table and SignlR
+
 https://blazorbingmaps.azurewebsites.net/ for the bing maps component
+
+## Packages
+
+- Inputs: https://www.nuget.org/packages/RPedretti.Blazor.Components
+- Layouts: https://www.nuget.org/packages/RPedretti.Blazor.Components.Layout
+- Sensors: https://www.nuget.org/packages/RPedretti.Blazor.Sensors
+- BingMaps: https://www.nuget.org/packages/RPedretti.Blazor.BingMaps
 
 ## Inputs
 There are four custom inputs, with acessibility
