@@ -259,7 +259,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
         public void Dispose()
         {
             JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.suggestbox.unregisterSuggestBox", SuggestBoxId);
-            thisRef.Dispose();
+            JSRuntime.Current.UntrackObjectRef(thisRef);
         }
     }
 

@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.JSInterop;
 using RPedretti.Blazor.BingMaps.Entities;
+using RPedretti.Blazor.BingMaps.Entities.Layer;
 using RPedretti.Blazor.BingMaps.Modules;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.BingMaps
 {
-    public class BingMapsBase : BlazorComponent
+    public class BingMapsBase : BlazorComponent, IDisposable
     {
         #region Fields
 
+        private Shared.Collections.BindingList<BaseBingMapEntity> _entities;
+        private Shared.Collections.BindingList<BingMapLayer> _layers;
         private ObservableCollection<IBingMapModule> _modules;
         private bool _shouldRender;
         private BingMapsViewConfig _viewConfig;
@@ -24,15 +28,80 @@ namespace RPedretti.Blazor.BingMaps
 
         #region Methods
 
+        private async Task AddItem(BaseBingMapEntity baseBingMapEntity)
+        {
+            try
+            {
+                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.addItem", Id, baseBingMapEntity);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private void EntitiesChanged(object sender, ListChangedEventArgs e)
+        {
+            switch (e.ListChangedType)
+            {
+                case ListChangedType.ItemAdded:
+                    AddItem(_entities[e.NewIndex]);
+                    break;
+
+                case ListChangedType.ItemChanged:
+                    UpdateItem(_entities[e.NewIndex]);
+                    break;
+            }
+        }
+
+        private async void EntitiesRemoved(object sender, BaseBingMapEntity removed)
+        {
+            try
+            {
+                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.removeItem", Id, removed);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        private async void LayerRemoved(object sender, BingMapLayer removed)
+        {
+        }
+
+        private void LayersChanged(object sender, ListChangedEventArgs e)
+        {
+            switch (e.ListChangedType)
+            {
+                case ListChangedType.ItemAdded:
+                    break;
+
+                case ListChangedType.ItemChanged:
+                    break;
+            }
+        }
+
         private void ModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add && modulesLoaded)
             {
                 foreach (IBingMapModule item in e.NewItems)
                 {
-                    Console.WriteLine("init after load");
                     item.InitAsync(Id);
                 }
+            }
+        }
+
+        private async Task RemoveItem(BaseBingMapEntity baseBingMapEntity)
+        {
+            try
+            {
+                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.removeItem", Id, baseBingMapEntity);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
@@ -49,6 +118,18 @@ namespace RPedretti.Blazor.BingMaps
             return true;
         }
 
+        private async Task UpdateItem(BaseBingMapEntity baseBingMapEntity)
+        {
+            try
+            {
+                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.updateItem", Id, baseBingMapEntity);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
         private void UpdateView(BingMapsViewConfig viewConfig)
         {
             JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.updateView", Id, viewConfig);
@@ -57,8 +138,57 @@ namespace RPedretti.Blazor.BingMaps
         #endregion Methods
 
         protected bool init;
+
+        [Parameter]
+        protected Shared.Collections.BindingList<BaseBingMapEntity> Entities
+        {
+            get => _entities;
+            set
+            {
+                if (!EqualityComparer<BindingList<BaseBingMapEntity>>.Default.Equals(_entities, value))
+                {
+                    if (_entities != null)
+                    {
+                        _entities.ListChanged -= EntitiesChanged;
+                        _entities.BeforeRemove -= EntitiesRemoved;
+                    }
+
+                    _entities = value;
+
+                    if (_entities != null)
+                    {
+                        _entities.ListChanged += EntitiesChanged;
+                        _entities.BeforeRemove += EntitiesRemoved;
+                    }
+                }
+            }
+        }
+
         [Parameter] protected string Id { get; set; } = $"bing-maps-{Guid.NewGuid().ToString().Replace("-", "")}";
-        [Parameter] protected Func<Task> MapLoaded { get; set; }
+
+        [Parameter]
+        protected Shared.Collections.BindingList<BingMapLayer> Layers
+        {
+            get => _layers;
+            set
+            {
+                if (_layers != null)
+                {
+                    _layers.ListChanged -= LayersChanged;
+                    _layers.BeforeRemove -= LayerRemoved;
+                }
+
+                _layers = value;
+
+                if (_layers != null)
+                {
+                    _layers.ListChanged += LayersChanged;
+                    _layers.BeforeRemove += LayerRemoved;
+                }
+            }
+        }
+
+        [Parameter] protected Action MapLoaded { get; set; }
         [Parameter] protected BingMapsConfig MapsConfig { get; set; } = new BingMapsConfig();
 
         [Parameter]
@@ -67,11 +197,17 @@ namespace RPedretti.Blazor.BingMaps
             get => _modules;
             set
             {
-                if (_modules != null) _modules.CollectionChanged -= ModulesChanged;
+                if (_modules != null)
+                {
+                    _modules.CollectionChanged -= ModulesChanged;
+                }
 
                 _modules = value;
 
-                if (_modules != null) _modules.CollectionChanged += ModulesChanged;
+                if (_modules != null)
+                {
+                    _modules.CollectionChanged += ModulesChanged;
+                }
             }
         }
 
@@ -107,19 +243,30 @@ namespace RPedretti.Blazor.BingMaps
             return _shouldRender;
         }
 
+        public void Dispose()
+        {
+            Modules = null;
+            Entities = null;
+            Layers = null;
+            MapLoaded = null;
+
+            JSRuntime.Current.UntrackObjectRef(thisRef);
+            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.unloadMap", Id);
+        }
+
         [JSInvokable]
         public async Task NotifyMapLoaded()
         {
-            MapLoaded?.Invoke();
             if (Modules != null)
             {
                 foreach (var module in Modules)
                 {
-                    Console.WriteLine("init on load");
                     await module.InitAsync(Id);
                 }
             }
+            MapLoaded?.Invoke();
             modulesLoaded = true;
+            StateHasChanged();
         }
     }
 }

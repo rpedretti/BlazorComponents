@@ -13,9 +13,13 @@ window.rpedrettiBlazorComponents.bingMaps.modules.traffic = (function () {
                 }
                 _managers.set(this.mapId, trafficManager);
             });
+
+            return 1;
         },
         updateTraffic: function (mapId, options) {
             _managers.get(mapId).setOptions(options);
+
+            return 1;
         }
     };
 })();

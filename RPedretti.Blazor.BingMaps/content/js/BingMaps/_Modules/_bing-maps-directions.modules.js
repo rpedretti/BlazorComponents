@@ -19,6 +19,8 @@ window.rpedrettiBlazorComponents.bingMaps.modules.directions = (function () {
 
                 //Specify the where to display the input panel
                 directionsManager.showInputPanel(this.inputPanelId);
+
+                return 1;
             });
         }
     };

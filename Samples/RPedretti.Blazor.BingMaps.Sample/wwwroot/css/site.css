@@ -132,3 +132,19 @@ app > .spinner-wrapper {
   .main .directions-page > .bing-maps {
     height: 300px; } }
 
+.main .content {
+  height: calc(100% - 52px); }
+
+.pushpin-page {
+  height: 100%; }
+  .pushpin-page > .update-btn {
+    display: block; }
+  .pushpin-page > .bing-maps {
+    margin-top: 12px;
+    float: left;
+    width: 100%;
+    height: calc(100% - 80px);
+    max-height: 600px;
+    max-width: 600px;
+    position: relative; }
+

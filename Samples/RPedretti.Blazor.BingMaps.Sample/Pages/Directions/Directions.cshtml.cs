@@ -54,10 +54,5 @@ namespace RPedretti.Blazor.BingMaps.Sample.Pages.Directions
             _directionsModule.DirectionsUpdated += DirectionsUpdated;
             Modules = new ObservableCollection<IBingMapModule> { _directionsModule };
         }
-
-        public Task MapLoaded()
-        {
-            return Task.CompletedTask;
-        }
     }
 }

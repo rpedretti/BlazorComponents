@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Blazor.Components;
-using RPedretti.Blazor.BingMaps.Entities;
+﻿using RPedretti.Blazor.BingMaps.Entities;
 using RPedretti.Blazor.BingMaps.Modules;
 using RPedretti.Blazor.BingMaps.Modules.Traffic;
-using RPedretti.Blazor.BingMaps.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,8 +20,6 @@ namespace RPedretti.Blazor.BingMaps.Sample.Pages
         #endregion Fields
 
         #region Properties
-
-        [Inject] protected BingMapPushpinService BingMapPushpinService { get; set; }
 
         protected BingMapsConfig MapsConfig { get; set; } = new BingMapsConfig
         {
@@ -79,11 +75,6 @@ namespace RPedretti.Blazor.BingMaps.Sample.Pages
             }
 
             StateHasChanged();
-        }
-
-        public Task MapLoaded()
-        {
-            return Task.CompletedTask;
         }
 
         #endregion Methods

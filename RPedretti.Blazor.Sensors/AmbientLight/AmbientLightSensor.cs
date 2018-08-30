@@ -8,7 +8,7 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
     {
         #region Fields
 
-        private DotNetObjectRef ambientLightSensorRef;
+        private DotNetObjectRef thisRef;
 
         #endregion Fields
 
@@ -22,8 +22,8 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
 
         internal void Init()
         {
-            ambientLightSensorRef = new DotNetObjectRef(this);
-            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorSensors.lightsensor.initSensor", ambientLightSensorRef);
+            thisRef = new DotNetObjectRef(this);
+            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorSensors.lightsensor.initSensor", thisRef);
         }
 
         #endregion Methods
@@ -70,7 +70,10 @@ namespace RPedretti.Blazor.Sensors.AmbientLight
 
         public void Dispose()
         {
-            ambientLightSensorRef.Dispose();
+            if (thisRef != null)
+            {
+                JSRuntime.Current.UntrackObjectRef(thisRef);
+            }
         }
 
         [JSInvokable]

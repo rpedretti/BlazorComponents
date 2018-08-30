@@ -1,0 +1,21 @@
+﻿@page "/pushpin"
+@using RPedretti.Blazor.BingMaps.Entities.Pushpin
+@inherits PushpinPageBase
+
+<div class="pushpin-page">
+    <div style="width: 300px; display:inline-block; float:left">
+        <button class="btn btn-primary update-btn" onclick="@AddPushpin" disabled="@DisableAddButton">Add pushpin</button>
+        <ul class="list-group">
+            @foreach (var pushpin in Entities)
+            {
+                var p = pushpin as BingMapPushpin;
+                <li class="list-group-item" onclick="@(() => RemovePushpin(p))" title="(@(p.Center.Latitude), @(p.Center.Longitude))">@(p.Id)</li>
+            }
+        </ul>
+    </div>
+    <BingMaps Id="@BingMapId"
+              Entities="@Entities"
+              MapsConfig="@MapsConfig"
+              ViewConfig="@MapsViewConfig"
+              MapLoaded="@MapLoaded" />
+</div>

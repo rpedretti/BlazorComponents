@@ -41,7 +41,7 @@ namespace RPedretti.Blazor.BingMaps.Modules.Directions
 
         public void Dispose()
         {
-            thisRef.Dispose();
+            JSRuntime.Current.UntrackObjectRef(thisRef);
         }
 
         public override async Task InitAsync(string mapId)

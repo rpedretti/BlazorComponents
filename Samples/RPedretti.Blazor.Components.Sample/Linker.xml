@@ -9,9 +9,8 @@
     <type fullname="System.Linq.Expressions*" />
   </assembly>
   <assembly fullname="System.ComponentModel.Annotations">
-    <!-- This is required by JSon.NET and any expression.Compile caller -->
-    <type fullname="System.ComponentModel.DataAnnotations.RequiredAttribeute" />
-    <type fullname="System.ComponentModel.DataAnnotations.DisplayAttribeute" />
+    <type fullname="System.ComponentModel.DataAnnotations.RequiredAttribute" />
+    <type fullname="System.ComponentModel.DataAnnotations.DisplayAttribute" />
   </assembly>
   <!-- Name of the entry point assembly -->
   <assembly fullname="RPedretti.Blazor.Components.Sample" />
