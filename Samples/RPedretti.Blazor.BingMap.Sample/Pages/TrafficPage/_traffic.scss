@@ -1,0 +1,16 @@
+﻿.main .content {
+    height: calc(100% - 52px);
+}
+
+.traffic-page {
+    height: 100%;
+    > .bing-map {
+        margin-top: 12px;
+        float: left;
+        width: 100%;
+        height: calc(100% - 80px);
+        max-height: 600px;
+        max-width: 600px;
+        position: relative;
+    }
+}

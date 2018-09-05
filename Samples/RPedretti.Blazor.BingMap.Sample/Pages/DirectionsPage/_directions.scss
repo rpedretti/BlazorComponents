@@ -1,0 +1,30 @@
+﻿.directions-page {
+    > .directions-container {
+        display: inline-block;
+        margin-right: 12px;
+        vertical-align: top;
+        width: 377px;
+        overflow-x: auto;
+
+        > .itineraryPanel {
+            max-height: 400px;
+            overflow: auto;
+        }
+    }
+
+    > .bing-map {
+        display: inline-block;
+        margin-top: 12px;
+        width: 100%;
+        height: 600px;
+        max-width: 600px;
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 1276px) {
+    .main .directions-page  > .bing-map {
+        height: 300px;
+    }
+}
+

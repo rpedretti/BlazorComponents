@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.JSInterop;
-using RPedretti.Blazor.Components.Operators;
+using RPedretti.Blazor.Shared.Operators;
 using System;
 using System.Collections.Generic;
 using System.Linq;

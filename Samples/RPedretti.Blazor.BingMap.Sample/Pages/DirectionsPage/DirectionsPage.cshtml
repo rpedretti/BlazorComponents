@@ -1,0 +1,13 @@
+﻿@page "/directions"
+@inherits DirectionsPageBase
+
+<div class="directions-page">
+    <div class="directions-container" onclick="event.stopPropagation();">
+        <div class="inputPannel" id="inputPannel"></div>
+        <div class="itineraryPanel" id="itineraryPanel"></div>
+    </div>
+    <BingMap Id="@BingMapId"
+              MapsConfig="@MapsConfig"
+              ViewConfig="@MapsViewConfig"
+              Modules="@Modules" />
+</div>

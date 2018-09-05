@@ -1,0 +1,36 @@
+﻿.polyline-page {
+    height: 100%;
+
+    > .spinner-wrapper {
+        display: none;
+    }
+
+    > .spinner-wrapper,
+    > .bing-map {
+        float: left;
+        width: 100%;
+        height: calc(100% - 80px);
+        max-height: 600px;
+        max-width: 600px;
+        position: relative;
+    }
+
+    > .events {
+        margin-left: 8px;
+        float: left;
+
+        & > .-active {
+            background-color: lightgreen;
+        }
+    }
+
+    &.-loading {
+        > .bing-map {
+            display: none;
+        }
+
+        > .spinner-wrapper {
+            display: block;
+        }
+    }
+}

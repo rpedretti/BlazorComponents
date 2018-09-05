@@ -1,0 +1,24 @@
+﻿@page "/polyline"
+@using RPedretti.Blazor.Components.Spinner
+@inherits PolyLinePageBase
+
+<div class="@($"polyline-page{(Loading ? " -loading" : null)}")">
+    <div class="spinner-wrapper">
+        <Spinner Centered
+                 Active="@Loading"
+                 Size="@SpinnerSize.LARGE" />
+    </div>
+    <BingMap Id="@BingMapId"
+             Entities="@Entities"
+             MapsConfig="@MapConfig"
+             ViewConfig="@MapViewConfig"
+             MapLoaded="@MapLoaded" />
+    <div class="events">
+        <p class="@(Click ? "-active" : "")">click</p>
+        <p class="@(DoubleClick ? "-active" : "")">double click</p>
+        <p class="@(MouseOver ? "-active" : "")">mouse over</p>
+        <p class="@(MouseOut ? "-active" : "")">mouse out</p>
+        <p class="@(MouseDown ? "-active" : "")">mouse down</p>
+        <p class="@(MouseUp ? "-active" : "")">mouse up</p>
+    </div>
+</div>

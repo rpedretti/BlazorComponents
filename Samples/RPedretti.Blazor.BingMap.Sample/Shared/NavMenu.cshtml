@@ -1,0 +1,44 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="/">Bing Maps Sample</a>
+    <button class="navbar-toggler" onclick=@ToggleNavMenu>
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class=@(collapseNavMenu ? "collapse" : null) onclick=@ToggleNavMenu>
+    <ul class="nav flex-column">
+        @foreach (var link in links)
+        {
+            var l = link;
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="@(l.Url)" Match=@(l.Match)>
+                    <span class="oi oi-home" aria-hidden="true"></span> @l.Label
+                </NavLink>
+            </li>
+        }
+    </ul>
+</div>
+
+@functions {
+    bool collapseNavMenu = true;
+
+    List<NavItem> links = new List<NavItem>()
+    {
+        new NavItem { Label = "Traffic", Url="/", Match = NavLinkMatch.All },
+        new NavItem { Label = "Directions", Url="/directions" },
+        new NavItem { Label = "Pushpin", Url="/pushpin" },
+        new NavItem { Label = "Polyline", Url="/polyline" }
+    };
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    class NavItem
+    {
+        public string Url { get; set; }
+        public string Label { get; set; }
+        public NavLinkMatch Match { get; set; }
+    }
+}
