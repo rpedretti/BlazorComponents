@@ -154,6 +154,28 @@ app > .spinner-wrapper {
   .polyline-page.-loading > .spinner-wrapper {
     display: block; }
 
+.polygon-page {
+  height: 100%; }
+  .polygon-page > .spinner-wrapper {
+    display: none; }
+  .polygon-page > .spinner-wrapper,
+  .polygon-page > .bing-map {
+    float: left;
+    width: 100%;
+    height: calc(100% - 80px);
+    max-height: 600px;
+    max-width: 600px;
+    position: relative; }
+  .polygon-page > .events {
+    margin-left: 8px;
+    float: left; }
+    .polygon-page > .events > .-active {
+      background-color: lightgreen; }
+  .polygon-page.-loading > .bing-map {
+    display: none; }
+  .polygon-page.-loading > .spinner-wrapper {
+    display: block; }
+
 .main .content {
   height: calc(100% - 52px); }
 

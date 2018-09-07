@@ -4,33 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPedretti.Blazor.BingMap.Entities.Polyline
+namespace RPedretti.Blazor.BingMap.Entities.Polygon
 {
-    public partial class BingMapPolyline : BaseBingMapEntity
+    public partial class BingMapPolygon : BaseBingMapEntity
     {
-
         #region Fields
 
-        private const string attachEventFunctionName = _polylineNamespace + ".attachEvent";
-        private const string detachEventFunctionName = _polylineNamespace + ".detachEvent";
+        private const string attachEventFunctionName = _polygonNamespace + ".attachEvent";
+        private const string detachEventFunctionName = _polygonNamespace + ".detachEvent";
 
         #endregion Fields
 
         #region Events
 
-        private event EventHandler<MouseEventArgs<BingMapPolyline>> _onClick;
-        private event EventHandler<MouseEventArgs<BingMapPolyline>> _onDoubleClick;
-        private event EventHandler<MouseEventArgs<BingMapPolyline>> _onMouseDown;
-        private event EventHandler<MouseEventArgs<BingMapPolyline>> _onMouseOut;
-        private event EventHandler<MouseEventArgs<BingMapPolyline>> _onMouseOver;
-        private event EventHandler<MouseEventArgs<BingMapPolyline>> _onMouseUp;
+        private event EventHandler<MouseEventArgs<BingMapPolygon>> _onClick;
+        private event EventHandler<MouseEventArgs<BingMapPolygon>> _onDoubleClick;
+        private event EventHandler<MouseEventArgs<BingMapPolygon>> _onMouseDown;
+        private event EventHandler<MouseEventArgs<BingMapPolygon>> _onMouseOut;
+        private event EventHandler<MouseEventArgs<BingMapPolygon>> _onMouseOver;
+        private event EventHandler<MouseEventArgs<BingMapPolygon>> _onMouseUp;
 
         #endregion Events
 
         #region Methods
 
         [JSInvokable]
-        public Task EmitPolylineEvent(MouseEventArgs<BingMapPolyline> args)
+        public Task EmitPolygonEvent(MouseEventArgs<BingMapPolygon> args)
         {
             switch (args.EventName)
             {
@@ -58,14 +57,14 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
 
         #endregion Methods
 
-        public event EventHandler<MouseEventArgs<BingMapPolyline>> OnClick
+        public event EventHandler<MouseEventArgs<BingMapPolygon>> OnClick
         {
             add
             {
                 AssureThisRef();
                 if (_onClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.Click, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.Click, thisRef, nameof(EmitPolygonEvent));
                 }
                 _onClick += value;
             }
@@ -80,14 +79,14 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
             }
         }
 
-        public event EventHandler<MouseEventArgs<BingMapPolyline>> OnDoubleClick
+        public event EventHandler<MouseEventArgs<BingMapPolygon>> OnDoubleClick
         {
             add
             {
                 AssureThisRef();
                 if (_onDoubleClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.DoubleClick, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.DoubleClick, thisRef, nameof(EmitPolygonEvent));
                 }
                 _onDoubleClick += value;
             }
@@ -102,14 +101,14 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
             }
         }
 
-        public event EventHandler<MouseEventArgs<BingMapPolyline>> OnMouseDown
+        public event EventHandler<MouseEventArgs<BingMapPolygon>> OnMouseDown
         {
             add
             {
                 AssureThisRef();
                 if (_onMouseDown == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseDown, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseDown, thisRef, nameof(EmitPolygonEvent));
                 }
                 _onMouseDown += value;
             }
@@ -124,14 +123,14 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
             }
         }
 
-        public event EventHandler<MouseEventArgs<BingMapPolyline>> OnMouseOut
+        public event EventHandler<MouseEventArgs<BingMapPolygon>> OnMouseOut
         {
             add
             {
                 AssureThisRef();
                 if (_onMouseOut == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseOut, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseOut, thisRef, nameof(EmitPolygonEvent));
                 }
                 _onMouseOut += value;
             }
@@ -146,14 +145,14 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
             }
         }
 
-        public event EventHandler<MouseEventArgs<BingMapPolyline>> OnMouseOver
+        public event EventHandler<MouseEventArgs<BingMapPolygon>> OnMouseOver
         {
             add
             {
                 AssureThisRef();
                 if (_onMouseOver == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseOver, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseOver, thisRef, nameof(EmitPolygonEvent));
                 }
                 _onMouseOver += value;
             }
@@ -168,14 +167,14 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
             }
         }
 
-        public event EventHandler<MouseEventArgs<BingMapPolyline>> OnMouseUp
+        public event EventHandler<MouseEventArgs<BingMapPolygon>> OnMouseUp
         {
             add
             {
                 AssureThisRef();
                 if (_onMouseUp == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseUp, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseUp, thisRef, nameof(EmitPolygonEvent));
                 }
                 _onMouseUp += value;
             }

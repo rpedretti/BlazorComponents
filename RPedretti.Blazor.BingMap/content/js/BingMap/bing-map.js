@@ -1,5 +1,5 @@
 ﻿window.rpedrettiBlazorComponents = window.rpedrettiBlazorComponents || {};
-window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazorComponents.bingMaps || {}, (function () {
+window.rpedrettiBlazorComponents.bingMaps = window.rpedrettiBlazorComponents.bingMaps || (function () {
     const _maps = new Map();
     const _layers = new Map();
     const notInit = [];
@@ -71,6 +71,9 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 case 'bingmappolyline':
                     instance = self.polyline.buildInstance(item);
                     break;
+                case 'bingmappolygon':
+                    instance = self.polygon.buildInstance(item);
+                    break;
             }
 
             if (instance) {
@@ -87,6 +90,9 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 case 'bingmappolyline':
                     self.polyline.update(item);
                     break;
+                case 'bingmappolygon':
+                    self.polygon.update(item);
+                    break;
             }
 
             return 1;
@@ -99,6 +105,9 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                     break;
                 case 'bingmappolyline':
                     instance = self.polyline.remove(item.id);
+                    break;
+                case 'bingmappolygon':
+                    instance = self.polygon.remove(item.id);
                     break;
             }
 
@@ -120,12 +129,7 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 rpedrettiBlazorComponents.helpers.removeEmpty(polyline);
                 const options = polyline.options;
                 if (options && options.strokeColor) {
-                    const c = options.strokeColor;
-                    if (typeof c === 'string') {
-                        options.strokeColor = Microsoft.Maps.Color.fromHex(c);
-                    } else {
-                        options.strokeColor = new Microsoft.Maps.Color(c.a, c.r, c.g, c.b);
-                    }
+                    options.strokeColor = rpedrettiBlazorComponents.helpers.parseColor(options.strokeColor);
                 }
             };
             const updateOptions = function (polyline) {
@@ -136,7 +140,7 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 _polylines.get(polyline.id).setLocations(coordinates);
             };
             const clearEvents = function (polylineId) {
-                const handlers = _handlers.get(polylineId) || []
+                const handlers = _handlers.get(polylineId) || [];
                 for (const handler in handlers) {
                     Microsoft.Maps.Events.removeHandler(handlers[handler]);
                 }
@@ -177,7 +181,7 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 update: function (polyline) {
                     normalizePolyline(polyline);
                     const originalPolyline = _polylines.get(polyline.id);
-                    if (!_.isEqual(Object.assign({}, polyline.coordinates), Object.assign({}, originalPolyline.getLocations()))) {
+                    if (!_.isEqual(polyline.coordinates, JSON.parse(JSON.stringify(originalPolyline.getLocations())))) {
                         updateLocations(polyline);
                     }
 
@@ -208,6 +212,117 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 }
             };
         })(),
+        polygon: (function () {
+            const _polygons = new Map();
+            const _handlers = new Map();
+            const _initHandler = new Map();
+            const normalizePolygon = function (polygon) {
+                rpedrettiBlazorComponents.helpers.removeEmpty(polygon);
+                const options = polygon.options;
+                if (options) {
+                    if (options.fillColor) {
+                        options.fillColor = rpedrettiBlazorComponents.helpers.parseColor(options.fillColor);
+                    }
+                    if (options.strokeColor) {
+                        options.strokeColor = rpedrettiBlazorComponents.helpers.parseColor(options.strokeColor);
+                    }
+                }
+            };
+            const updateOptions = function (polygon) {
+                _polygons.get(polygon.id).setOptions(polygon.options);
+            };
+            const updateLocations = function (polygon) {
+                const coordinates = polygon.coordinates.map(c => new Microsoft.Maps.Location(c.latitude, c.longitude));
+                _polygons.get(polygon.id).setLocations(coordinates);
+            };
+            const updateRings = function (polygon) {
+                const rings = polygon.rings.map(ring => ring.map(c=> new Microsoft.Maps.Location(c.latitude, c.longitude)));
+                _polygons.get(polygon.id).setRings(rings);
+            };
+            const clearEvents = function (polygonId) {
+                const handlers = _handlers.get(polygonId) || [];
+                for (const handler in handlers) {
+                    Microsoft.Maps.Events.removeHandler(handlers[handler]);
+                }
+
+                return true;
+            };
+            const addEventHandler = function (polylineInstance, polylineId, eventName, polylineRef, refEventName) {
+                const handler = Microsoft.Maps.Events.addHandler(polylineInstance, eventName, (e) => {
+                    var evt = Object.assign({}, e);
+                    evt.getX = e.getX();
+                    evt.getY = e.getY();
+                    delete evt.primitive;
+                    delete evt.layer;
+                    delete evt.target;
+                    polylineRef.invokeMethodAsync(refEventName, evt);
+                });
+                if (!_handlers.has(polylineId)) {
+                    _handlers.set(polylineId, {});
+                }
+                _handlers.get(polylineId)[eventName] = handler;
+            };
+
+            return {
+                buildInstance: function (polygon) {
+                    normalizePolygon(polygon);
+                    let polygonInstance;
+                    if (polygon.coordinates) {
+                        const coordinates = polygon.coordinates.map(c => new Microsoft.Maps.Location(c.latitude, c.longitude));
+                        polygonInstance = new Microsoft.Maps.Polygon(coordinates, polygon.options);
+                    } else if (polygon.rings) {
+                        const rings = polygon.rings.map(ring => ring.map(c => new Microsoft.Maps.Location(c.latitude, c.longitude)));
+                        polygonInstance = new Microsoft.Maps.Polygon(rings, polygon.options);
+                    }
+
+                    for (var { polygonId, eventName, polygonRef, refEventName } of _initHandler.get(polygon.id) || []) {
+                        addEventHandler(polygonInstance, polygonId, eventName, polygonRef, refEventName);
+                    }
+
+                    _initHandler.delete(polygon.id);
+
+                    _polygons.set(polygon.id, polygonInstance);
+
+                    return polygonInstance;
+                },
+                update: function (polygon) {
+                    normalizePolygon(polygon);
+                    const originalPolygon = _polygons.get(polygon.id);
+                    var c = polygon.coordinates;
+                    if (c.length > 0) {
+                        c.push(c[0]);
+                    }
+                    if (!_.isEqual(c, JSON.parse(JSON.stringify(originalPolygon.getLocations())))) {
+                        updateLocations(polygon);
+                    } else if (!_.isEqual(polygon.rings, JSON.stringify(originalPolygon.getRings()))) {
+                        updateRings(polygon);
+                    } else if (polygon.options) {
+                        updateOptions(polygon);
+                    }
+
+                    return 1;
+                },
+                attachEvent: function (polygonId, eventName, polygonRef, refEventName) {
+                    const polygonInstance = _polygons.get(polygonId);
+                    if (polygonInstance) {
+                        addEventHandler(polygonInstance, polygonId, eventName, polygonRef, refEventName);
+                    } else {
+                        if (!_initHandler.has(polygonId)) {
+                            _initHandler.set(polygonId, []);
+                        }
+                        _initHandler.get(polygonId).push({ polygonId, eventName, polygonRef, refEventName });
+                    }
+
+                    return 1;
+                },
+                remove: function (polygonId) {
+                    const instance = _polygons.get(polygonId);
+                    clearEvents(polygonId);
+                    _polygons.delete(polygonId);
+                    return instance;
+                }
+            };
+        })(),
         pushpin: (function () {
             const _pushpins = new Map();
             const _handlers = new Map();
@@ -216,12 +331,7 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 rpedrettiBlazorComponents.helpers.removeEmpty(pushpin);
                 const options = pushpin.options;
                 if (options && options.color) {
-                    const c = options.color;
-                    if (typeof c === 'string') {
-                        options.color = Microsoft.Maps.Color.fromHex(c);
-                    } else {
-                        options.color = new Microsoft.Maps.Color(c.a, c.r, c.g, c.b);
-                    }
+                    options.color = rpedrettiBlazorComponents.helpers.parseColor(options.color);
                 }
             };
             const updateOptions = function (pushpin) {
@@ -278,7 +388,7 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                 update: function (pushpin) {
                     normalizePushpin(pushpin);
                     const originalPushpin = _pushpins.get(pushpin.id);
-                    if (!_.isEqual(Object.assign({}, pushpin.center), Object.assign({}, originalPushpin.getLocation()))) {
+                    if (!_.isEqual(pushpin.center, JSON.parse(JSON.stringify(originalPushpin.getLocation())))) {
                         updateLocation(pushpin);
                     }
 
@@ -385,10 +495,16 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
                     switch (item.type) {
                         case 'bingmappushpin':
                             instance = self.pushpin.buildInstance(item);
-                            _items.get(id).set(item.id, instance);
+                            break;
+                        case 'bingmappolyline':
+                            instance = self.polyline.buildInstance(item);
+                            break;
+                        case 'bingmappolygon':
+                            instance = self.polygon.buildInstance(item);
                             break;
                     }
 
+                    _items.get(id).set(item.id, instance);
                     _layers.get(id).layerInstance.add(instance);
                 },
                 removeItem(id, itemId) {
@@ -401,7 +517,7 @@ window.rpedrettiBlazorComponents.bingMaps = Object.assign(window.rpedrettiBlazor
     };
 
     return self;
-})());
+})();
 
 function getBingMaps() {
     rpedrettiBlazorComponents.bingMaps.initMaps();

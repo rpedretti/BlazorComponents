@@ -1,4 +1,4 @@
-﻿namespace RPedretti.Blazor.BingMap.Entities.Polyline
+﻿namespace RPedretti.Blazor.BingMap.Entities. Polygon
 {
     public class PolygonEvents
     {

@@ -10,6 +10,8 @@ rpedrettiBlazorComponents.helpers = (function () {
             if ($evtTarget.closest($container).length === 0) {
                 return true;
             }
+
+            return false;
         },
 
         removeEmpty: (obj) => {
@@ -23,6 +25,9 @@ rpedrettiBlazorComponents.helpers = (function () {
             return [window].concat(path.split('.')).reduce(function (prev, curr) {
                 return prev[curr];
             });
+        },
+        parseColor: (c) => {
+            return typeof c === 'string' ? Microsoft.Maps.Color.fromHex() : new Microsoft.Maps.Color(c.a, c.r, c.g, c.b);
         }
     };
 })();

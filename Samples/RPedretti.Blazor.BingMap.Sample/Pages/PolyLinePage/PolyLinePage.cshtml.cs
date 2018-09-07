@@ -24,7 +24,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolyLinePage
 
         protected BingMapConfig MapConfig { get; set; } = new BingMapConfig
         {
-            MapTypeId = BingMapTypes.GrayScale,
+            MapTypeId = BingMapTypes.Road,
             SupportedMapTypes = new string[] {
                 BingMapTypes.Aerial,
                 BingMapTypes.GrayScale,

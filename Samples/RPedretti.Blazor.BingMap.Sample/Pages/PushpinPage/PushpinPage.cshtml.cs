@@ -22,7 +22,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
 
         protected BingMapConfig MapsConfig { get; set; } = new BingMapConfig
         {
-            MapTypeId = BingMapTypes.GrayScale,
+            MapTypeId = BingMapTypes.Road,
             SupportedMapTypes = new string[] {
                 BingMapTypes.Aerial,
                 BingMapTypes.GrayScale,
