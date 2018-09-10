@@ -1,17 +1,18 @@
 ﻿using RPedretti.Blazor.BingMap.Entities;
 using RPedretti.Blazor.BingMap.Entities.Polyline;
 using RPedretti.Blazor.Shared.Operators;
-using RPedretti.Blazor.Shared.Collections;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
+using RPedretti.Blazor.BingMap.Collections;
+using System.ComponentModel;
 
 namespace RPedretti.Blazor.BingMap.Sample.Pages.PolyLinePage
 {
     public class PolyLinePageBase : BaseComponent, IDisposable
     {
         protected string BingMapId = $"bing-map-{Guid.NewGuid().ToString().Replace("-", "")}";
-        protected BindingList<BaseBingMapEntity> Entities = new BindingList<BaseBingMapEntity>();
+        protected BingMapEntityList Entities = new BingMapEntityList();
         protected DebounceDispatcher clickDispatcher = new DebounceDispatcher();
         protected DebounceDispatcher doubleClickDispatcher = new DebounceDispatcher();
         protected DebounceDispatcher downDispatcher = new DebounceDispatcher();

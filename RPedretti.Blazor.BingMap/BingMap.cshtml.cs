@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.JSInterop;
+using Newtonsoft.Json;
+using RPedretti.Blazor.BingMap.Collections;
 using RPedretti.Blazor.BingMap.Entities;
 using RPedretti.Blazor.BingMap.Entities.Layer;
 using RPedretti.Blazor.BingMap.Modules;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -15,9 +18,9 @@ namespace RPedretti.Blazor.BingMap
     public class BingMapBase : BlazorComponent, IDisposable
     {
         #region Fields
-
-        private Shared.Collections.BindingList<BaseBingMapEntity> _entities;
-        private Shared.Collections.BindingList<BingMapLayer> _layers;
+        private const string _mapNamespace = "rpedrettiBlazorComponents.bingMaps";
+        private BingMapEntityList _entities;
+        private BingMapLayerList _layers;
         private ObservableCollection<IBingMapModule> _modules;
         private bool _shouldRender;
         private BingMapsViewConfig _viewConfig;
@@ -32,7 +35,7 @@ namespace RPedretti.Blazor.BingMap
         {
             try
             {
-                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.addItem", Id, baseBingMapEntity);
+                await JSRuntime.Current.InvokeAsync<object>($"{_mapNamespace}.addItem", Id, baseBingMapEntity);
             }
             catch (Exception e)
             {
@@ -155,7 +158,7 @@ namespace RPedretti.Blazor.BingMap
         protected bool init;
 
         [Parameter]
-        protected Shared.Collections.BindingList<BaseBingMapEntity> Entities
+        protected BingMapEntityList Entities
         {
             get => _entities;
             set
@@ -166,23 +169,54 @@ namespace RPedretti.Blazor.BingMap
                     {
                         _entities.ListChanged -= EntitiesChanged;
                         _entities.BeforeRemove -= EntitiesRemoved;
+                        _entities.BeforeRemoveRange -= BeforeRemoveRange;
+                        _entities.ListRangeChanged -= EntitiesRangeChanged;
+                        ClearItems();
                     }
 
                     _entities = value;
 
                     if (_entities != null)
                     {
+                        AddItems(0, Entities.Count);
                         _entities.ListChanged += EntitiesChanged;
                         _entities.BeforeRemove += EntitiesRemoved;
+                        _entities.BeforeRemoveRange += BeforeRemoveRange;
+                        _entities.ListRangeChanged += EntitiesRangeChanged;
                     }
                 }
             }
         }
 
+        private async void BeforeRemoveRange(object sender, IEnumerable<BaseBingMapEntity> e)
+        {
+            await JSRuntime.Current.InvokeAsync<object>($"{_mapNamespace}.removeItems", e);
+        }
+
+        private void EntitiesRangeChanged(object sender, RangeChangdEventArgs e)
+        {
+            switch (e.Type)
+            {
+                case RangeChangeType.Add:
+                    AddItems(e.StartIndex, e.Ammount);
+                    break;
+            }
+        }
+
+        private async Task ClearItems()
+        {
+            await JSRuntime.Current.InvokeAsync<object>($"{_mapNamespace}.clearItems");
+        }
+
+        private async Task AddItems(int start, int count)
+        {
+            await JSRuntime.Current.InvokeAsync<object>($"{_mapNamespace}.addItems", Id, Entities.Skip(start).Take(count));
+        }
+
         [Parameter] protected string Id { get; set; } = $"bing-map-{Guid.NewGuid().ToString().Replace("-", "")}";
 
         [Parameter]
-        protected Shared.Collections.BindingList<BingMapLayer> Layers
+        protected BingMapLayerList Layers
         {
             get => _layers;
             set
@@ -279,6 +313,7 @@ namespace RPedretti.Blazor.BingMap
                     await module.InitAsync(Id);
                 }
             }
+            Console.WriteLine("loaded");
             MapLoaded?.Invoke();
             modulesLoaded = true;
             StateHasChanged();

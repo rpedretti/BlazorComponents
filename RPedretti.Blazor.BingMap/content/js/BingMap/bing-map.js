@@ -62,6 +62,28 @@ window.rpedrettiBlazorComponents.bingMaps = window.rpedrettiBlazorComponents.bin
 
             return 1;
         },
+        addItems: function (mapId, items) {
+            let instances = [];
+            for (var item of items) {
+                let instance;
+                switch (item.type) {
+                    case 'bingmappushpin':
+                        instance = self.pushpin.buildInstance(item);
+                        break;
+                    case 'bingmappolyline':
+                        instance = self.polyline.buildInstance(item);
+                        break;
+                    case 'bingmappolygon':
+                        instance = self.polygon.buildInstance(item);
+                        break;
+                }
+                instances.push(instance);
+            }
+
+            if (instances.length > 0) {
+                _maps.get(mapId).map.entities.push(instances);
+            }
+        },
         addItem: function (mapId, item) {
             let instance;
             switch (item.type) {
@@ -112,6 +134,33 @@ window.rpedrettiBlazorComponents.bingMaps = window.rpedrettiBlazorComponents.bin
             }
 
             _maps.get(mapId).map.entities.remove(instance);
+
+            return 1;
+        },
+        removeItems: function (mapId, items) {
+            let instances = [];
+            for (var item of items) {
+                let instance;
+                switch (item.type) {
+                    case 'bingmappushpin':
+                        instance = self.pushpin.getInstance(item.id);
+                        break;
+                    case 'bingmappolyline':
+                        instance = self.polyline.getInstance(item.id);
+                        break;
+                    case 'bingmappolygon':
+                        instance = self.polygon.getInstance(item.id);
+                        break;
+                }
+                instances.push(instance);
+            }
+
+            if (instances.length > 0) {
+                _maps.get(mapId).map.entities.remove(instances);
+            }
+        },
+        clearItems: function () {
+            _maps.get(mapId).map.entities.clear();
 
             return 1;
         },
@@ -483,9 +532,13 @@ window.rpedrettiBlazorComponents.bingMaps = window.rpedrettiBlazorComponents.bin
                 init: function (id, layerRef) {
                     const layerInstance = new Microsoft.Maps.Layer(id);
                     _layers.set(id, { layerInstance, layerRef });
+
+                    return 1;
                 },
                 AddToMap: function (id, mapId) {
                     _maps.get(mapId).map.layers.insert(_layers.get(id).layerInstance);
+
+                    return 1;
                 },
                 addItem: function (id, item) {
                     if (!_items.has(id)) {
@@ -506,11 +559,71 @@ window.rpedrettiBlazorComponents.bingMaps = window.rpedrettiBlazorComponents.bin
 
                     _items.get(id).set(item.id, instance);
                     _layers.get(id).layerInstance.add(instance);
+
+                    return 1;
+                },
+                addItems: function (id, items) {
+                    let instances = [];
+                    if (!_items.has(id)) {
+                        _items.set(id, new Map());
+                    }
+                    for (var item of items) {
+                        let instance;
+                        switch (item.type) {
+                            case 'bingmappushpin':
+                                instance = self.pushpin.buildInstance(item);
+                                break;
+                            case 'bingmappolyline':
+                                instance = self.polyline.buildInstance(item);
+                                break;
+                            case 'bingmappolygon':
+                                instance = self.polygon.buildInstance(item);
+                                break;
+                        }
+                        _items.get(id).set(item.id, instance);
+                        instances.push(instance);
+                    }
+
+                    if (instances.length > 0) {
+                        _layers.get(id).layerInstance.add(instances);
+                    }
+
+                    return 1;
                 },
                 removeItem(id, itemId) {
                     const item = _items.get(id).get(itemId);
                     _items.get(id).delete(itemId);
                     _layers.get(id).layerInstance.remove(item);
+
+                    return 1;
+                },
+                removeItems: function (id, items) {
+                    let instances = [];
+                    for (var item of items) {
+                        const instance = _items.get(id).get(item.id);
+                        instances.push(instance);
+                    }
+
+                    if (instances.length > 0) {
+                        _layers.get(id).layerInstance.remove(instances);
+                    }
+
+                    return 1;
+                },
+                updateItem: function (id, item) {
+                    switch (item.type) {
+                        case 'bingmappushpin':
+                            self.pushpin.update(item);
+                            break;
+                        case 'bingmappolyline':
+                            self.polyline.update(item);
+                            break;
+                        case 'bingmappolygon':
+                            self.polygon.update(item);
+                            break;
+                    }
+
+                    return 1;
                 }
             };
         })()

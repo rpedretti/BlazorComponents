@@ -1,7 +1,7 @@
 ﻿using Microsoft.JSInterop;
-using RPedretti.Blazor.Shared.Collections;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.BingMap.Entities.Polyline

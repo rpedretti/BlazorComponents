@@ -1,21 +1,22 @@
-﻿using RPedretti.Blazor.BingMap.Entities;
+﻿using RPedretti.Blazor.BingMap.Collections;
+using RPedretti.Blazor.BingMap.Entities;
 using RPedretti.Blazor.BingMap.Entities.InfoBox;
 using RPedretti.Blazor.BingMap.Entities.Layer;
 using RPedretti.Blazor.BingMap.Entities.Pushpin;
-using RPedretti.Blazor.Shared.Collections;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
 {
     public class PushpinPageBase : BaseComponent, IDisposable
     {
-        private int index = 0;
+        private int index = 2;
         private Random rnd = new Random();
 
         protected string BingMapId = $"bing-map-{Guid.NewGuid().ToString().Replace("-", "")}";
-        protected BindingList<BaseBingMapEntity> Entities = new BindingList<BaseBingMapEntity>();
-        protected BindingList<BingMapLayer> Layers = new BindingList<BingMapLayer>();
+        protected BingMapEntityList Entities = new BingMapEntityList();
+        protected BingMapLayerList Layers = new BingMapLayerList();
         private InfoBox infobox;
         protected BingMapLayer layer;
         private bool infoAttached;
@@ -53,6 +54,15 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
             layer = new BingMapLayer("pushpins");
             Layers.Add(layer);
 
+            //layer.Add(new BingMapPushpin { Id = 0.ToString(), Center = new Geocoordinate() });
+
+            layer.AddRange(new BingMapPushpin[] {
+                new BingMapPushpin() { Id = 0.ToString(), Center = new Geocoordinate() },
+                new BingMapPushpin() { Id = 1.ToString(), Center = new Geocoordinate() { Latitude = 1 } },
+                new BingMapPushpin() { Id = 2.ToString(), Center = new Geocoordinate() { Latitude = 2 } }
+            });
+
+            StateHasChanged();
             return Task.CompletedTask;
         }
 
@@ -63,28 +73,36 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
                 await infobox.SetMap(BingMapId);
                 infoAttached = true;
             }
-            index++;
 
-            var latitude = rnd.NextDouble() * -180 + 90;
-            var longitude = rnd.NextDouble() * -360 + 180;
-
-            var pushpin = new BingMapPushpin
+            var pushpins = new List<BingMapPushpin>();
+            for (int i = 0; i < 3; i++)
             {
-                Id = index.ToString(),
-                Center = new Geocoordinate { Latitude = latitude, Longitude = longitude },
-                Options = new PushpinOptions
+
+                index++;
+
+                var latitude = rnd.NextDouble() * -180 + 90;
+                var longitude = rnd.NextDouble() * -360 + 180;
+
+                var pushpin = new BingMapPushpin
                 {
-                    Text = index.ToString(),
-                    Draggable = true,
-                    Icon = "https://www.bingmapsportal.com/Content/images/poi_custom.png"
-                }
-            };
+                    Id = index.ToString(),
+                    Center = new Geocoordinate { Latitude = latitude, Longitude = longitude },
+                    Options = new PushpinOptions
+                    {
+                        Text = index.ToString(),
+                        Draggable = true,
+                        Icon = "https://www.bingmapsportal.com/Content/images/poi_custom.png"
+                    }
+                };
 
-            pushpin.OnMouseOver += Pushpin_OnMouseOver;
-            pushpin.OnMouseOut += Pushpin_OnMouseOut;
-            pushpin.OnDragEnd += Pushpin_OnDragEnd;
+                pushpin.OnMouseOver += Pushpin_OnMouseOver;
+                pushpin.OnMouseOut += Pushpin_OnMouseOut;
+                pushpin.OnDragEnd += Pushpin_OnDragEnd;
 
-            Entities.Add(pushpin);
+                pushpins.Add(pushpin);
+            }
+
+            layer.AddRange(pushpins);
 
         }
 
@@ -110,7 +128,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
             pushpin.OnMouseOut -= Pushpin_OnMouseOut;
             pushpin.OnDragEnd -= Pushpin_OnDragEnd;
 
-            Entities.Remove(pushpin);
+            layer.Remove(pushpin);
         }
 
         private async void Pushpin_OnMouseOver(object sender, MouseEventArgs<BingMapPushpin> e)
@@ -134,13 +152,17 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
 
         public void Dispose()
         {
-            foreach (var entitie in Entities)
+            foreach (var item in Entities)
             {
-                entitie.Dispose();
+                item.Dispose();
             }
 
             foreach (var layer in Layers)
             {
+                foreach (var entitie in layer)
+                {
+                    entitie.Dispose();
+                }
                 layer.Dispose();
             }
 
