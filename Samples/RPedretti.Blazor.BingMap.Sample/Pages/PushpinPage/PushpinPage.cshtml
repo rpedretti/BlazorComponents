@@ -6,25 +6,21 @@
     <div style="width: 300px; display:inline-block; float:left">
         <button class="btn btn-primary update-btn" onclick="@AddPushpin" disabled="@DisableAddButton">Add pushpin</button>
         <ul class="list-group">
-            @if (layer != null)
+            @foreach (var pushpin in Entities)
             {
-                foreach (var pushpin in layer)
-                {
-                    var p = pushpin as BingMapPushpin;
-                    <li class="list-group-item" title="(@(p.Center.Latitude), @(p.Center.Longitude))">
-                        <span style="vertical-align: middle;line-height: 38px;">@(p.Id)</span>
-                        <span style="float:right;">
-                            <i class="@($"btn fas fa-{(p.OptionsSnapshot.Visible ?? true ? "eye" : "eye-slash")}")" onclick="@(() => ToggleVisibility(p))"></i>
-                            <i class="btn fas fa-times" style="font-weight:900;" onclick="@(() => RemovePushpin(p))"></i>
-                        </span>
-                    </li>
-                }
+                var p = pushpin as BingMapPushpin;
+                <li class="list-group-item" title="(@(p.Center.Latitude), @(p.Center.Longitude))">
+                    <span style="vertical-align: middle;line-height: 38px;">@(p.Id)</span>
+                    <span style="float:right;">
+                        <i class="@($"btn fas fa-{(p.OptionsSnapshot.Visible ?? true ? "eye" : "eye-slash")}")" onclick="@(() => ToggleVisibility(p))"></i>
+                        <i class="btn fas fa-times" style="font-weight:900;" onclick="@(() => RemovePushpin(p))"></i>
+                    </span>
+                </li>
             }
         </ul>
     </div>
     <BingMap Id="@BingMapId"
              Entities="@Entities"
-             Layers="@Layers"
              MapsConfig="@MapsConfig"
              ViewConfig="@MapsViewConfig"
              MapLoaded="@MapLoaded" />

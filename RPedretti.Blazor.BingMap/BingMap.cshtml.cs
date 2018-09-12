@@ -313,10 +313,9 @@ namespace RPedretti.Blazor.BingMap
                     await module.InitAsync(Id);
                 }
             }
-            Console.WriteLine("loaded");
+            StateHasChanged();
             MapLoaded?.Invoke();
             modulesLoaded = true;
-            StateHasChanged();
         }
     }
 }

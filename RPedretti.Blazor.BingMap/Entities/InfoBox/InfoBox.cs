@@ -8,6 +8,7 @@ namespace RPedretti.Blazor.BingMap.Entities.InfoBox
     {
         private string _htmlContent;
         private InfoboxOptions _options;
+        private const string _mapsNamespace = "rpedrettiBlazorComponents.bingMaps";
         private const string _infoboxNamespace = "rpedrettiBlazorComponents.bingMaps.infobox";
         private const string _infoboxRegister = _infoboxNamespace + ".register";
         private const string _infoboxGet = _infoboxNamespace + ".get";
@@ -52,7 +53,7 @@ namespace RPedretti.Blazor.BingMap.Entities.InfoBox
             }
         }
         public async Task<bool> ShowCloseButton() => await JSRuntime.Current.InvokeAsync<bool>(_infoboxGet, Id, nameof(Actions));
-        public async Task SetMap(string mapId) => await JSRuntime.Current.InvokeAsync<bool>(_infoboxSet + "Map", Id, mapId);
+        public async Task AttachMap(string mapId) => await JSRuntime.Current.InvokeAsync<bool>(_mapsNamespace + ".attachInfoBox", mapId, Id);
         public async Task<bool> ShowPointer() => await JSRuntime.Current.InvokeAsync<bool>(_infoboxGet, Id, nameof(Actions));
         public async Task<string> Title() => await JSRuntime.Current.InvokeAsync<string>(_infoboxGet, Id, nameof(Actions));
         public async Task<bool> Visible() => await JSRuntime.Current.InvokeAsync<bool>(_infoboxGet, Id, nameof(Actions));

@@ -262,3 +262,7 @@ __pycache__/
 /Samples/RPedretti.Blazor.BingMap.Sample/Properties/PublishProfiles
 /Samples/RPedretti.Blazor.Components.Sample/Properties/PublishProfiles
 /nuget.key
+**/RPedretti.Blazor.BingMap/content/**/*.js
+**/RPedretti.Blazor.BingMap/content/**/*.js.map
+**/RPedretti.Blazor.BingMap/ts/**/*.js
+**/RPedretti.Blazor.BingMap/ts/**/*.js.map

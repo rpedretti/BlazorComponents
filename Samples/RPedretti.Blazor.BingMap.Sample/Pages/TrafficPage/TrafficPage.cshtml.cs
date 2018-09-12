@@ -61,7 +61,6 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.TrafficPage
             {
                 _trafficModule = new BingMapTrafficModule();
                 Modules.Add(_trafficModule);
-                Console.WriteLine("Adding traffic module");
             }
             else
             {
