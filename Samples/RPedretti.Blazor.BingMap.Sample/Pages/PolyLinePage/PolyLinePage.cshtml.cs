@@ -58,6 +58,11 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolyLinePage
                     new Location(10, 10),
                     new Location(0, 0),
                     new Location(10, -10),
+                },
+                Options = new BingMapPolylineOptions
+                {
+                    StrokeThickness = 3,
+                    StrokeDashArray = new int[] { 3, 3, 0, 2 }
                 }
             };
 

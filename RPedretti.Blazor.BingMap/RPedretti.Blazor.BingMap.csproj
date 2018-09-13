@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>RPedretti.Blazor.BingMaps</PackageId>
-    <Version>0.0.8-preview</Version>
+    <Version>0.0.9-preview</Version>
     <Authors>Rafael Pedretti</Authors>
     <Company>RJPSoft</Company>
 
@@ -73,6 +73,10 @@
     <TypeScriptCompile Include="ts\Entities\Polyline.ts" />
     <TypeScriptCompile Include="ts\Entities\Polygon.ts" />
     <TypeScriptCompile Include="ts\Entities\Pushpin.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="content\js\" />
   </ItemGroup>
 
   <Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using Microsoft.JSInterop;
-using Newtonsoft.Json;
 using RPedretti.Blazor.BingMap.Collections;
 using RPedretti.Blazor.BingMap.Entities;
 using RPedretti.Blazor.BingMap.Entities.Layer;
@@ -15,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.BingMap
 {
-    public class BingMapBase : BlazorComponent, IDisposable
+    public partial class BingMapBase : BlazorComponent, IDisposable
     {
         #region Fields
         private const string _mapNamespace = "rpedrettiBlazorComponents.bingMaps";
@@ -155,6 +154,11 @@ namespace RPedretti.Blazor.BingMap
 
         #endregion Methods
 
+        public BingMapBase()
+        {
+            thisRef = new DotNetObjectRef(this);
+        }
+
         protected bool init;
 
         [Parameter]
@@ -280,7 +284,6 @@ namespace RPedretti.Blazor.BingMap
             if (!init)
             {
                 init = true;
-                thisRef = new DotNetObjectRef(this);
                 JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.getMap", thisRef, Id, MapsConfig);
             }
 

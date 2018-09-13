@@ -3,10 +3,8 @@ using RPedretti.Blazor.BingMap.Entities;
 using RPedretti.Blazor.BingMap.Entities.Polygon;
 using RPedretti.Blazor.Shared.Operators;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

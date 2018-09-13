@@ -34,31 +34,31 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
         {
             switch (args.EventName)
             {
-                case PolylineEvents.Click:
+                case PushpinEvents.Click:
                     _onClick?.Invoke(this, args);
                     break;
-                case PolylineEvents.DoubleClick:
+                case PushpinEvents.DoubleClick:
                     _onDoubleClick?.Invoke(this, args);
                     break;
-                case PolylineEvents.Drag:
+                case PushpinEvents.Drag:
                     _onDrag?.Invoke(this, args);
                     break;
-                case PolylineEvents.DragEnd:
+                case PushpinEvents.DragEnd:
                     _onDragEnd?.Invoke(this, args);
                     break;
-                case PolylineEvents.DragStart:
+                case PushpinEvents.DragStart:
                     _onDragStart?.Invoke(this, args);
                     break;
-                case PolylineEvents.MouseDown:
+                case PushpinEvents.MouseDown:
                     _onMouseDown?.Invoke(this, args);
                     break;
-                case PolylineEvents.MouseOut:
+                case PushpinEvents.MouseOut:
                     _onMouseOut?.Invoke(this, args);
                     break;
-                case PolylineEvents.MouseOver:
+                case PushpinEvents.MouseOver:
                     _onMouseOver?.Invoke(this, args);
                     break;
-                case PolylineEvents.MouseUp:
+                case PushpinEvents.MouseUp:
                     _onMouseUp?.Invoke(this, args);
                     break;
             }
@@ -74,7 +74,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.Click, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.Click, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onClick += value;
             }
@@ -83,7 +83,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onClick -= value;
                 if (_onClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.Click);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.Click);
                 }
                 CheckThisRef();
             }
@@ -96,7 +96,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onDoubleClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.DoubleClick, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.DoubleClick, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onDoubleClick += value;
             }
@@ -105,7 +105,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onDoubleClick -= value;
                 if (_onDoubleClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.DoubleClick);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.DoubleClick);
                 }
                 CheckThisRef();
             }
@@ -118,7 +118,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onDrag == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.Drag, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.Drag, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onDrag += value;
             }
@@ -127,7 +127,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onDrag -= value;
                 if (_onDrag == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.Drag);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.Drag);
                 }
                 CheckThisRef();
             }
@@ -140,7 +140,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onDragEnd == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.DragEnd, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.DragEnd, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onDragEnd += value;
             }
@@ -149,7 +149,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onDragEnd -= value;
                 if (_onDragEnd == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.DragEnd);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.DragEnd);
                 }
                 CheckThisRef();
             }
@@ -162,7 +162,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onDragStart == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.DragStart, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.DragStart, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onDragStart += value;
             }
@@ -171,7 +171,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onDragStart -= value;
                 if (_onDragStart == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.DragStart);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.DragStart);
                 }
                 CheckThisRef();
             }
@@ -184,7 +184,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onMouseDown == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.MouseDown, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.MouseDown, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onMouseDown += value;
             }
@@ -193,7 +193,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onMouseDown -= value;
                 if (_onMouseDown == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.MouseDown);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.MouseDown);
                 }
                 CheckThisRef();
             }
@@ -206,7 +206,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onMouseOut == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.MouseOut, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.MouseOut, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onMouseOut += value;
             }
@@ -215,7 +215,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onMouseOut -= value;
                 if (_onMouseOut == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.MouseOut);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.MouseOut);
                 }
                 CheckThisRef();
             }
@@ -228,7 +228,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onMouseOver == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.MouseOver, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.MouseOver, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onMouseOver += value;
             }
@@ -237,7 +237,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onMouseOver -= value;
                 if (_onMouseOver == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.MouseOver);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.MouseOver);
                 }
                 CheckThisRef();
             }
@@ -250,7 +250,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 AssureThisRef();
                 if (_onMouseUp == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.MouseUp, thisRef, nameof(EmitPushpinEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PushpinEvents.MouseUp, thisRef, nameof(EmitPushpinEvent));
                 }
                 _onMouseUp += value;
             }
@@ -259,7 +259,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
                 _onMouseUp -= value;
                 if (_onMouseUp == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.MouseUp);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PushpinEvents.MouseUp);
                 }
                 CheckThisRef();
             }

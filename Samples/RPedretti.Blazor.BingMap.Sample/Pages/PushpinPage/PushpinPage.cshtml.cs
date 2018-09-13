@@ -37,7 +37,8 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
 
         protected BingMapsViewConfig MapsViewConfig { get; set; } = new BingMapsViewConfig();
         public bool DisableAddButton { get; set; }
-
+        public int MapClick { get; private set; }
+        public int MapRightClick { get; private set; }
 
         protected async Task MapLoaded()
         {
@@ -92,6 +93,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
                 pushpin.OnMouseOver += Pushpin_OnMouseOver;
                 pushpin.OnMouseOut += Pushpin_OnMouseOut;
                 pushpin.OnDragEnd += Pushpin_OnDragEnd;
+                pushpin.OnDragStart += Pushpin_OnDragStart;
 
                 pushpins.Add(pushpin);
             }
@@ -100,6 +102,14 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
 
             return Task.CompletedTask;
 
+        }
+
+        private async void Pushpin_OnDragStart(object sender, MouseEventArgs<BingMapPushpin> e)
+        {
+            await infobox.Options(new InfoboxOptions
+            {
+                Visible = false
+            });
         }
 
         private void Pushpin_OnDragEnd(object sender, MouseEventArgs<BingMapPushpin> e)
@@ -123,6 +133,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
             pushpin.OnMouseOver -= Pushpin_OnMouseOver;
             pushpin.OnMouseOut -= Pushpin_OnMouseOut;
             pushpin.OnDragEnd -= Pushpin_OnDragEnd;
+            pushpin.OnDragStart -= Pushpin_OnDragStart;
 
             Entities.Remove(pushpin);
         }
@@ -154,6 +165,26 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
             }
 
             infobox?.Dispose();
+        }
+
+        public Task OnMapRightClick(MouseEventArgs<BingMapBase> args)
+        {
+            MapRightClick++;
+            StateHasChanged();
+            return Task.CompletedTask;
+        }
+
+        public Task OnMapClick(MouseEventArgs<BingMapBase> args)
+        {
+            MapClick++;
+            StateHasChanged();
+            return Task.CompletedTask;
+        }
+
+        public Task OnMapThrottleViewChangeEnd()
+        {
+            Console.WriteLine("Throttle View Change End");
+            return Task.CompletedTask;
         }
     }
 }

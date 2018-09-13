@@ -4,6 +4,8 @@
 
 <div class="pushpin-page">
     <div style="width: 300px; display:inline-block; float:left">
+        <span style="display:inline-block; margin-right: 12px">Map click: @MapClick</span>
+        <span style="display:inline-block;">Map Right Click: @MapRightClick</span>
         <button class="btn btn-primary update-btn" onclick="@AddPushpin" disabled="@DisableAddButton">Add pushpin</button>
         <ul class="list-group">
             @foreach (var pushpin in Entities)
@@ -23,5 +25,8 @@
              Entities="@Entities"
              MapsConfig="@MapsConfig"
              ViewConfig="@MapsViewConfig"
-             MapLoaded="@MapLoaded" />
+             MapLoaded="@MapLoaded"
+             Click="@OnMapClick"
+             RightClick="@OnMapRightClick"
+             ThrottleViewChangeEnd="@OnMapThrottleViewChangeEnd" />
 </div>

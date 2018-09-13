@@ -1,6 +1,6 @@
 ﻿namespace RPedretti.Blazor.BingMap.Entities.Pushpin
 {
-    public class PolylineEvents
+    public class PushpinEvents
     {
         public const string Click = "click";
         public const string DoubleClick = "dblclick";

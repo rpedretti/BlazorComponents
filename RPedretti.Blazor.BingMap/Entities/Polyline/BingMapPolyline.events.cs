@@ -1,7 +1,5 @@
 ﻿using Microsoft.JSInterop;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RPedretti.Blazor.BingMap.Entities.Polyline
@@ -34,22 +32,22 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
         {
             switch (args.EventName)
             {
-                case PolygonEvents.Click:
+                case PolylineEvents.Click:
                     _onClick?.Invoke(this, args);
                     break;
-                case PolygonEvents.DoubleClick:
+                case PolylineEvents.DoubleClick:
                     _onDoubleClick?.Invoke(this, args);
                     break;
-                case PolygonEvents.MouseDown:
+                case PolylineEvents.MouseDown:
                     _onMouseDown?.Invoke(this, args);
                     break;
-                case PolygonEvents.MouseOut:
+                case PolylineEvents.MouseOut:
                     _onMouseOut?.Invoke(this, args);
                     break;
-                case PolygonEvents.MouseOver:
+                case PolylineEvents.MouseOver:
                     _onMouseOver?.Invoke(this, args);
                     break;
-                case PolygonEvents.MouseUp:
+                case PolylineEvents.MouseUp:
                     _onMouseUp?.Invoke(this, args);
                     break;
             }
@@ -65,7 +63,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 AssureThisRef();
                 if (_onClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.Click, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.Click, thisRef, nameof(EmitPolylineEvent));
                 }
                 _onClick += value;
             }
@@ -74,7 +72,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 _onClick -= value;
                 if (_onClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolygonEvents.Click);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.Click);
                 }
                 CheckThisRef();
             }
@@ -87,7 +85,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 AssureThisRef();
                 if (_onDoubleClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.DoubleClick, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.DoubleClick, thisRef, nameof(EmitPolylineEvent));
                 }
                 _onDoubleClick += value;
             }
@@ -96,7 +94,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 _onDoubleClick -= value;
                 if (_onDoubleClick == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolygonEvents.DoubleClick);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.DoubleClick);
                 }
                 CheckThisRef();
             }
@@ -109,7 +107,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 AssureThisRef();
                 if (_onMouseDown == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseDown, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.MouseDown, thisRef, nameof(EmitPolylineEvent));
                 }
                 _onMouseDown += value;
             }
@@ -118,7 +116,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 _onMouseDown -= value;
                 if (_onMouseDown == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolygonEvents.MouseDown);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.MouseDown);
                 }
                 CheckThisRef();
             }
@@ -131,7 +129,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 AssureThisRef();
                 if (_onMouseOut == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseOut, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.MouseOut, thisRef, nameof(EmitPolylineEvent));
                 }
                 _onMouseOut += value;
             }
@@ -140,7 +138,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 _onMouseOut -= value;
                 if (_onMouseOut == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolygonEvents.MouseOut);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.MouseOut);
                 }
                 CheckThisRef();
             }
@@ -153,7 +151,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 AssureThisRef();
                 if (_onMouseOver == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseOver, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.MouseOver, thisRef, nameof(EmitPolylineEvent));
                 }
                 _onMouseOver += value;
             }
@@ -162,7 +160,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 _onMouseOver -= value;
                 if (_onMouseOver == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolygonEvents.MouseOver);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.MouseOver);
                 }
                 CheckThisRef();
             }
@@ -175,7 +173,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 AssureThisRef();
                 if (_onMouseUp == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolygonEvents.MouseUp, thisRef, nameof(EmitPolylineEvent));
+                    JSRuntime.Current.InvokeAsync<object>(attachEventFunctionName, Id, PolylineEvents.MouseUp, thisRef, nameof(EmitPolylineEvent));
                 }
                 _onMouseUp += value;
             }
@@ -184,7 +182,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
                 _onMouseUp -= value;
                 if (_onMouseUp == null)
                 {
-                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolygonEvents.MouseUp);
+                    JSRuntime.Current.InvokeAsync<object>(detachEventFunctionName, Id, PolylineEvents.MouseUp);
                 }
                 CheckThisRef();
             }

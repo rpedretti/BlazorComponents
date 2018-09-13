@@ -1,6 +1,6 @@
 ﻿namespace RPedretti.Blazor.BingMap.Entities.Polyline
 {
-    public class PolygonEvents
+    public class PolylineEvents
     {
         public const string Changed = "changed";
         public const string Click = "click";
