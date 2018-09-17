@@ -15,7 +15,7 @@ namespace RPedretti.Blazor.BingMap.Modules.Traffic
         #region Properties
 
         private string InitFunctionName =>
-            "rpedrettiBlazorComponents.bingMaps.modules.traffic.init";
+            "rpedrettiBlazorComponents.bingMaps.map.modules.traffic.init";
 
         #endregion Properties
 
@@ -30,7 +30,7 @@ namespace RPedretti.Blazor.BingMap.Modules.Traffic
         public async Task UpateTrafficAsync(BingMapTrafficOptions options)
         {
             await JSRuntime.Current.InvokeAsync<object>(
-                "rpedrettiBlazorComponents.bingMaps.modules.traffic.updateTraffic",
+                "rpedrettiBlazorComponents.bingMaps.map.modules.traffic.updateTraffic",
                 _mapId, options);
         }
 

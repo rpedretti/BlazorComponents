@@ -3,16 +3,17 @@
 @inherits PolyLinePageBase
 
 <div class="@($"polyline-page{(Loading ? " -loading" : null)}")">
-    <div class="spinner-wrapper">
+    <div class="map-wrapper">
         <Spinner Centered
                  Active="@Loading"
                  Size="@SpinnerSize.LARGE" />
+        <BingMap Id="@BingMapId"
+                 ref="bingMap"
+                 Entities="@Entities"
+                 MapsConfig="@MapConfig"
+                 ViewConfig="@MapViewConfig"
+                 MapLoaded="@MapLoaded" />
     </div>
-    <BingMap Id="@BingMapId"
-             Entities="@Entities"
-             MapsConfig="@MapConfig"
-             ViewConfig="@MapViewConfig"
-             MapLoaded="@MapLoaded" />
     <div class="events">
         <p class="@(Click ? "-active" : "")">click</p>
         <p class="@(DoubleClick ? "-active" : "")">double click</p>

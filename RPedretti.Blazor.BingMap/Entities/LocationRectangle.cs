@@ -12,8 +12,7 @@ namespace RPedretti.Blazor.BingMap.Entities
 
         public override bool Equals(object obj)
         {
-            var rectangle = obj as LocationRectangle;
-            return rectangle != null &&
+            return obj is LocationRectangle rectangle &&
                    EqualityComparer<Geocoordinate>.Default.Equals(Center, rectangle.Center) &&
                    Height == rectangle.Height &&
                    Width == rectangle.Width;

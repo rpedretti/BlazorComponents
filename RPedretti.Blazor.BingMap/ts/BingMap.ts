@@ -108,7 +108,7 @@ export class BingMaps {
 
 
             for (var { eventName, refEventName } of this._initChangeHandler.get(mapId) || []) {
-                this.attachChangeEvent(mapId,eventName, refEventName);
+                this.attachChangeEvent(mapId, eventName, refEventName);
             }
             this._initChangeHandler.delete(mapId);
 
@@ -371,7 +371,6 @@ export class BingMaps {
         return 1;
     };
 
-
     public attachThrottleEvent = (mapId: string, eventName: string, refEventName: string) => {
         const mapObj = this._maps.get(mapId);
         if (mapObj) {
@@ -391,6 +390,24 @@ export class BingMaps {
         Microsoft.Maps.Events.removeHandler(handler);
 
         return 1;
+    }
+
+    public getCenter = (mapId: string): Microsoft.Maps.Location => {
+        const mapObj = this._maps.get(mapId);
+        if (mapObj) {
+            return mapObj.map.getCenter();
+        } else {
+            throw new Error(`Map ${mapId} does not exist`);
+        }
+    }
+
+    public getBounds = (mapId: string): Microsoft.Maps.LocationRect => {
+        const mapObj = this._maps.get(mapId);
+        if (mapObj) {
+            return mapObj.map.getBounds();
+        } else {
+            throw new Error(`Map ${mapId} does not exist`);
+        }
     }
 
     public readonly polygon = new Polygon();

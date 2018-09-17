@@ -123,7 +123,7 @@ app > .spinner-wrapper {
 .directions-page > .bing-map {
   display: inline-block;
   margin-top: 12px;
-  width: 100%;
+  width: calc(100% - 394px);
   height: 600px;
   max-width: 600px;
   position: relative; }
@@ -136,23 +136,27 @@ app > .spinner-wrapper {
   height: 100%; }
   .polyline-page > .spinner-wrapper {
     display: none; }
-  .polyline-page > .spinner-wrapper,
-  .polyline-page > .bing-map {
+  .polyline-page > .map-wrapper {
     float: left;
     width: 100%;
     height: calc(100% - 80px);
     max-height: 600px;
     max-width: 600px;
     position: relative; }
+    .polyline-page > .map-wrapper > .bing-map {
+      float: left;
+      width: 100%;
+      height: calc(100% - 80px);
+      max-height: 600px;
+      max-width: 600px;
+      position: relative; }
   .polyline-page > .events {
     margin-left: 8px;
     float: left; }
     .polyline-page > .events > .-active {
       background-color: lightgreen; }
-  .polyline-page.-loading > .bing-map {
-    display: none; }
-  .polyline-page.-loading > .spinner-wrapper {
-    display: block; }
+  .polyline-page.-loading > .map-wrapper > .bing-map {
+    visibility: hidden; }
 
 .polygon-page {
   height: 100%; }

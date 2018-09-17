@@ -5,15 +5,25 @@
         display: none;
     }
 
-    > .spinner-wrapper,
-    > .bing-map {
+    > .map-wrapper {
         float: left;
         width: 100%;
         height: calc(100% - 80px);
         max-height: 600px;
         max-width: 600px;
         position: relative;
+
+        > .bing-map {
+            float: left;
+            width: 100%;
+            height: calc(100% - 80px);
+            max-height: 600px;
+            max-width: 600px;
+            position: relative;
+        }
     }
+
+
 
     > .events {
         margin-left: 8px;
@@ -24,13 +34,7 @@
         }
     }
 
-    &.-loading {
-        > .bing-map {
-            display: none;
-        }
-
-        > .spinner-wrapper {
-            display: block;
-        }
+    &.-loading > .map-wrapper > .bing-map {
+        visibility: hidden;
     }
 }

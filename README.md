@@ -19,16 +19,28 @@ https://blazorbingmaps.azurewebsites.net/ for the bing maps component
 
 ## Inputs
 There are four custom inputs, with acessibility
+
+### Usage
+On your `_ViewImports.cshtml` add the TagHelper
+```
+@addTagHelper *, RPedretti.Blazor.Components
+```
+
 - Checkbox: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml#L22-L36)
 - RadioGroup: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml#L72-L87)
 - SuggestBox: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml#L10-L16)
 - ToggleSwitch: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml#L41-L68)
-
-## Progress
 - ProgressBar: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Loaders/Loaders.cshtml#L8-L13)
 - Spinner: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Loaders/Loaders.cshtml#L14-L31)
 
 ## Layout
+
+### Usage
+On your `_ViewImports.cshtml` add the TagHelper
+```
+@addTagHelper *, RPedretti.Blazor.Components
+```
+
 - Accordeon: There are many in [sample Input](https://github.com/rpedretti/BlazorComponents/blob/master/Samples/RPedretti.Blazor.Components.Sample/Pages/Inputs/Inputs.cshtml) page
 - DynamicGroupedTable: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Forecast/Forecast.cshtml#L18-L20)
 - DynamicTable: [sample](https://github.com/rpedretti/BlazorComponents/blob/ecaa7db9411fbe053adfceea27b46c7b36e7e0e6/Samples/RPedretti.Blazor.Components.Sample/Pages/Forecast/Forecast.cshtml#L24-L28)
@@ -36,8 +48,15 @@ There are four custom inputs, with acessibility
 - Pager: [sample]()
 
 ## BingMaps
-To use the maps you only have to load the maps script in yoyr app.
-There is a extension method that do that. Just have to call it ath the `Startup.Configure` method:
+
+### Usage
+
+First add the TagHelper in your `_ViewImports.cshtml` 
+```
+@addTagHelper *, RPedretti.Blazor.BingMap
+```
+
+Then load the maps script in yoyr app. There is a extension method that do that. Just it at the `Startup.Configure` method:
 
 ```
 public void Configure(IBlazorApplicationBuilder app)

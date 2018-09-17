@@ -1,7 +1,9 @@
 ﻿import { BingMaps } from "./BingMap";
+import { DevTools } from "./DevTools";
 
-namespace rpedrettiBlazorComponents {
-    export const bingMaps = new BingMaps()
+namespace rpedrettiBlazorComponents.bingMaps {
+    export const map = new BingMaps()
+    export const devTools = new DevTools();
 }
 
 declare global {
@@ -14,5 +16,5 @@ declare global {
 window.rpedrettiBlazorComponents = rpedrettiBlazorComponents;
 
 window.getBingMaps = function() {
-    rpedrettiBlazorComponents.bingMaps.initMaps();
+    rpedrettiBlazorComponents.bingMaps.map.initMaps();
 }

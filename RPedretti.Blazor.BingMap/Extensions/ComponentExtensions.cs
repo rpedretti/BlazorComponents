@@ -12,7 +12,7 @@ namespace RPedretti.Blazor.BingMap.Extensions
             string apiKey,
             string mapLanguage = null)
         {
-            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.initScript", apiKey, mapLanguage);
+            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.initScript", apiKey, mapLanguage);
             return applicationBuilder;
         }
 

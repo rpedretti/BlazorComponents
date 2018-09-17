@@ -16,7 +16,7 @@
         return func as any;
     }
 
-    static parseColor(c: string | { a: number, r: number, g: number, b: number}): Microsoft.Maps.Color {
+    static parseColor(c: string | { a: number, r: number, g: number, b: number }): Microsoft.Maps.Color {
         return typeof c === 'string' ? Microsoft.Maps.Color.fromHex(c) : new Microsoft.Maps.Color(c.a, c.r, c.g, c.b);
     }
 }

@@ -19,6 +19,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolygonPage
         protected DebounceDispatcher downDispatcher = new DebounceDispatcher();
         protected DebounceDispatcher upDispatcher = new DebounceDispatcher();
         protected DebounceDispatcher outDispatcher = new DebounceDispatcher();
+        protected BingMap bingMap;
 
         private BingMapPolygon polygon;
         private Timer changePolygonTimer;
@@ -34,7 +35,6 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolygonPage
                 BingMapTypes.Road,
                 BingMapTypes.BirdsEyes
             },
-            Center = new Geocoordinate { Latitude = 0, Longitude = 0 },
             EnableHighDpi = true,
             Zoom = 10,
             ShowTrafficButton = true
@@ -48,23 +48,27 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolygonPage
         public bool DoubleClick { get; set; }
         public bool Click { get; set; }
 
-        protected Task MapLoaded()
+        protected async Task MapLoaded()
         {
             Loading = false;
-            Task.Run(StateHasChanged);
+
+            var bounds = await bingMap.GetBoundsAsync();
+
+            var latitude = bounds.Center.Latitude;
+            var longitude = bounds.Center.Longitude;
 
             polygon = new BingMapPolygon
             {
                 Coordinates = new BindingList<Geocoordinate>
                 {
-                    new Geocoordinate { Latitude = 0.1, Longitude = -0.1 },
-                    new Geocoordinate { Latitude = 0.1, Longitude = 0.1 },
-                    new Geocoordinate { Latitude = -0.1, Longitude = 0.1 },
-                    new Geocoordinate { Latitude = -0.1, Longitude = -0.1 }
+                    new Geocoordinate { Latitude = latitude + 0.1, Longitude = longitude - 0.1 },
+                    new Geocoordinate { Latitude = latitude + 0.1, Longitude = longitude + 0.1 },
+                    new Geocoordinate { Latitude = latitude - 0.1, Longitude = longitude + 0.1 },
+                    new Geocoordinate { Latitude = latitude - 0.1, Longitude = longitude - 0.1 }
                 },
                 Options = new BingMapPolygonOptions
                 {
-                    FillColor = Color.Blue,
+                    FillColor = Color.FromArgb(0x7F, Color.Blue),
                     StrokeThickness = 2,
                     StrokeColor = Color.Red
                 }
@@ -79,29 +83,31 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolygonPage
 
             Entities.Add(polygon);
 
-            changePolygonTimer = new Timer((o) =>
+            changePolygonTimer = new Timer(async o =>
             {
+                bounds = await bingMap.GetBoundsAsync();
+
+                latitude = bounds.Center.Latitude;
+                longitude = bounds.Center.Longitude;
                 polygon.Rings = new BindingList<Geocoordinate[]>
                 {
                     new Geocoordinate[]
                     {
-                        new Geocoordinate { Latitude = 0.1, Longitude = -0.1 },
-                        new Geocoordinate { Latitude = 0.1, Longitude = 0.1 },
-                        new Geocoordinate { Latitude = -0.1, Longitude = 0.1 },
-                        new Geocoordinate { Latitude = -0.1, Longitude = -0.1 }
+                        new Geocoordinate { Latitude = latitude + 0.1, Longitude = longitude - 0.1 },
+                        new Geocoordinate { Latitude = latitude + 0.1, Longitude = longitude + 0.1 },
+                        new Geocoordinate { Latitude = latitude - 0.1, Longitude = longitude + 0.1 },
+                        new Geocoordinate { Latitude = latitude - 0.1, Longitude = longitude - 0.1 }
                     },
                     new Geocoordinate[]
                     {
-                        new Geocoordinate { Latitude = 0.05, Longitude = -0.05 },
-                        new Geocoordinate { Latitude = -0.05, Longitude = -0.05 },
-                        new Geocoordinate { Latitude = -0.05, Longitude = 0.05 },
-                        new Geocoordinate { Latitude = 0.05, Longitude = 0.05 }
+                        new Geocoordinate { Latitude = latitude + 0.05, Longitude = longitude - 0.05 },
+                        new Geocoordinate { Latitude = latitude - 0.05, Longitude = longitude - 0.05 },
+                        new Geocoordinate { Latitude = latitude - 0.05, Longitude = longitude + 0.05 },
+                        new Geocoordinate { Latitude = latitude + 0.05, Longitude = longitude + 0.05 }
                     }
                 };
                 StateHasChanged();
             }, null, 3000, Timeout.Infinite);
-
-            return Task.CompletedTask;
         }
 
         private void Polygon_OnMouseUp(object sender, MouseEventArgs<BingMapPolygon> e)

@@ -15,7 +15,7 @@
     > .bing-map {
         display: inline-block;
         margin-top: 12px;
-        width: 100%;
+        width: calc(100% - 394px);
         height: 600px;
         max-width: 600px;
         position: relative;

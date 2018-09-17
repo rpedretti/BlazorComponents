@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RPedretti.Blazor.Shared\RPedretti.Blazor.Shared.csproj" />
-    <ProjectReference Include="..\RPedretti.Security\RPedretti.Security.csproj" />
   </ItemGroup>
 
 </Project>

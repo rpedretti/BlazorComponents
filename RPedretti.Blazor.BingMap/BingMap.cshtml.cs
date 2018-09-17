@@ -17,7 +17,7 @@ namespace RPedretti.Blazor.BingMap
     public partial class BingMapBase : BlazorComponent, IDisposable
     {
         #region Fields
-        private const string _mapNamespace = "rpedrettiBlazorComponents.bingMaps";
+        private const string _mapNamespace = "rpedrettiBlazorComponents.bingMaps.map";
         private BingMapEntityList _entities;
         private BingMapLayerList _layers;
         private ObservableCollection<IBingMapModule> _modules;
@@ -30,7 +30,7 @@ namespace RPedretti.Blazor.BingMap
 
         #region Methods
 
-        private async Task AddItem(BaseBingMapEntity baseBingMapEntity)
+        private async Task AddItemAsync(BaseBingMapEntity baseBingMapEntity)
         {
             try
             {
@@ -47,11 +47,11 @@ namespace RPedretti.Blazor.BingMap
             switch (e.ListChangedType)
             {
                 case ListChangedType.ItemAdded:
-                    AddItem(_entities[e.NewIndex]);
+                    AddItemAsync(_entities[e.NewIndex]);
                     break;
 
                 case ListChangedType.ItemChanged:
-                    UpdateItem(_entities[e.NewIndex]);
+                    UpdateItemAsync(_entities[e.NewIndex]);
                     break;
             }
         }
@@ -60,7 +60,7 @@ namespace RPedretti.Blazor.BingMap
         {
             try
             {
-                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.removeItem", Id, removed);
+                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.removeItem", Id, removed);
             }
             catch (Exception e)
             {
@@ -72,7 +72,7 @@ namespace RPedretti.Blazor.BingMap
         {
             try
             {
-                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.removeLayer", Id, removed);
+                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.removeLayer", Id, removed);
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@ namespace RPedretti.Blazor.BingMap
                 switch (e.ListChangedType)
                 {
                     case ListChangedType.ItemAdded:
-                        await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.addLayer", Id, _layers[e.NewIndex].Id);
+                        await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.addLayer", Id, _layers[e.NewIndex].Id);
                         break;
                     case ListChangedType.ItemChanged:
                         break;
@@ -110,11 +110,11 @@ namespace RPedretti.Blazor.BingMap
             }
         }
 
-        private async Task RemoveItem(BaseBingMapEntity baseBingMapEntity)
+        private async Task RemoveItemAsync(BaseBingMapEntity baseBingMapEntity)
         {
             try
             {
-                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.removeItem", Id, baseBingMapEntity);
+                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.removeItem", Id, baseBingMapEntity);
             }
             catch (Exception e)
             {
@@ -135,11 +135,11 @@ namespace RPedretti.Blazor.BingMap
             return true;
         }
 
-        private async Task UpdateItem(BaseBingMapEntity baseBingMapEntity)
+        private async Task UpdateItemAsync(BaseBingMapEntity baseBingMapEntity)
         {
             try
             {
-                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.updateItem", Id, baseBingMapEntity);
+                await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.updateItem", Id, baseBingMapEntity);
             }
             catch (Exception e)
             {
@@ -149,7 +149,17 @@ namespace RPedretti.Blazor.BingMap
 
         private void UpdateView(BingMapsViewConfig viewConfig)
         {
-            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.updateView", Id, viewConfig);
+            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.updateView", Id, viewConfig);
+        }
+
+        public async Task<Geocoordinate> GetCenterAsync()
+        {
+            return await JSRuntime.Current.InvokeAsync<Geocoordinate>($"{_mapNamespace}.getCenter", Id);
+        }
+
+        public async Task<LocationRectangle> GetBoundsAsync()
+        {
+            return await JSRuntime.Current.InvokeAsync<LocationRectangle>($"{_mapNamespace}.getBounds", Id);
         }
 
         #endregion Methods
@@ -284,7 +294,7 @@ namespace RPedretti.Blazor.BingMap
             if (!init)
             {
                 init = true;
-                JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.getMap", thisRef, Id, MapsConfig);
+                JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.getMap", thisRef, Id, MapsConfig);
             }
 
             _shouldRender = false;
@@ -303,7 +313,7 @@ namespace RPedretti.Blazor.BingMap
             MapLoaded = null;
 
             JSRuntime.Current.UntrackObjectRef(thisRef);
-            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.unloadMap", Id);
+            JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.unloadMap", Id);
         }
 
         [JSInvokable]

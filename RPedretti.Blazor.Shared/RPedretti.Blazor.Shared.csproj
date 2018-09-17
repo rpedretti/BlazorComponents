@@ -9,8 +9,4 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RPedretti.Security\RPedretti.Security.csproj" />
-  </ItemGroup>
-
 </Project>

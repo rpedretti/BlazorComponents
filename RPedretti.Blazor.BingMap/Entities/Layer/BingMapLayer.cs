@@ -13,7 +13,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Layer
     {
         #region Fields
 
-        private const string layerNamespace = "rpedrettiBlazorComponents.bingMaps.layer";
+        private const string layerNamespace = "rpedrettiBlazorComponents.bingMaps.map.layer";
         private readonly BingMapEntityList _items = new BingMapEntityList();
         private DotNetObjectRef thisRef;
 

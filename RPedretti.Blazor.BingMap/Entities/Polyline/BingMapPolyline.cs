@@ -7,7 +7,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polyline
 {
     public partial class BingMapPolyline : BaseBingMapEntity
     {
-        private const string _polylineNamespace = "rpedrettiBlazorComponents.bingMaps.polyline";
+        private const string _polylineNamespace = "rpedrettiBlazorComponents.bingMaps.map.polyline";
         private const string _polylineGet = _polylineNamespace + ".getPropertie";
         private const string clearEventsFunctionName = _polylineNamespace + ".clearEvents";
 

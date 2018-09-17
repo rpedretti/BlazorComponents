@@ -16,7 +16,8 @@ module.exports = {
         ]
     },
     entry: {
-        "bing-map_v1": "./ts/InitMap.ts"
+        "bing-map_v1": "./ts/InitMap.ts",
+        "bing-map-devtool": "./ts/DevTools.ts"
     },
     output: {
         path: path.join(__dirname, "/content/js"),

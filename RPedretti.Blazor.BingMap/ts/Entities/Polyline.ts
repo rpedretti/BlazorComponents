@@ -1,8 +1,7 @@
 import { DotNetEntity, DotNetPolyline } from "./DotNetEntityTypes";
 import { Dictionary } from "./../Collections";
 import { Helpers } from "./../Helpers";
-import * as _ from 'lodash';
-
+const _isEqual = require('lodash.isequal');
 
 export class Polyline {
     private _polylines = new Map<string, Microsoft.Maps.Polyline>();
@@ -83,7 +82,7 @@ export class Polyline {
     public update = (polyline: DotNetPolyline): number => {
         this.normalizePolyline(polyline);
         const originalPolyline = this._polylines.get(polyline.id);
-        if (originalPolyline && !_.isEqual(polyline.coordinates, JSON.parse(JSON.stringify(originalPolyline.getLocations())))) {
+        if (originalPolyline && !_isEqual(polyline.coordinates, JSON.parse(JSON.stringify(originalPolyline.getLocations())))) {
             this.updateLocations(polyline);
         }
 

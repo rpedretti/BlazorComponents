@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using RPedretti.Blazor.BingMap.Collections;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace RPedretti.Blazor.BingMap.Sample.Pages.PolyLinePage
 {
@@ -21,6 +22,8 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolyLinePage
         private BingMapPolyline polyLine;
         private Timer changePolylineTimer;
 
+        protected BingMap bingMap;
+
         public bool Loading { get; set; } = true;
 
         protected BingMapConfig MapConfig { get; set; } = new BingMapConfig
@@ -32,10 +35,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolyLinePage
                 BingMapTypes.Road,
                 BingMapTypes.BirdsEyes
             },
-            Center = new Geocoordinate { Latitude = 0, Longitude = 0 },
-            EnableHighDpi = true,
-            Zoom = 2,
-            ShowTrafficButton = true
+            EnableHighDpi = true
         };
 
         protected BingMapsViewConfig MapViewConfig { get; set; } = new BingMapsViewConfig();
@@ -46,18 +46,19 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolyLinePage
         public bool DoubleClick { get; set; }
         public bool Click { get; set; }
 
-        protected Task MapLoaded()
+        protected async Task MapLoaded()
         {
             Loading = false;
-            Task.Run(StateHasChanged);
+
+            var bounds = await bingMap.GetBoundsAsync();
 
             polyLine = new BingMapPolyline
             {
                 Coordinates = new BindingList<Location>
                 {
-                    new Location(10, 10),
-                    new Location(0, 0),
-                    new Location(10, -10),
+                    new Location(bounds.Center.Latitude + bounds.Height / 3f, bounds.Center.Longitude - bounds.Width / 3f),
+                    new Location(bounds.Center.Latitude, bounds.Center.Longitude),
+                    new Location(bounds.Center.Latitude + bounds.Height / 3f, bounds.Center.Longitude + bounds.Width / 3f),
                 },
                 Options = new BingMapPolylineOptions
                 {
@@ -75,13 +76,17 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PolyLinePage
 
             Entities.Add(polyLine);
 
-            changePolylineTimer = new Timer((o) =>
+            changePolylineTimer = new Timer(async (o) =>
             {
-                polyLine.Coordinates.Insert(1, new Location(4, 12));
+                var newBounds = await bingMap.GetBoundsAsync();
+                var latitude = newBounds.Center.Latitude;
+                var longitude = newBounds.Center.Longitude - newBounds.Height / 4f;
+
+                polyLine.Coordinates.Insert(1, new Location(latitude, longitude));
                 StateHasChanged();
             }, null, 3000, Timeout.Infinite);
 
-            return Task.CompletedTask;
+            StateHasChanged();
         }
 
         private void PolyLine_OnMouseUp(object sender, MouseEventArgs<BingMapPolyline> e)

@@ -1,17 +1,23 @@
-﻿using RPedretti.Blazor.BingMap.Collections;
+﻿using Newtonsoft.Json;
+using RPedretti.Blazor.BingMap.Collections;
 using RPedretti.Blazor.BingMap.Entities;
 using RPedretti.Blazor.BingMap.Entities.InfoBox;
 using RPedretti.Blazor.BingMap.Entities.Layer;
 using RPedretti.Blazor.BingMap.Entities.Pushpin;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.Extensions.Logging;
+using Blazor.Extensions.Logging;
 
 namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
 {
     public class PushpinPageBase : BaseComponent, IDisposable
     {
-        private int index = 2;
+        [Inject] ILogger<PushpinPageBase> logger { get; set; }
+        private int index = 0;
         private Random rnd = new Random();
 
         protected string BingMapId = $"bing-map-{Guid.NewGuid().ToString().Replace("-", "")}";
@@ -19,6 +25,8 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
         private InfoBox infobox;
         protected BingMapLayer layer;
         private bool infoAttached;
+
+        protected BingMap bingMap;
 
         protected BingMapConfig MapsConfig { get; set; } = new BingMapConfig
         {
@@ -29,10 +37,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
                 BingMapTypes.Road,
                 BingMapTypes.BirdsEyes
             },
-            Center = new Geocoordinate { Latitude = 0, Longitude = 0 },
-            EnableHighDpi = true,
-            Zoom = 2,
-            ShowTrafficButton = true
+            EnableHighDpi = true
         };
 
         protected BingMapsViewConfig MapsViewConfig { get; set; } = new BingMapsViewConfig();
@@ -57,51 +62,30 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
                 await infobox.AttachMap(BingMapId);
                 infoAttached = true;
             }
-
-            Entities.AddRange(new BingMapPushpin[] {
-                new BingMapPushpin() { Id = 0.ToString(), Center = new Geocoordinate() },
-                new BingMapPushpin() { Id = 1.ToString(), Center = new Geocoordinate() { Latitude = 1 } },
-                new BingMapPushpin() { Id = 2.ToString(), Center = new Geocoordinate() { Latitude = 2 } }
-            });
-
             StateHasChanged();
         }
 
-        public Task AddPushpin()
+        public async Task AddPushpin()
         {
-            var pushpins = new List<BingMapPushpin>();
-            for (int i = 0; i < 3; i++)
+            var bounds = await bingMap.GetBoundsAsync();
+            var pushpins = await DevToolService.GetPushpins(3, bounds, new PushpinOptions
             {
+                Draggable = true,
+                Icon = "https://www.bingmapsportal.com/Content/images/poi_custom.png"
+            });
 
+            pushpins.ForEach(pushpin =>
+            {
                 index++;
-
-                var latitude = rnd.NextDouble() * -180 + 90;
-                var longitude = rnd.NextDouble() * -360 + 180;
-
-                var pushpin = new BingMapPushpin
-                {
-                    Id = index.ToString(),
-                    Center = new Geocoordinate { Latitude = latitude, Longitude = longitude },
-                    Options = new PushpinOptions
-                    {
-                        Text = index.ToString(),
-                        Draggable = true,
-                        Icon = "https://www.bingmapsportal.com/Content/images/poi_custom.png"
-                    }
-                };
-
+                pushpin.Id = index.ToString();
+                pushpin.Options.Text = index.ToString();
                 pushpin.OnMouseOver += Pushpin_OnMouseOver;
                 pushpin.OnMouseOut += Pushpin_OnMouseOut;
                 pushpin.OnDragEnd += Pushpin_OnDragEnd;
                 pushpin.OnDragStart += Pushpin_OnDragStart;
-
-                pushpins.Add(pushpin);
-            }
+            });
 
             Entities.AddRange(pushpins);
-
-            return Task.CompletedTask;
-
         }
 
         private async void Pushpin_OnDragStart(object sender, MouseEventArgs<BingMapPushpin> e)
@@ -114,7 +98,7 @@ namespace RPedretti.Blazor.BingMap.Sample.Pages.PushpinPage
 
         private void Pushpin_OnDragEnd(object sender, MouseEventArgs<BingMapPushpin> e)
         {
-            StateHasChanged();
+            (sender as BingMapPushpin).Center = e.Target.Center;
         }
 
         public void ToggleVisibility(BingMapPushpin pushpin)

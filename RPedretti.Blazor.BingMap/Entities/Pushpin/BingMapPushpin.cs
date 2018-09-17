@@ -5,7 +5,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Pushpin
     public partial class BingMapPushpin : BaseBingMapEntity
     {
         #region Fields
-        private const string _pushpinNamespace = "rpedrettiBlazorComponents.bingMaps.pushpin";
+        private const string _pushpinNamespace = "rpedrettiBlazorComponents.bingMaps.map.pushpin";
         private const string _pushpinRemove = _pushpinNamespace + ".remove";
         private const string _pushpinGet = _pushpinNamespace + ".getPropertie";
 

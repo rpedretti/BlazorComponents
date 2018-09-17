@@ -16,7 +16,7 @@ namespace RPedretti.Blazor.BingMap.Modules.Directions
         #region Properties
 
         private string InitFunctionName =>
-            "rpedrettiBlazorComponents.bingMaps.modules.directions.init";
+            "rpedrettiBlazorComponents.bingMaps.map.modules.directions.init";
 
         public string InputPanelId { get; set; }
 

@@ -8,8 +8,8 @@ namespace RPedretti.Blazor.BingMap.Entities.InfoBox
     {
         private string _htmlContent;
         private InfoboxOptions _options;
-        private const string _mapsNamespace = "rpedrettiBlazorComponents.bingMaps";
-        private const string _infoboxNamespace = "rpedrettiBlazorComponents.bingMaps.infobox";
+        private const string _mapsNamespace = "rpedrettiBlazorComponents.bingMaps.map";
+        private const string _infoboxNamespace = "rpedrettiBlazorComponents.bingMaps.map.infobox";
         private const string _infoboxRegister = _infoboxNamespace + ".register";
         private const string _infoboxGet = _infoboxNamespace + ".get";
         private const string _infoboxSet = _infoboxNamespace + ".set";

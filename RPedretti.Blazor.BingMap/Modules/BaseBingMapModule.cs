@@ -9,7 +9,7 @@ namespace RPedretti.Blazor.BingMap.Modules
 
         protected async Task InitModuleAsync(string mapId, string moduleName, string initFuncName = null, object initFuncParams = null)
         {
-            await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.loadModule",
+            await JSRuntime.Current.InvokeAsync<object>("rpedrettiBlazorComponents.bingMaps.map.loadModule",
                 mapId, moduleName, initFuncName, initFuncParams ?? new { });
         }
 

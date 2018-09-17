@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <PackageId>RPedretti.Blazor.BingMaps</PackageId>
-    <Version>0.0.9-preview</Version>
+    <PackageId>RPedretti.Blazor.BingMap</PackageId>
+    <Version>0.0.10-preview</Version>
     <Authors>Rafael Pedretti</Authors>
     <Company>RJPSoft</Company>
 
@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ts\DevTools.ts" />
     <None Remove="ts\DotNetEntityTypes.ts" />
     <None Remove="ts\Entities\Infobox.ts" />
     <None Remove="ts\Helpers.ts" />
@@ -51,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <WebpackInputs Remove="ts\DevTools.ts" />
     <WebpackInputs Remove="ts\DotNetEntityTypes.ts" />
     <WebpackInputs Remove="ts\Entities\Infobox.ts" />
     <WebpackInputs Remove="ts\Helpers.ts" />
@@ -64,6 +66,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ts\Collections.ts" />
+    <TypeScriptCompile Include="ts\DevTools.ts" />
     <TypeScriptCompile Include="ts\Entities\DotNetEntityTypes.ts" />
     <TypeScriptCompile Include="ts\Entities\Infobox.ts" />
     <TypeScriptCompile Include="ts\Helpers.ts" />

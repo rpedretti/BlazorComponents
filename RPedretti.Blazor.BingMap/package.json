@@ -6,11 +6,13 @@
     "build": "webpack-cli"
   },
   "dependencies": {
-    "lodash": "4.17.10"
+    "lodash.isequal": "4.5.0",
+    "uuid": "3.3.2"
   },
   "devDependencies": {
     "@types/emscripten": "0.0.31",
     "@types/lodash": "4.14.116",
+    "@types/uuid": "3.4.4",
     "ts-loader": "^4.4.2",
     "typescript": "^2.8.3",
     "webpack": "^4.16.3",

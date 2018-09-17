@@ -8,7 +8,7 @@ namespace RPedretti.Blazor.BingMap.Entities.Polygon
 {
     public partial class BingMapPolygon : BaseBingMapEntity
     {
-        private const string _polygonNamespace = "rpedrettiBlazorComponents.bingMaps.polygon";
+        private const string _polygonNamespace = "rpedrettiBlazorComponents.bingMaps.map.polygon";
         private const string _polygonGet = _polygonNamespace + ".getPropertie";
         private const string clearEventsFunctionName = _polygonNamespace + ".clearEvents";
 
