@@ -1,13 +1,69 @@
-﻿@inherits CarouselBase
+﻿@typeparam TItem
 
-<div class="carousel">
-    <div class="carousel-container">
-        <div class="carousel-content">
-
+@{ RenderFragment<CarouselContext> defaultTemplate = c => @<span>@c.Item</span>; }
+<div onclick="event.stopPropagation(); event.preventDefault();">
+    <div id="@Id" class="@($"carousel{(_slide ? " slide" : null)}")" data-ride="carousel" data-interval="@CycleTime">
+        <ul class="carousel-indicators">
+            @for (int i = 0; i < Items.Count(); i++)
+            {
+                var curr = i;
+                <li data-target="#@Id" data-slide-to="@(i+1)" class="@(curr + 1 == currentIndex ? "active" : null)"></li>
+            }
+        </ul>
+        <div class="carousel-inner">
+            @for (int i = 0; i < Items.Count(); i++)
+            {
+                var ctx = new CarouselContext { Index = i, Item = Items.ElementAt(i) };
+                var curr = i;
+                <div class="@($"carousel-item{(curr+1 == currentIndex ? " active" : null)}")">
+                    @(ItemTemplate?.Invoke(ctx) ?? defaultTemplate(ctx))
+                </div>
+            }
         </div>
-    </div>
-    <div class="controls">
-        <button role="link" aria-label="próximo" disabled="@(!HasNext)" onclick="@(() => GoToNext())" class="next"><i class="icon_seta_right"></i></button>
-        <button role="link" aria-label="anterior" disabled="@(!HasPrev)" onclick="@(() => GoToPrev())" class="prev"><i class="icon_seta"></i></button>
+        <a class="carousel-control-prev" href="#@Id" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#@Id" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
     </div>
 </div>
+
+
+@functions {
+private bool _slide;
+private int _cycleTime;
+private int currentIndex = 1;
+
+[Parameter] protected string Id { get; set; } = $"carousel_{Guid.NewGuid()}";
+[Parameter] protected IEnumerable<TItem> Items { get; set; } = new TItem[0];
+[Parameter] protected RenderFragment<CarouselContext> ItemTemplate { get; set; }
+[Parameter] protected string Classes { get; set; }
+[Parameter]
+protected int CycleTime
+{
+    get => _cycleTime;
+    set
+    {
+        _slide = value > 0;
+        _cycleTime = value;
+    }
+}
+
+public void GoToNext()
+{
+    StateHasChanged();
+}
+
+public void GoToPrev()
+{
+    StateHasChanged();
+}
+
+public class CarouselContext
+{
+    public int Index { get; set; }
+    public TItem Item { get; set; }
+    public bool Active { get; set; }
+}
+}

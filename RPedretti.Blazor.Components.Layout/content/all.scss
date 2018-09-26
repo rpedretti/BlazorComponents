@@ -1,9 +1,9 @@
-﻿@import 
-    "_animations.scss",
-    "_mixins.scss",
-    "_shared.scss",
-    "../Accordeon/_accordeon.scss",
-    "../DynamicTable/_dynamic-table.scss",
-    "../DynamicTable/_dynamic-grouped-table.scss",
-    "../PagedGrid/_paged-grid.scss",
-    "../Pager/_pager.scss";
+﻿@import "_animations.scss";
+@import "_mixins.scss";
+@import "_shared.scss";
+@import "../Accordeon/_accordeon.scss";
+@import "../Carousel/_carousel.scss";
+@import "../DynamicTable/_dynamic-table.scss";
+@import "../DynamicTable/_dynamic-grouped-table.scss";
+@import "../PagedGrid/_paged-grid.scss";
+@import "../Pager/_pager.scss";

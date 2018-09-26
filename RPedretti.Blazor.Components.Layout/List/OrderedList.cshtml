@@ -1,0 +1,18 @@
+﻿@typeparam TItem
+
+@if (Items != null)
+{
+<ol>
+    @foreach (var item in Items)
+    {
+        <li>
+            @ItemTemplate(item)
+        </li>
+    }
+</ol>
+}
+
+@functions  {
+    [Parameter] protected RenderFragment<TItem> ItemTemplate { get; set; }
+    [Parameter] protected IEnumerable<TItem> Items { get; set; }
+}

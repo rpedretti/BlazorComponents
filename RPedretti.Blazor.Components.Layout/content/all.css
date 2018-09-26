@@ -32,6 +32,9 @@
   .accordeon > .accordeon-content.-expand {
     max-height: 3000px; }
 
+.carousel {
+  width: 100%; }
+
 .dynamic-table > .table .-hidden {
   display: none; }
 

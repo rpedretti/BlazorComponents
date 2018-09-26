@@ -9,6 +9,7 @@
                    tabindex="0"
                    role="button"
                    aria-label="first page"
+                   onkeydown="@(k => HandleKeyPress(k, FirstPage))"
                    onclick="@FirstPage">&lt;&lt;</a>
             </li>
             <li class="page-item">
@@ -16,26 +17,30 @@
                    tabindex="0"
                    role="button"
                    aria-label="previous page group"
+                   onkeydown="@(k => HandleKeyPress(k, PreviousPagination))"
                    onclick="@PreviousPagination"></i>
             </li>
         }
-        <li class="@($"page-item {(CurrentPage == 1 ? "disabled" : null)}")"
-            tabindex="0"
-            role="button"
-            aria-disabled="@(CurrentPage == 1)"
-            aria-label="previous page">
-            <a class="page-link" onclick="@PreviousPage">&lt;</a>
+        <li class="@($"page-item {(CurrentPage == 1 ? "disabled" : null)}")">
+            <a class="page-link"
+               role="button"
+               aria-disabled="@(CurrentPage == 1)"
+               aria-label="previous page"
+               tabindex="0"
+               onkeydown="@(k => HandleKeyPress(k, PreviousPage))"
+               onclick="@PreviousPage">&lt;</a>
         </li>
 
         @for (int i = 0; i < Indicators.Length; i++)
         {
             var indicator = Indicators[i];
             <li class="@($"page-item {(indicator.Active ? "active" : null)} {(!indicator.Visible ? "-hidden" : null)}")">
-                <a class="page-link" 
+                <a class="page-link"
                    tabindex="0"
                    role="button"
                    aria-hidden="@(!indicator.Visible ? "true" : null)"
                    aria-label="@($"page {indicator.Content}{(indicator.Active ? ", atual" : null)}")"
+                   onkeydown="@(k => HandleKeyPress(k, () => OnRequestPage?.Invoke(indicator.Page)))"
                    onclick="@(() => OnRequestPage?.Invoke(indicator.Page))">@indicator.Content</a>
             </li>
         }
@@ -46,6 +51,7 @@
                role="button"
                aria-disabled="@(CurrentPage == PageCount)"
                aria-label="next page"
+               onkeydown="@(k => HandleKeyPress(k, NextPage))"
                onclick="@NextPage">&gt;</a>
         </li>
         @if (ShowLast)
@@ -55,6 +61,7 @@
                    tabindex="0"
                    role="button"
                    aria-label="next page group"
+                   onkeydown="@(k => HandleKeyPress(k, NextPagination))"
                    onclick="@NextPagination"></i>
             </li>
             <li class="page-item">
@@ -62,6 +69,7 @@
                    tabindex="0"
                    role="button"
                    aria-label="last page"
+                   onkeydown="@(k => HandleKeyPress(k, LastPage))"
                    onclick="@LastPage">&gt;&gt;</a>
             </li>
         }

@@ -32,7 +32,7 @@ namespace RPedretti.Blazor.Components.Sample.Pages.Movies
 
         protected bool Loading { get; set; }
 
-        protected List<MoviePosterModel> Movies { get; set; }
+        protected List<MoviePosterModel> Movies { get; set; } = new List<MoviePosterModel>();
 
         protected int MoviesCount { get; set; }
 
@@ -151,9 +151,9 @@ namespace RPedretti.Blazor.Components.Sample.Pages.Movies
             _localStorage.RemoveItem("page");
         }
 
-        public void GoToMovie(string id)
+        public void GoToMovie(MoviePosterModel model)
         {
-            Console.WriteLine($"Olar filme {id}");
+            Console.WriteLine($"Olar filme {model.Title} ({model.Id})");
         }
 
         public async Task SearchAsync()

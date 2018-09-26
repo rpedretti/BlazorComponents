@@ -1,4 +1,5 @@
-﻿@inherits DynamicTableBase
+﻿@typeparam TItem
+@inherits DynamicTableBase
 @using RPedretti.Blazor.Components.Spinner
 
 <div class="dynamic-table">
@@ -26,12 +27,20 @@
             <tbody>
                 @foreach (var row in Rows)
                 {
-                    <tr tabindex="0" class="table-row @row.Classes">
-                        @for (int i = 0; i < row.Cells.Count(); i++)
+                    <tr tabindex="0" class="table-row @row.Classes" onclick="@(() => OnRowClick?.Invoke(row))">
+                        @for (int i = 0; i < Columns.Count(); i++)
                         {
                             var header = Headers.ElementAt(i);
-                            var rowContent = row.Cells.ElementAt(i);
-                            <td class="@($"table-cell {rowContent.Classes}{(header.Hidden ? " -hidden" : null)}")">@rowContent.Formatter()</td>
+                            var column = Columns.ElementAt(i);
+                            <td class="@($"table-cell {column.Classes}{(header.Hidden ? " -hidden" : null)}")">
+                                @if (column.Template != null)
+                                {
+                                    @column.Template(row.Context);
+                                }
+                                else {
+                                    @row.Context.ToString();
+                                }
+                            </td>
                         }
                     </tr>
                 }
@@ -43,3 +52,9 @@
         <Spinner Centered Active="@Loading" Size="SpinnerSize.MEDIUM"></Spinner>
     }
 </div>
+
+@functions {
+    [Parameter] IEnumerable<DynamicTableRow<TItem>> Rows { get; set; } = new DynamicTableRow<TItem>[] { };
+    [Parameter] IEnumerable<DynamicTableColumn<TItem>> Columns { get; set; } = new DynamicTableColumn<TItem>[] { };
+    [Parameter] Func<DynamicTableRow<TItem>, Task> OnRowClick { get; set; }
+}

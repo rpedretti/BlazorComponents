@@ -1,8 +1,11 @@
 ﻿using Microsoft.JSInterop;
 using RPedretti.Blazor.Components.Sample.Domain;
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Blazor.Extensions.Logging;
 
 namespace RPedretti.Blazor.Components.Sample.Services
 {
@@ -15,14 +18,16 @@ namespace RPedretti.Blazor.Components.Sample.Services
         private const string key = "5cea5c6";
 
         private readonly HttpClient httpClient;
+        private readonly ILogger<ImdbService> logger;
 
         #endregion Fields
 
         #region Constructors
 
-        public ImdbService(HttpClient httpClient)
+        public ImdbService(HttpClient httpClient, ILogger<ImdbService> logger)
         {
             this.httpClient = httpClient;
+            this.logger = logger;
         }
 
         #endregion Constructors
@@ -36,11 +41,19 @@ namespace RPedretti.Blazor.Components.Sample.Services
 
         public async Task<MovieSearchResult> FindMoviesByPattern(string pattern, int page, CancellationToken cancelationToken)
         {
-            var responseJson = await httpClient.GetAsync($"{_baseUrl}&s={pattern}&page={page}", cancelationToken);
-            var content = await responseJson.Content.ReadAsStringAsync();
-            var movies = Json.Deserialize<MovieSearchResult>(content);
+            try
+            {
+                var responseJson = await httpClient.GetAsync($"{_baseUrl}&s={pattern}&page={page}", cancelationToken);
+                var content = await responseJson.Content.ReadAsStringAsync();
+                var movies = Json.Deserialize<MovieSearchResult>(content);
 
-            return movies;
+                return movies;
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e);
+                throw;
+            }
         }
 
         public async Task<Movie> GetMovieById(string id)

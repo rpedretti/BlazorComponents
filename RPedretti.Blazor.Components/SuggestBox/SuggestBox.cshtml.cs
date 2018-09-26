@@ -21,6 +21,7 @@ namespace RPedretti.Blazor.Components.SuggestBox
         private DebounceDispatcher queryDispatcher = new DebounceDispatcher();
 
         private DotNetObjectRef thisRef;
+        protected ElementRef input;
 
         #endregion Fields
 

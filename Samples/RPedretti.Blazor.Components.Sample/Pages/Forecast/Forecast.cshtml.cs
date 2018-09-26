@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
 using RPedretti.Blazor.Components.Layout.DynamicTable;
+using RPedretti.Blazor.Components.Sample.Domain;
 using RPedretti.Blazor.Components.Sample.Services;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace RPedretti.Blazor.Components.Sample.Pages
 
         [Inject]
         private IForecastService ForecastService { get; set; }
+        protected List<DynamicTableColumn<WeatherForecast>> Columns { get; set; }
 
         #endregion Properties
 
@@ -33,36 +35,13 @@ namespace RPedretti.Blazor.Components.Sample.Pages
 
             var forecasts = await ForecastService.GetForecastAsync();
 
-            Forecasts = forecasts.Select(f =>
-             {
-                 var props = new List<DynamicTableCell>
-                {
-                    new DynamicTableCell { Content = f.Date, Classes = "-l" },
-                    new DynamicTableCell { Content = f.Temperature, Classes = "-l" },
-                    new DynamicTableCell { Content = f.RainChangePercent, Classes = "-r" },
-                    new DynamicTableCell { Content = f.RainAmmount, Classes = "-r" }
-                };
-
-                 return new DynamicTableRow { Cells = props };
-             }).ToList();
+            Forecasts = forecasts.Select(f => new DynamicTableRow<WeatherForecast> { Context = f }).ToList();
 
             GroupedForecast = forecasts.GroupBy(f => f.Date.Date).Select(g =>
             {
-                var group = new DynamicTableGroup
+                var group = new DynamicTableGroup<WeatherForecast>
                 {
-                    Title = $"{g.Key.ToShortDateString()} -> Avg temp (C): {Math.Round(g.Average(f => f.Temperature), 1, MidpointRounding.ToEven)}",
-                    Rows = g.Select(f =>
-                    {
-                        var props = new List<DynamicTableCell>
-                        {
-                            new DynamicTableCell { Content = f.Date, Classes = "forecast-date -l" },
-                            new DynamicTableCell { Content = f.Temperature, Classes = "-l" },
-                            new DynamicTableCell { Content = f.RainChangePercent, Classes = "-r" },
-                            new DynamicTableCell { Content = f.RainAmmount, Classes = "-r" }
-                        };
-
-                        return new DynamicTableRow { Cells = props };
-                    }).ToList()
+                    Rows = g.Select(f => new DynamicTableRow<WeatherForecast> { Context = f }).ToList()
                 };
 
                 return group;
@@ -73,9 +52,9 @@ namespace RPedretti.Blazor.Components.Sample.Pages
 
         #endregion Methods
 
-        protected List<DynamicTableRow> Forecasts { get; set; }
+        protected List<DynamicTableRow<WeatherForecast>> Forecasts { get; set; }
 
-        protected List<DynamicTableGroup> GroupedForecast { get; set; }
+        protected List<DynamicTableGroup<WeatherForecast>> GroupedForecast { get; set; }
 
         protected List<DynamicTableHeader> Headers { get; set; }
 
@@ -89,24 +68,6 @@ namespace RPedretti.Blazor.Components.Sample.Pages
         {
             await GetForecastAsync();
             StateHasChanged();
-        }
-
-        protected async Task Sort(string sortId, bool isAsc)
-        {
-            Loading = true;
-
-            await Task.Delay(1500);
-
-            if (isAsc)
-            {
-                Forecasts = Forecasts.OrderBy(r => r.Cells.ElementAt(int.Parse(sortId)).Content).ToList();
-            }
-            else
-            {
-                Forecasts = Forecasts.OrderByDescending(r => r.Cells.ElementAt(int.Parse(sortId)).Content).ToList();
-            }
-
-            Loading = false;
         }
 
         public bool Grouped
@@ -129,6 +90,54 @@ namespace RPedretti.Blazor.Components.Sample.Pages
         public void ToggleColumn(int index)
         {
             Headers.ElementAt(index).Hidden = !Headers.ElementAt(index).Hidden;
+        }
+
+        protected async Task Sort(string sortId, bool isAsc)
+        {
+            Loading = true;
+
+            await Task.Delay(1500);
+
+            var column = Columns.ElementAt(int.Parse(sortId));
+
+            if (isAsc)
+            {
+                switch (column.SortProp)
+                {
+                    case nameof(WeatherForecast.Date):
+                        Forecasts = Forecasts.OrderBy(r => r.Context.Date).ToList();
+                        break;
+                    case nameof(WeatherForecast.RainAmmount):
+                        Forecasts = Forecasts.OrderBy(r => r.Context.RainAmmount).ToList();
+                        break;
+                    case nameof(WeatherForecast.RainChangePercent):
+                        Forecasts = Forecasts.OrderBy(r => r.Context.RainChangePercent).ToList();
+                        break;
+                    case nameof(WeatherForecast.Temperature):
+                        Forecasts = Forecasts.OrderBy(r => r.Context.Temperature).ToList();
+                        break;
+                }
+            }
+            else
+            {
+                switch (column.SortProp)
+                {
+                    case nameof(WeatherForecast.Date):
+                        Forecasts = Forecasts.OrderByDescending(r => r.Context.Date).ToList();
+                        break;
+                    case nameof(WeatherForecast.RainAmmount):
+                        Forecasts = Forecasts.OrderByDescending(r => r.Context.RainAmmount).ToList();
+                        break;
+                    case nameof(WeatherForecast.RainChangePercent):
+                        Forecasts = Forecasts.OrderByDescending(r => r.Context.RainChangePercent).ToList();
+                        break;
+                    case nameof(WeatherForecast.Temperature):
+                        Forecasts = Forecasts.OrderByDescending(r => r.Context.Temperature).ToList();
+                        break;
+                }
+            }
+
+            Loading = false;
         }
     }
 }

@@ -1,7 +1,8 @@
 import { DotNetEntity, DotNetPushpin } from "./DotNetEntityTypes";
 import { Dictionary } from "./../Collections";
 import { Helpers } from "./../Helpers";
-const _isEqual = require('lodash.isequal');
+import { isEqual } from 'lodash.isequal';
+//const _isEqual = require('lodash.isequal');
 
 export class Pushpin {
     private _pushpins = new Map<string, Microsoft.Maps.Pushpin>();
@@ -80,7 +81,7 @@ export class Pushpin {
     public update = (pushpin: DotNetPushpin) => {
         this.normalizePushpin(pushpin);
         const originalPushpin = this._pushpins.get(pushpin.id);
-        if (originalPushpin && !_isEqual(pushpin.center, JSON.parse(JSON.stringify(originalPushpin.getLocation())))) {
+        if (originalPushpin && !isEqual(pushpin.center, JSON.parse(JSON.stringify(originalPushpin.getLocation())))) {
             this.updateLocation(pushpin);
         }
 

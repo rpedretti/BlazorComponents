@@ -1,4 +1,5 @@
-﻿@inherits PagedGridBase
+﻿@typeparam TItem
+@inherits PagedGridBase
 @using RPedretti.Blazor.Components.Spinner
 
 <div class="paged-grid">
@@ -13,8 +14,14 @@
     }
     @if (HasContent && !Loading)
     {
-        <ol tabindex="0" aria-label="@A11yLabel" aria-required="false" class="movies">
-            @ChildContent
+        <ol tabindex="0" aria-label="@A11yLabel" aria-required="false" class="@ListClasses">
+            @for (var i = 0; i < Items.Count(); i++)
+            {
+                var item = Items.ElementAtOrDefault(i);
+                <li class="@ItemClasses">
+                    @ItemTemplate(new PagedGridContext { Index = i, Item = item })
+                </li>
+            }
         </ol>
     }
     else if (Loading)
@@ -23,6 +30,20 @@
     }
     else if (!HasContent)
     {
-        <p>@NoContentMessage</p>
+        <p>@NoContentTemplate</p>
     }
 </div>
+
+@functions {
+[Parameter] IEnumerable<TItem> Items { get; set; }
+[Parameter] RenderFragment<PagedGridContext> ItemTemplate { get; set; }
+[Parameter] RenderFragment NoContentTemplate { get; set; }
+[Parameter] string ListClasses { get; set; }
+[Parameter] string ItemClasses { get; set; }
+
+public class PagedGridContext
+{
+    public TItem Item { get; set; }
+    public int Index { get; set; }
+}
+}

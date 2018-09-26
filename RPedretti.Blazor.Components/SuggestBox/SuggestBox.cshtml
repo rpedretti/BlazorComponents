@@ -4,6 +4,7 @@
 <div data-widget="acessible-suggest" class="@($"suggest-box{(!LoadingSuggestion && OpenSuggestion ? " -open" : null)}")">
     <div class="sb-input">
         <input type="text"
+               ref="input"
                id="@SuggestBoxId"
                autocomplete="off"
                class="form-control"

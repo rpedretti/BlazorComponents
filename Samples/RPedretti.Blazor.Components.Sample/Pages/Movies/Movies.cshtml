@@ -1,6 +1,7 @@
 ﻿@page "/movies"
 @inherits MoviesBase
-@using RPedretti.Blazor.Components.Layout.Pager
+@using RPedretti.Blazor.Components.Sample.Models;
+@using RPedretti.Blazor.Components.Layout.PagedGrid;
 
 <div class="input-group mb-3">
     <input type="text"
@@ -21,23 +22,26 @@
 
 <h1>Movies (@MoviesCount)</h1>
 
+@{ RenderFragment<PagedGrid<MoviePosterModel>.PagedGridContext> template = c =>
+    @<MoviePoster Movie="@(c.Item)"
+                  A11yRole="listitem"
+                  A11ySetSize="@MoviesCount"
+                  A11yPosInSet="@((CurrentPage - 1) * 10 + c.Index + 1)"
+                  A11yLabel="@($"{c.Item.Title}{(c.Item.Plot != null ? ", " + c.Item.Plot : null)}")"
+                  OnClick="@(() => GoToMovie(c.Item))" />;
+}
+
 <PagedGrid MaxIndicators="3"
            SmallPager
+           TItem="MoviePosterModel"
+           Items="@Movies"
+           ItemTemplate="@template"
+           ListClasses="movies"
+           ItemClasses="movie-poster"
            A11yLabel="Movies"
            Loading="@Loading"
            HasContent="@HasContent"
            CurrentPage="@CurrentPage"
            PageCount="@PageCount"
            OnRequestPage="@RequestPage">
-    @for (int i = 0; i < Movies.Count; i++)
-    {
-        var index = i;
-        var movie = Movies[index];
-        <MoviePoster Movie="@movie"
-                     A11yRole="listitem"
-                     A11ySetSize="@MoviesCount"
-                     A11yPosInSet="@((CurrentPage - 1) * 10 + index + 1)"
-                     A11yLabel="@($"{movie.Title}{(movie.Plot != null ? ", " + movie.Plot : null)}")"
-                     OnClick="@(() => GoToMovie(movie.Id))" />
-    }
 </PagedGrid>

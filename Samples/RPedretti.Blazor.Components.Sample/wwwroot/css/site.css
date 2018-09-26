@@ -199,6 +199,7 @@ app > .spinner-wrapper {
     grid-row-gap: 12px;
     grid-column-gap: 4px; }
     .paged-grid .movies > .movie-poster {
+      list-style: none;
       justify-self: center; }
 
 .sensors-ambientlight {

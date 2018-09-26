@@ -1,0 +1,10 @@
+﻿@using RPedretti.Blazor.Components.Layout.Carousel
+@page "/carousel"
+
+@{ RenderFragment<Carousel<string>.CarouselContext> template = c => @<div style="height: 300px; width: 100%; background-color: rgba(255, 0, 0, .8)">@c.Item</div>; }
+
+<Carousel TItem="string"
+          Id="myCarousel"
+          ItemTemplate="@template"
+          CycleTime="600"
+          Items="@(new string[] { "1", "2", "4", "8", "16"})" />

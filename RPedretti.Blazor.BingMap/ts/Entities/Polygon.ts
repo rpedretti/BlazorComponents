@@ -1,7 +1,8 @@
 import { DotNetEntity, DotNetPolygon } from "./DotNetEntityTypes";
 import { Dictionary } from "./../Collections";
 import { Helpers } from "./../Helpers";
-const _isEqual = require('lodash.isequal');
+import { isEqual } from 'lodash.isequal';
+//const _isEqual = require('lodash.isequal');
 
 export class Polygon {
     private _polygons = new Map<string, Microsoft.Maps.Polygon>();
@@ -104,9 +105,9 @@ export class Polygon {
         if (c.length > 0) {
             c.push(c[0]);
         }
-        if (!_isEqual(c, JSON.parse(JSON.stringify(originalPolygon.getLocations())))) {
+        if (!isEqual(c, JSON.parse(JSON.stringify(originalPolygon.getLocations())))) {
             this.updateLocations(polygon);
-        } else if (!_isEqual(polygon.rings, JSON.stringify(originalPolygon.getRings()))) {
+        } else if (!isEqual(polygon.rings, JSON.stringify(originalPolygon.getRings()))) {
             this.updateRings(polygon);
         } else if (polygon.options) {
             this.updateOptions(polygon);

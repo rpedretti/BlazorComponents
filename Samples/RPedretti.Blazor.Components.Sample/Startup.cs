@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using RPedretti.Blazor.Components.Sample.Managers;
 using RPedretti.Blazor.Components.Sample.Services;
 using RPedretti.Blazor.Sensors.Extensions;
+using Microsoft.Extensions.Logging;
+using Blazor.Extensions.Logging;
 
 namespace RPedretti.Blazor.Components.Sample
 {
@@ -28,6 +30,10 @@ namespace RPedretti.Blazor.Components.Sample
             services.AddStorage();
             services.AddAmbientLightSensor();
             services.AddGeolocationSensor();
+            services.AddLogging(builder => builder
+                .AddBrowserConsole()
+                .SetMinimumLevel(LogLevel.Trace)
+            );
         }
 
         #endregion Methods

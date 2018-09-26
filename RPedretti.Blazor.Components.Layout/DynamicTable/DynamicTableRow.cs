@@ -2,12 +2,12 @@
 
 namespace RPedretti.Blazor.Components.Layout.DynamicTable
 {
-    public class DynamicTableRow
+    public class DynamicTableRow<T>
     {
         #region Properties
 
-        public IEnumerable<DynamicTableCell> Cells { get; set; }
         public string Classes { get; set; }
+        public T Context { get; set; }
 
         #endregion Properties
     }

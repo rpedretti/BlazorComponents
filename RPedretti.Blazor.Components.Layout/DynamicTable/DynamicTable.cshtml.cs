@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.AspNetCore.Blazor.Builder;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,12 +16,10 @@ namespace RPedretti.Blazor.Components.Layout.DynamicTable
         #endregion Fields
 
         #region Properties
-
         [Parameter] protected string Classes { get; set; }
         protected DynamicTableHeader CurrentOrdered { get; set; }
         [Parameter] protected IEnumerable<DynamicTableHeader> Headers { get; set; }
         [Parameter] protected bool Loading { get; set; }
-        [Parameter] protected IEnumerable<DynamicTableRow> Rows { get; set; }
         [Parameter] protected Func<string, bool, Task> SortRequest { get; set; }
 
         #endregion Properties
