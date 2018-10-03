@@ -1,5 +1,6 @@
 Param(
 	[switch]$Increment,
+	[switch]$Preview,
 	[string]$Path
 )
 
@@ -28,13 +29,12 @@ if ($Increment) {
 	$End = $Parts[2].SPlit("-")
 
 	[int]$Minor = $End[0]
-	[string]$Preview = $End[1]
 
 	$Minor = $Minor + 1
 	$Updated = "${Major}.${Middle}.${Minor}"
 
 	if ($Preview) {
-		$Updated = "${Updated}-${Preview}"
+		$Updated = "${Updated}-preview"
 	}
 	
 	$XmlDocument.Project.PropertyGroup.Version = $Updated

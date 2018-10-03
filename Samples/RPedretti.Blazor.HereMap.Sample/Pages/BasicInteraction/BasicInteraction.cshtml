@@ -1,0 +1,35 @@
+﻿@page "/basic-interaction"
+@page "/"
+@using RPedretti.Blazor.HereMap.Entities;
+@using RPedretti.Blazor.HereMap.Extensions;
+@using System.Collections.ObjectModel;
+
+<div class="index-page">
+<HereMap Id="myMap"
+         ref="hereMap"
+         Options="@Options"
+         Modules="@Modules"
+         AppId="jEO4XTOHuvWvrjSpynlC"
+         AppCode="F1Zx_ZTztf7uCKGRLq_PNw"
+         MapLoaded="@MapLoaded"/>
+</div>
+
+@functions {
+    private HereMap hereMap;
+
+    MapOptions Options = new MapOptions {
+        Center = new Point { Latitude = -22.9071, Longitude = -47.0632 },
+        Zoom = 10
+    };
+
+    ObservableCollection<HereMapModule> Modules = new ObservableCollection<HereMapModule> {
+        HereMapModule.Ui,
+        HereMapModule.Behaviours
+    };
+
+    private async Task MapLoaded()
+    {
+        await hereMap.AddDefaultBehaviour();
+        await hereMap.AddDefaultUi();
+    }
+}

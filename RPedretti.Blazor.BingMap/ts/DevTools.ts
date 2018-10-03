@@ -1,5 +1,5 @@
 ﻿import { DotNetPushpin, DotNetPolyline, DotNetPolygon } from "./Entities/DotNetEntityTypes";
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 export class DevTools {
     getPolygons = (

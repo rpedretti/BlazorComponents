@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>RPedretti.Blazor.BingMap</PackageId>
-    <Version>0.0.10-preview</Version>
+    <Version>0.0.10</Version>
     <Authors>Rafael Pedretti</Authors>
     <Company>RJPSoft</Company>
 
@@ -22,8 +22,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.6.0-preview1-final" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.6.0-preview1-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.6.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -37,33 +37,7 @@
   <ItemGroup>
     <WebpackInputs Include="ts\**\*.ts" Exclude="content\**;node_modules\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="ts\DevTools.ts" />
-    <None Remove="ts\DotNetEntityTypes.ts" />
-    <None Remove="ts\Entities\Infobox.ts" />
-    <None Remove="ts\Helpers.ts" />
-    <None Remove="ts\InitMap.ts" />
-    <None Remove="ts\Modules\Directions.module.ts" />
-    <None Remove="ts\Modules\Traffic.module.ts" />
-    <None Remove="ts\Polygon.ts" />
-    <None Remove="ts\Polyline.ts" />
-    <None Remove="ts\Pushpin.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <WebpackInputs Remove="ts\DevTools.ts" />
-    <WebpackInputs Remove="ts\DotNetEntityTypes.ts" />
-    <WebpackInputs Remove="ts\Entities\Infobox.ts" />
-    <WebpackInputs Remove="ts\Helpers.ts" />
-    <WebpackInputs Remove="ts\InitMap.ts" />
-    <WebpackInputs Remove="ts\Modules\Directions.module.ts" />
-    <WebpackInputs Remove="ts\Modules\Traffic.module.ts" />
-    <WebpackInputs Remove="ts\Polygon.ts" />
-    <WebpackInputs Remove="ts\Polyline.ts" />
-    <WebpackInputs Remove="ts\Pushpin.ts" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <TypeScriptCompile Include="ts\Collections.ts" />
     <TypeScriptCompile Include="ts\DevTools.ts" />

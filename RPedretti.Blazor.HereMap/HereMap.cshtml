@@ -1,0 +1,81 @@
+﻿@using Microsoft.JSInterop;
+@using RPedretti.Blazor.HereMap.Entities;
+@using RPedretti.Blazor.HereMap.Services;
+@using System.Collections.ObjectModel;
+@using System.Collections.Specialized;
+@implements IDisposable;
+
+<div class="here-map" id="@Id" ref="map"></div>
+
+@functions {
+    private bool init = false;
+    private ElementRef map;
+    private DotNetObjectRef _thisRef;
+    private ObservableCollection<HereMapModule> _modules;
+    [Inject] private HereMapService hereMapService { get; set; }
+
+    [Parameter] internal string Id { get; set; } = "here-map-" + Guid.NewGuid().ToString();
+    [Parameter] protected string AppId { get; set; }
+    [Parameter] protected string AppCode { get; set; }
+    [Parameter] protected MapOptions Options { get; set; }
+    [Parameter] protected ObservableCollection<HereMapModule> Modules
+    {
+        get => _modules;
+        set
+        {
+            if (_modules != null)
+            {
+                _modules.CollectionChanged -= ModulesChanged;
+            }
+
+            _modules = value;
+
+            if (_modules != null)
+            {
+                _modules.CollectionChanged += ModulesChanged;
+            }
+        }
+    }
+
+    [Parameter] protected Func<Task> MapLoaded { get; set; }
+
+    protected override void OnInit()
+    {
+        _thisRef = new DotNetObjectRef(this);
+    }
+
+    protected override async Task OnAfterRenderAsync()
+    {
+        if (!init)
+        {
+            init = true;
+
+            await hereMapService.InitService(AppId, AppCode);
+
+            if (Modules.Any())
+            {
+                await hereMapService.LoadModules(Modules);
+            }
+
+            await JSRuntime.Current.InvokeAsync<int>("rpedrettiBlazorComponents.hereMaps.map.initMap",
+                map,
+                Options,
+                _thisRef);
+
+            MapLoaded?.Invoke();
+        }
+    }
+
+    public void Dispose()
+    {
+        JSRuntime.Current.UntrackObjectRef(_thisRef);
+    }
+
+    private async void ModulesChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Add)
+        {
+            await hereMapService.LoadModules(e.NewItems as IEnumerable<HereMapModule>);
+        }
+    }
+}

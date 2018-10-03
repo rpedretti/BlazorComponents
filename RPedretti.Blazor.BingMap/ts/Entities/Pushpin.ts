@@ -1,8 +1,7 @@
 import { DotNetEntity, DotNetPushpin } from "./DotNetEntityTypes";
 import { Dictionary } from "./../Collections";
 import { Helpers } from "./../Helpers";
-import { isEqual } from 'lodash.isequal';
-//const _isEqual = require('lodash.isequal');
+import * as isEqual from 'lodash.isequal';
 
 export class Pushpin {
     private _pushpins = new Map<string, Microsoft.Maps.Pushpin>();
