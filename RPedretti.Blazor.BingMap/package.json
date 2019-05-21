@@ -10,13 +10,13 @@
     "uuid": "3.3.2"
   },
   "devDependencies": {
-    "@types/emscripten": "0.0.31",
-    "@types/lodash": "4.17.11",
+    "@types/emscripten": "0.0.32",
+    "@types/lodash": "4.14.130",
     "@types/uuid": "3.4.4",
+    "bingmaps": "2.0.3",
     "ts-loader": "^4.4.2",
     "typescript": "^2.8.3",
     "webpack": "^4.16.3",
-    "bingmaps": "2.0.3",
     "webpack-cli": "^3.1.0"
   }
 }
